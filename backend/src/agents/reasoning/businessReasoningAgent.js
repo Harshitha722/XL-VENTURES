@@ -37,14 +37,22 @@ function businessReasoningAgent(agentOutputs) {
             );
         }
 
-        if (health.nps < 5) {
+        if (
+            health.nps !== null &&
+            health.nps !== undefined &&
+            health.nps < 5
+        ) {
 
             risks.push(
                 "customer dissatisfaction"
             );
         }
 
-        if (health.adoption < 50) {
+        if (
+            health.adoption !== null &&
+            health.adoption !== undefined &&
+            health.adoption < 50
+        ) {
 
             risks.push(
                 "low product adoption"
@@ -58,7 +66,7 @@ function businessReasoningAgent(agentOutputs) {
      */
     if (contract) {
 
-        if (!contract.autoRenew) {
+        if (contract.autoRenew === false) {
 
             risks.push(
                 "renewal risk"

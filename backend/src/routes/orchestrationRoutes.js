@@ -1,11 +1,3 @@
-/**
- * ORCHESTRATION ROUTES
- *
- * Purpose:
- * Expose the complete RenewAI
- * orchestration pipeline as an API.
- */
-
 const express = require("express");
 
 const orchestrate =
@@ -13,69 +5,29 @@ const orchestrate =
 
 const router = express.Router();
 
-
 /**
- * POST /api/orchestrate
- *
- * Body:
- * {
- *    customerId: 1,
- *    interaction: "..."
- * }
+ * Compatibility route.
+ * Milestone 1 uses POST /api/upload/analyze, but this keeps older local tests
+ * from breaking while still using the new document-driven orchestrator.
  */
 router.post("/", (req, res) => {
-
     try {
-
-        const {
-
-            customerId,
-
-            interaction
-
-        } = req.body;
-
-
-        /**
-         * Validate request.
-         */
-        if (!customerId || !interaction) {
-
-            return res.status(400).json({
-
-                error:
-                    "customerId and interaction are required"
-            });
-        }
-
-
-        /**
-         * Execute orchestration pipeline.
-         */
         const result =
-
-            orchestrate(
-                customerId,
-                interaction
-            );
-
+            orchestrate({
+                contractText: req.body.contractText || "",
+                meetingText: req.body.meetingText || req.body.interaction || "",
+                emailText: req.body.emailText || ""
+            });
 
         res.json(result);
-
     }
-
     catch (error) {
-
         console.error(error);
 
         res.status(500).json({
-
-            error:
-                "Internal Server Error"
+            error: "Internal Server Error"
         });
     }
-
 });
-
 
 module.exports = router;

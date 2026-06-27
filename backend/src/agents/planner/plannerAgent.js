@@ -9,11 +9,20 @@
  */
 
 
-function plannerAgent(interactionText) {
+function plannerAgent(uploadedText) {
 
-    // Convert to lowercase
+    /**
+     * The planner analyzes all uploaded content together.
+     * For now this is keyword-based so it is easy to understand and extend.
+     */
     const text =
-        interactionText.toLowerCase();
+        [
+            uploadedText.contractText,
+            uploadedText.meetingText,
+            uploadedText.emailText
+        ]
+            .join("\n")
+            .toLowerCase();
 
     const executionPlan = [];
 
@@ -23,7 +32,8 @@ function plannerAgent(interactionText) {
     if (
         text.includes("adoption") ||
         text.includes("usage") ||
-        text.includes("login")
+        text.includes("login") ||
+        text.includes("frustrated")
     ) {
 
         executionPlan.push(
@@ -37,6 +47,7 @@ function plannerAgent(interactionText) {
     if (
         text.includes("renew") ||
         text.includes("contract") ||
+        text.includes("sla") ||
         text.includes("discount")
     ) {
 
@@ -51,7 +62,8 @@ function plannerAgent(interactionText) {
     if (
         text.includes("unhappy") ||
         text.includes("issue") ||
-        text.includes("support")
+        text.includes("support") ||
+        text.includes("escalate")
     ) {
 
         executionPlan.push(
@@ -59,13 +71,27 @@ function plannerAgent(interactionText) {
         );
     }
 
-    /**
-     * CRM context is useful
-     * for almost every case.
-     */
-    executionPlan.push(
-        "CRMContextAgent"
-    );
+    if (
+        text.includes("enterprise") ||
+        text.includes("stakeholder") ||
+        text.includes("budget") ||
+        text.includes("expansion") ||
+        text.includes("analytics")
+    ) {
+
+        executionPlan.push(
+            "CRMContextAgent"
+        );
+    }
+
+    if (!executionPlan.length) {
+        executionPlan.push(
+            "CustomerHealthAgent",
+            "ContractAgent",
+            "KnowledgeAgent",
+            "CRMContextAgent"
+        );
+    }
 
     /**
      * Remove duplicates.

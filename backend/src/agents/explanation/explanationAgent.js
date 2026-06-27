@@ -10,7 +10,8 @@
 function explanationAgent(
     recommendations,
     agentOutputs,
-    reasoning
+    reasoning,
+    orchestrationInput = {}
 ) {
 
     return recommendations.map((item) => {
@@ -40,7 +41,7 @@ function explanationAgent(
                 `Adoption: ${agentOutputs.CustomerHealthAgent?.adoption}%`,
 
                 `Escalations: ${agentOutputs.CRMContextAgent?.escalations}`
-            ];
+            ].filter((item) => !item.includes("undefined") && !item.includes("null"));
 
             confidence = 92;
         }
@@ -60,7 +61,7 @@ function explanationAgent(
             evidence = [
 
                 `Adoption: ${agentOutputs.CustomerHealthAgent?.adoption}%`
-            ];
+            ].filter((item) => !item.includes("undefined") && !item.includes("null"));
 
             confidence = 88;
         }
@@ -82,7 +83,7 @@ function explanationAgent(
                 `Renewal Date: ${agentOutputs.ContractAgent?.renewalDate}`,
 
                 `Auto Renew: ${agentOutputs.ContractAgent?.autoRenew}`
-            ];
+            ].filter((item) => !item.includes("undefined") && !item.includes("null"));
 
             confidence = 85;
         }
@@ -104,7 +105,7 @@ function explanationAgent(
                 `Discount Allowed: ${agentOutputs.ContractAgent?.discountAllowed}`,
 
                 `Max Discount: ${agentOutputs.ContractAgent?.maxDiscountPercent}%`
-            ];
+            ].filter((item) => !item.includes("undefined") && !item.includes("null"));
 
             confidence = 82;
         }
@@ -137,9 +138,19 @@ function explanationAgent(
                 "Generated from business reasoning rules.";
 
             evidence =
-                reasoning.risks;
+                orchestrationInput.evidence || reasoning.risks;
 
             confidence = 75;
+        }
+
+        /**
+         * Prefer real uploaded-document snippets whenever available.
+         */
+        if (orchestrationInput.evidence?.length) {
+            evidence = [
+                ...orchestrationInput.evidence.slice(0, 3),
+                ...evidence
+            ].slice(0, 5);
         }
 
 

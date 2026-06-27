@@ -1,0 +1,215 @@
+{
+    "timestamp": "2026-06-27T12:53:01.482Z",
+    "executionPlan": [
+        "CustomerHealthAgent",
+        "ContractAgent",
+        "KnowledgeAgent",
+        "CRMContextAgent"
+    ],
+    "agentOutputs": {
+        "CustomerHealthAgent": {
+            "adoption": 35,
+            "nps": 3,
+            "csat": 3.5,
+            "risk": "high",
+            "evidence": [
+                "Customer frustration detected in uploaded documents.",
+                "Customer stated they may not renew."
+            ]
+        },
+        "ContractAgent": {
+            "renewalDate": "August 15, 2026",
+            "contractValue": 300000,
+            "autoRenew": false,
+            "discountAllowed": true,
+            "maximumDiscountPercent": 15,
+            "maxDiscountPercent": 15,
+            "slaTerms": "Priority support response within 2 hours.",
+            "sla": "Priority support response within 2 hours.",
+            "evidence": [
+                "Renewal Date: August 15, 2026",
+                "Contract Value: 300000",
+                "Auto renewal disabled.",
+                "Maximum discount allowed: 15%"
+            ]
+        },
+        "KnowledgeAgent": {
+            "playbooks": [
+                {
+                    "trigger": "Low adoption",
+                    "action": "Conduct Adoption Workshop"
+                },
+                {
+                    "trigger": "Escalation",
+                    "action": "Executive Business Review"
+                },
+                {
+                    "trigger": "Renewal risk",
+                    "action": "Initiate Renewal Process"
+                }
+            ],
+            "evidence": [
+                "Low adoption playbook selected.",
+                "Escalation playbook selected.",
+                "Renewal risk playbook selected."
+            ]
+        },
+        "CRMContextAgent": {
+            "tier": "Enterprise",
+            "opportunities": [
+                "Analytics Module",
+                "AI Assistant",
+                "Expansion Discussion"
+            ],
+            "stakeholders": [
+                "Executive Sponsor",
+                "Finance Stakeholder"
+            ],
+            "escalations": 2,
+            "evidence": [
+                "Enterprise tier inferred from uploaded documents.",
+                "Expansion or product opportunity detected.",
+                "Escalation language detected in uploaded documents."
+            ]
+        }
+    },
+    "reasoning": {
+        "risks": [
+            "churn risk",
+            "customer dissatisfaction",
+            "low product adoption",
+            "renewal risk",
+            "frequent escalations"
+        ],
+        "opportunities": [
+            "retention discount strategy",
+            "upsell opportunity"
+        ],
+        "missingInformation": [
+            "executive sponsor status",
+            "renewal meeting confirmation"
+        ]
+    },
+    "recommendations": [
+        {
+            "priority": "HIGH",
+            "action": "Schedule Executive Business Review"
+        },
+        {
+            "priority": "HIGH",
+            "action": "Escalate to Senior Customer Success Manager"
+        },
+        {
+            "priority": "HIGH",
+            "action": "Conduct Adoption Workshop"
+        },
+        {
+            "priority": "MEDIUM",
+            "action": "Initiate Renewal Discussion"
+        },
+        {
+            "priority": "MEDIUM",
+            "action": "Review Historical Support Issues"
+        },
+        {
+            "priority": "MEDIUM",
+            "action": "Offer Renewal Incentive"
+        },
+        {
+            "priority": "MEDIUM",
+            "action": "Explore Upsell Opportunities"
+        }
+    ],
+    "explanations": [
+        {
+            "recommendation": "Schedule Executive Business Review",
+            "priority": "HIGH",
+            "reason": "Customer exhibits strong churn indicators.",
+            "evidence": [
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "NPS: 3",
+                "Adoption: 35%"
+            ],
+            "confidence": 92
+        },
+        {
+            "recommendation": "Escalate to Senior Customer Success Manager",
+            "priority": "HIGH",
+            "reason": "Generated from business reasoning rules.",
+            "evidence": [
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026"
+            ],
+            "confidence": 75
+        },
+        {
+            "recommendation": "Conduct Adoption Workshop",
+            "priority": "HIGH",
+            "reason": "Feature adoption is below acceptable levels.",
+            "evidence": [
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "Adoption: 35%"
+            ],
+            "confidence": 88
+        },
+        {
+            "recommendation": "Initiate Renewal Discussion",
+            "priority": "MEDIUM",
+            "reason": "Contract requires proactive renewal management.",
+            "evidence": [
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "Renewal Date: August 15, 2026",
+                "Auto Renew: false"
+            ],
+            "confidence": 85
+        },
+        {
+            "recommendation": "Review Historical Support Issues",
+            "priority": "MEDIUM",
+            "reason": "Generated from business reasoning rules.",
+            "evidence": [
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026"
+            ],
+            "confidence": 75
+        },
+        {
+            "recommendation": "Offer Renewal Incentive",
+            "priority": "MEDIUM",
+            "reason": "Retention incentives are permitted by contract.",
+            "evidence": [
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "Discount Allowed: true",
+                "Max Discount: 15%"
+            ],
+            "confidence": 82
+        },
+        {
+            "recommendation": "Explore Upsell Opportunities",
+            "priority": "MEDIUM",
+            "reason": "Existing expansion opportunities are available.",
+            "evidence": [
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "Analytics Module",
+                "AI Assistant"
+            ],
+            "confidence": 80
+        }
+    ]
+}

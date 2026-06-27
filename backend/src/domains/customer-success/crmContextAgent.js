@@ -1,34 +1,72 @@
-const customers = require("../../data/customers.json");
-
 /**
- * CRM Context Agent
+ * CRM CONTEXT AGENT
  *
- * Purpose:
- * Return CRM-related information.
+ * Infers CRM-style context from uploaded documents.
+ * It does not use customers.json.
  */
-function crmContextAgent(customerId) {
+function crmContextAgent(uploadedText) {
+    const combinedText = [
+        uploadedText.contractText,
+        uploadedText.meetingText,
+        uploadedText.emailText
+    ].join("\n");
 
-    const customer = customers.find(
-        c => c.id === customerId
-    );
+    const text = combinedText.toLowerCase();
 
-    if (!customer) {
-        return {
-            error: "Customer not found"
-        };
+    const opportunities = [];
+    const stakeholders = [];
+    let escalations = 0;
+    let tier = null;
+
+    if (text.includes("enterprise")) {
+        tier = "Enterprise";
+    }
+    else if (text.includes("mid market") || text.includes("mid-market")) {
+        tier = "Mid Market";
+    }
+
+    if (text.includes("analytics module")) {
+        opportunities.push("Analytics Module");
+    }
+
+    if (text.includes("ai assistant")) {
+        opportunities.push("AI Assistant");
+    }
+
+    if (text.includes("expansion") || text.includes("upsell")) {
+        opportunities.push("Expansion Discussion");
+    }
+
+    if (text.includes("executive sponsor")) {
+        stakeholders.push("Executive Sponsor");
+    }
+
+    if (text.includes("finance stakeholder")) {
+        stakeholders.push("Finance Stakeholder");
+    }
+
+    if (text.includes("executive review")) {
+        escalations += 1;
+    }
+
+    if (text.includes("escalate") || text.includes("escalation")) {
+        escalations += 1;
     }
 
     return {
-
-        tier: customer.tier,
-
-        mrr: customer.mrr,
-
-        escalations:
-            customer.previousEscalations,
-
-        opportunities:
-            customer.openOpportunities
+        tier,
+        opportunities: [...new Set(opportunities)],
+        stakeholders: [...new Set(stakeholders)],
+        escalations,
+        evidence: [
+            ...(tier ? [`${tier} tier inferred from uploaded documents.`] : []),
+            ...(opportunities.length
+                ? ["Expansion or product opportunity detected."]
+                : []),
+            ...(escalations
+                ? ["Escalation language detected in uploaded documents."]
+                : [])
+        ]
     };
 }
 

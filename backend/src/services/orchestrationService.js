@@ -1,24 +1,5 @@
-/**
- * ORCHESTRATION SERVICE
- *
- * Complete RenewAI execution pipeline:
- *
- * Interaction
- *      ↓
- * Planner Agent
- *      ↓
- * Agent Registry
- *      ↓
- * Domain Agents
- *      ↓
- * Business Reasoning Agent
- *      ↓
- * Recommendation Agent
- *      ↓
- * Explanation Agent
- *      ↓
- * Shared Memory
- */
+const fs = require("fs");
+const path = require("path");
 
 const plannerAgent =
     require("../agents/planner/plannerAgent");
@@ -35,29 +16,79 @@ const recommendationAgent =
 const explanationAgent =
     require("../agents/explanation/explanationAgent");
 
-const {
-    saveMemory
-} = require("../memory/memoryAgent");
+const LATEST_ANALYSIS_PATH = path.join(
+    __dirname,
+    "../data/latestAnalysis.json"
+);
 
+/**
+ * Collect readable evidence lines from the uploaded documents.
+ * ExplanationAgent uses these snippets so the final output can point back to
+ * the real source content instead of mock data.
+ */
+function buildEvidence(uploadedText) {
+    const combinedText = [
+        uploadedText.contractText,
+        uploadedText.meetingText,
+        uploadedText.emailText
+    ].join("\n");
 
-function orchestrate(customerId, interaction) {
+    const keywords = [
+        "adoption",
+        "renew",
+        "contract",
+        "discount",
+        "sla",
+        "frustrated",
+        "unhappy",
+        "support",
+        "escalation",
+        "executive",
+        "analytics",
+        "auto renewal"
+    ];
 
-    /**
-     * STEP 1:
-     * Create execution plan.
-     */
+    return combinedText
+        .split(/(?<=[.!?])\s+|\n+/)
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .filter((line) => {
+            const lowerLine = line.toLowerCase();
+            return keywords.some((keyword) => lowerLine.includes(keyword));
+        })
+        .slice(0, 10);
+}
+
+/**
+ * Persist the latest analysis in single-user hackathon mode.
+ * Every dashboard-style frontend page reads from this file.
+ */
+function saveLatestAnalysis(result) {
+    fs.writeFileSync(
+        LATEST_ANALYSIS_PATH,
+        JSON.stringify(result, null, 4)
+    );
+}
+
+/**
+ * Run the full RenewAI agent pipeline from uploaded document text.
+ */
+function orchestrate(uploadedText) {
+    const evidence = buildEvidence(uploadedText);
+
+    const orchestrationInput = {
+        contractText: uploadedText.contractText || "",
+        meetingText: uploadedText.meetingText || "",
+        emailText: uploadedText.emailText || "",
+        evidence
+    };
+
     const executionPlan =
-        plannerAgent(interaction);
+        plannerAgent(orchestrationInput);
 
-
-    /**
-     * STEP 2:
-     * Execute selected agents.
-     */
     const agentOutputs = {};
 
     executionPlan.forEach((agentName) => {
-
         const agent =
             AgentRegistry[agentName];
 
@@ -65,100 +96,36 @@ function orchestrate(customerId, interaction) {
             return;
         }
 
-
-        /**
-         * Knowledge Agent expects
-         * a problem type instead
-         * of a customer ID.
-         */
-        if (agentName === "KnowledgeAgent") {
-
-            agentOutputs[agentName] =
-                agent("low_adoption");
-        }
-
-        else {
-
-            agentOutputs[agentName] =
-                agent(customerId);
-        }
-
+        agentOutputs[agentName] =
+            agent(orchestrationInput);
     });
 
-
-    /**
-     * STEP 3:
-     * Generate business insights.
-     */
     const reasoning =
+        businessReasoningAgent(agentOutputs);
 
-        businessReasoningAgent(
-            agentOutputs
-        );
-
-
-    /**
-     * STEP 4:
-     * Generate recommendations.
-     */
     const recommendations =
+        recommendationAgent(reasoning);
 
-        recommendationAgent(
-            reasoning
-        );
-
-
-    /**
-     * STEP 5:
-     * Generate explanations.
-     */
     const explanations =
-
         explanationAgent(
-
             recommendations,
-
             agentOutputs,
-
-            reasoning
+            reasoning,
+            orchestrationInput
         );
 
-
-    /**
-     * STEP 6:
-     * Persist interaction
-     * inside shared memory.
-     */
-    saveMemory({
-
-        customerId,
-
-        interaction,
-
+    const result = {
+        timestamp: new Date().toISOString(),
         executionPlan,
-
-        recommendations,
-
-        explanations
-    });
-
-
-    /**
-     * Final response.
-     */
-    return {
-
-        executionPlan,
-
         agentOutputs,
-
         reasoning,
-
         recommendations,
-
         explanations
     };
-}
 
+    saveLatestAnalysis(result);
+
+    return result;
+}
 
 module.exports = orchestrate;

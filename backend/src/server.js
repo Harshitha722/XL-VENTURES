@@ -11,14 +11,19 @@ const cors = require("cors");
 const orchestrationRoutes =
     require("./routes/orchestrationRoutes");
 
+const uploadRoutes =
+    require("./routes/uploadRoutes");
+
+const latestAnalysisRoutes =
+    require("./routes/latestAnalysisRoutes");
+
 const memoryRoutes =
     require("./routes/memoryRoutes");
 
 const dashboardRoutes =
     require("./routes/dashboardRoutes");
 
-const customerRoutes =
-    require("./routes/customerRoutes");
+
 
 const architectureRoutes =
     require("./routes/architectureRoutes");
@@ -74,6 +79,24 @@ app.use(
     orchestrationRoutes
 );
 
+/**
+ * =========================
+ * Upload-Driven Analysis APIs
+ * =========================
+ *
+ * POST /api/upload/analyze
+ * GET  /api/latest-analysis
+ */
+app.use(
+    "/api/upload",
+    uploadRoutes
+);
+
+app.use(
+    "/api/latest-analysis",
+    latestAnalysisRoutes
+);
+
 
 /**
  * =========================
@@ -110,10 +133,7 @@ app.use(
  * GET /api/customers
  * GET /api/customers/:customerId
  */
-app.use(
-    "/api/customers",
-    customerRoutes
-);
+
 
 
 /**

@@ -1,31 +1,60 @@
-const playbooks = require("../../data/playbooks.json");
+const PLAYBOOKS = {
+    lowAdoption: {
+        trigger: "Low adoption",
+        action: "Conduct Adoption Workshop"
+    },
+    escalation: {
+        trigger: "Escalation",
+        action: "Executive Business Review"
+    },
+    renewalRisk: {
+        trigger: "Renewal risk",
+        action: "Initiate Renewal Process"
+    }
+};
 
 /**
- * Knowledge Agent
+ * KNOWLEDGE AGENT
  *
- * Purpose:
- * Retrieve customer-success
- * playbooks.
+ * Uses internal static mappings instead of playbooks.json.
+ * The shape stays modular so a vector database can replace this later.
  */
-function knowledgeAgent(problemType) {
+function knowledgeAgent(uploadedText) {
+    const text = [
+        uploadedText.contractText,
+        uploadedText.meetingText,
+        uploadedText.emailText
+    ]
+        .join("\n")
+        .toLowerCase();
 
-    const playbook = playbooks.find(
-        p => p.type === problemType
-    );
+    const playbooks = [];
 
-    if (!playbook) {
+    if (text.includes("low adoption") || text.includes("adoption")) {
+        playbooks.push(PLAYBOOKS.lowAdoption);
+    }
 
-        return {
-            playbook:
-                "No playbook found."
-        };
+    if (
+        text.includes("escalation") ||
+        text.includes("escalate") ||
+        text.includes("executive review")
+    ) {
+        playbooks.push(PLAYBOOKS.escalation);
+    }
+
+    if (
+        text.includes("may not renew") ||
+        text.includes("renewal risk") ||
+        text.includes("auto renewal: no")
+    ) {
+        playbooks.push(PLAYBOOKS.renewalRisk);
     }
 
     return {
-
-        title: playbook.title,
-
-        actions: playbook.actions
+        playbooks,
+        evidence: playbooks.map(
+            (playbook) => `${playbook.trigger} playbook selected.`
+        )
     };
 }
 
