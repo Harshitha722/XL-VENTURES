@@ -1,0 +1,53 @@
+[
+    {
+        "type": "low_adoption",
+
+        "title": "Low Adoption Recovery Plan",
+
+        "actions": [
+            "Schedule adoption workshop",
+            "Provide executive training",
+            "Review feature utilization",
+            "Assign success manager"
+        ]
+    },
+
+    {
+        "type": "executive_escalation",
+
+        "title": "Executive Escalation Process",
+
+        "actions": [
+            "Arrange executive business review",
+            "Involve VP Customer Success",
+            "Create remediation plan",
+            "Track weekly progress"
+        ]
+    },
+
+    {
+        "type": "renewal_strategy",
+
+        "title": "Renewal Success Framework",
+
+        "actions": [
+            "Start discussions 90 days before renewal",
+            "Present ROI analysis",
+            "Address unresolved concerns",
+            "Identify expansion opportunities"
+        ]
+    },
+
+    {
+        "type": "upsell_strategy",
+
+        "title": "Expansion Revenue Playbook",
+
+        "actions": [
+            "Introduce premium modules",
+            "Review unmet requirements",
+            "Offer bundled pricing",
+            "Conduct stakeholder workshops"
+        ]
+    }
+]

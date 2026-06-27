@@ -1,0 +1,48 @@
+[
+    {
+        "id": 1,
+        "name": "Acme Corp",
+        "tier": "Enterprise",
+        "mrr": 25000,
+        "nps": 4,
+        "csat": 3.8,
+        "monthlyLogins": 420,
+        "featureAdoption": 45,
+        "renewalDate": "2026-08-15",
+        "previousEscalations": 2,
+        "openOpportunities": [
+            "Analytics Module",
+            "AI Assistant Add-on"
+        ]
+    },
+
+    {
+        "id": 2,
+        "name": "FinTech Global",
+        "tier": "Mid Market",
+        "mrr": 12000,
+        "nps": 8,
+        "csat": 4.5,
+        "monthlyLogins": 980,
+        "featureAdoption": 82,
+        "renewalDate": "2026-12-01",
+        "previousEscalations": 0,
+        "openOpportunities": [
+            "Workflow Automation"
+        ]
+    },
+
+    {
+        "id": 3,
+        "name": "RetailOne",
+        "tier": "Enterprise",
+        "mrr": 40000,
+        "nps": 2,
+        "csat": 2.9,
+        "monthlyLogins": 150,
+        "featureAdoption": 28,
+        "renewalDate": "2026-07-10",
+        "previousEscalations": 4,
+        "openOpportunities": []
+    }
+]
