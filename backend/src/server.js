@@ -1,7 +1,7 @@
 /**
  * RENEWAI SERVER
  *
- * Main entry point for the backend.
+ * Main backend entry point.
  */
 
 const express = require("express");
@@ -20,10 +20,19 @@ const dashboardRoutes =
 const customerRoutes =
     require("./routes/customerRoutes");
 
+const architectureRoutes =
+    require("./routes/architectureRoutes");
+
+const riskRoutes =
+    require("./routes/riskRoutes");
+
+const timelineRoutes =
+    require("./routes/timelineRoutes");
+
 
 const app = express();
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 
 /**
@@ -44,6 +53,8 @@ app.use(express.json());
 app.get("/", (req, res) => {
 
     res.json({
+
+        success: true,
 
         message:
             "RenewAI Backend Running 🚀"
@@ -107,7 +118,62 @@ app.use(
 
 /**
  * =========================
- * Start Express Server
+ * Architecture APIs
+ * =========================
+ *
+ * GET /api/architecture
+ */
+app.use(
+    "/api/architecture",
+    architectureRoutes
+);
+
+
+/**
+ * =========================
+ * Risk Score APIs
+ * =========================
+ *
+ * GET /api/risk-score/:customerId
+ */
+app.use(
+    "/api/risk-score",
+    riskRoutes
+);
+
+
+/**
+ * =========================
+ * Renewal Timeline APIs
+ * =========================
+ *
+ * GET /api/timeline/:customerId
+ */
+app.use(
+    "/api/timeline",
+    timelineRoutes
+);
+
+
+/**
+ * =========================
+ * 404 Handler
+ * =========================
+ */
+app.use((req, res) => {
+
+    res.status(404).json({
+
+        success: false,
+
+        message: "Route not found"
+    });
+});
+
+
+/**
+ * =========================
+ * Start Server
  * =========================
  */
 app.listen(PORT, () => {
