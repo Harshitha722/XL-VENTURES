@@ -29,6 +29,9 @@ const businessReasoningAgent =
 const recommendationAgent =
 require("../agents/recommendation/recommendationAgent");
 
+const explanationAgent =
+require("../agents/explanation/explanationAgent");
+
 
 function orchestrate(customerId, interaction) {
 
@@ -104,6 +107,17 @@ const recommendations =
         reasoning
     );
 
+/**
+ * Generate explainable outputs.
+ */
+const explanations =
+
+    explanationAgent(
+        recommendations,
+        agentOutputs,
+        reasoning
+    );
+
 
 return {
 
@@ -113,7 +127,9 @@ return {
 
     reasoning,
 
-    recommendations
+    recommendations,
+
+    explanations
 };
 }
 
