@@ -1,13 +1,22 @@
+/**
+ * ORCHESTRATION TEST
+ *
+ * Purpose:
+ * Verify the complete agent workflow.
+ */
+
 const orchestrate =
-require("./services/orchestrationService");
+    require("./services/orchestrationService");
 
 
-const result = orchestrate(
+const result =
 
-    1,
+    orchestrate(
 
-    "We are unhappy with adoption and may not renew our contract."
-);
+        1,
+
+        "We are unhappy with adoption and may not renew our contract."
+    );
 
 
 console.log(

@@ -2,17 +2,19 @@
  * ORCHESTRATION SERVICE
  *
  * Purpose:
- * Execute the complete workflow:
+ * Execute the complete agent workflow:
  *
  * Interaction
- *    ↓
+ *      ↓
  * Planner Agent
- *    ↓
+ *      ↓
  * Agent Registry
- *    ↓
+ *      ↓
  * Execute Selected Agents
- *    ↓
- * Collect Outputs
+ *      ↓
+ * Business Reasoning Agent
+ *      ↓
+ * Final Insights
  */
 
 const plannerAgent =
@@ -20,6 +22,9 @@ const plannerAgent =
 
 const AgentRegistry =
     require("../agents/shared/agentRegistry");
+
+const businessReasoningAgent =
+    require("../agents/reasoning/businessReasoningAgent");
 
 
 function orchestrate(customerId, interaction) {
@@ -45,13 +50,17 @@ function orchestrate(customerId, interaction) {
         const agent =
             AgentRegistry[agentName];
 
+        /**
+         * Skip if agent does not exist.
+         */
         if (!agent) {
             return;
         }
 
         /**
          * Knowledge Agent expects
-         * a problem type.
+         * a problem type instead of
+         * a customer ID.
          */
         if (agentName === "KnowledgeAgent") {
 
@@ -60,24 +69,36 @@ function orchestrate(customerId, interaction) {
         }
 
         /**
-         * All other agents use customerId.
+         * All other agents use
+         * customer ID.
          */
         else {
 
             agentOutputs[agentName] =
                 agent(customerId);
         }
-
     });
 
     /**
-     * Return everything.
+     * Step 3:
+     * Generate business insights.
+     */
+    const reasoning =
+
+        businessReasoningAgent(
+            agentOutputs
+        );
+
+    /**
+     * Final response.
      */
     return {
 
         executionPlan,
 
-        agentOutputs
+        agentOutputs,
+
+        reasoning
     };
 }
 
