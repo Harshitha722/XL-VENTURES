@@ -26,6 +26,9 @@ const AgentRegistry =
 const businessReasoningAgent =
     require("../agents/reasoning/businessReasoningAgent");
 
+const recommendationAgent =
+require("../agents/recommendation/recommendationAgent");
+
 
 function orchestrate(customerId, interaction) {
 
@@ -92,14 +95,26 @@ function orchestrate(customerId, interaction) {
     /**
      * Final response.
      */
-    return {
+  /**
+ * Generate recommendations.
+ */
+const recommendations =
 
-        executionPlan,
-
-        agentOutputs,
-
+    recommendationAgent(
         reasoning
-    };
+    );
+
+
+return {
+
+    executionPlan,
+
+    agentOutputs,
+
+    reasoning,
+
+    recommendations
+};
 }
 
 
