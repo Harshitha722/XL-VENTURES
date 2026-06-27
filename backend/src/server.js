@@ -8,6 +8,9 @@ const cors = require("cors");
 const orchestrationRoutes =
     require("./routes/orchestrationRoutes");
 
+const memoryRoutes =
+    require("./routes/memoryRoutes");
+
 
 const app = express();
 
@@ -15,7 +18,7 @@ const PORT = 5000;
 
 
 /**
- * Middlewares
+ * Global middlewares
  */
 app.use(cors());
 
@@ -23,7 +26,7 @@ app.use(express.json());
 
 
 /**
- * Health Check
+ * Health check endpoint
  */
 app.get("/", (req, res) => {
 
@@ -36,7 +39,7 @@ app.get("/", (req, res) => {
 
 
 /**
- * Agentic Orchestration API
+ * Main orchestration APIs
  */
 app.use(
 
@@ -47,7 +50,18 @@ app.use(
 
 
 /**
- * Start Server
+ * Shared memory APIs
+ */
+app.use(
+
+    "/api/memory",
+
+    memoryRoutes
+);
+
+
+/**
+ * Start Express server
  */
 app.listen(PORT, () => {
 

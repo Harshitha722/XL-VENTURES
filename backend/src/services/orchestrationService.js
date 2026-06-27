@@ -1,8 +1,7 @@
 /**
  * ORCHESTRATION SERVICE
  *
- * Purpose:
- * Execute the complete agent workflow:
+ * Complete RenewAI execution pipeline:
  *
  * Interaction
  *      ↓
@@ -10,11 +9,15 @@
  *      ↓
  * Agent Registry
  *      ↓
- * Execute Selected Agents
+ * Domain Agents
  *      ↓
  * Business Reasoning Agent
  *      ↓
- * Final Insights
+ * Recommendation Agent
+ *      ↓
+ * Explanation Agent
+ *      ↓
+ * Shared Memory
  */
 
 const plannerAgent =
@@ -27,46 +30,46 @@ const businessReasoningAgent =
     require("../agents/reasoning/businessReasoningAgent");
 
 const recommendationAgent =
-require("../agents/recommendation/recommendationAgent");
+    require("../agents/recommendation/recommendationAgent");
 
 const explanationAgent =
-require("../agents/explanation/explanationAgent");
+    require("../agents/explanation/explanationAgent");
+
+const {
+    saveMemory
+} = require("../memory/memoryAgent");
 
 
 function orchestrate(customerId, interaction) {
 
     /**
-     * Step 1:
-     * Generate execution plan.
+     * STEP 1:
+     * Create execution plan.
      */
     const executionPlan =
         plannerAgent(interaction);
 
+
     /**
-     * Store outputs from all agents.
+     * STEP 2:
+     * Execute selected agents.
      */
     const agentOutputs = {};
 
-    /**
-     * Step 2:
-     * Execute each selected agent.
-     */
     executionPlan.forEach((agentName) => {
 
         const agent =
             AgentRegistry[agentName];
 
-        /**
-         * Skip if agent does not exist.
-         */
         if (!agent) {
             return;
         }
 
+
         /**
          * Knowledge Agent expects
-         * a problem type instead of
-         * a customer ID.
+         * a problem type instead
+         * of a customer ID.
          */
         if (agentName === "KnowledgeAgent") {
 
@@ -74,19 +77,17 @@ function orchestrate(customerId, interaction) {
                 agent("low_adoption");
         }
 
-        /**
-         * All other agents use
-         * customer ID.
-         */
         else {
 
             agentOutputs[agentName] =
                 agent(customerId);
         }
+
     });
 
+
     /**
-     * Step 3:
+     * STEP 3:
      * Generate business insights.
      */
     const reasoning =
@@ -95,42 +96,68 @@ function orchestrate(customerId, interaction) {
             agentOutputs
         );
 
+
+    /**
+     * STEP 4:
+     * Generate recommendations.
+     */
+    const recommendations =
+
+        recommendationAgent(
+            reasoning
+        );
+
+
+    /**
+     * STEP 5:
+     * Generate explanations.
+     */
+    const explanations =
+
+        explanationAgent(
+
+            recommendations,
+
+            agentOutputs,
+
+            reasoning
+        );
+
+
+    /**
+     * STEP 6:
+     * Persist interaction
+     * inside shared memory.
+     */
+    saveMemory({
+
+        customerId,
+
+        interaction,
+
+        executionPlan,
+
+        recommendations,
+
+        explanations
+    });
+
+
     /**
      * Final response.
      */
-  /**
- * Generate recommendations.
- */
-const recommendations =
+    return {
 
-    recommendationAgent(
-        reasoning
-    );
+        executionPlan,
 
-/**
- * Generate explainable outputs.
- */
-const explanations =
-
-    explanationAgent(
-        recommendations,
         agentOutputs,
-        reasoning
-    );
 
+        reasoning,
 
-return {
+        recommendations,
 
-    executionPlan,
-
-    agentOutputs,
-
-    reasoning,
-
-    recommendations,
-
-    explanations
-};
+        explanations
+    };
 }
 
 
