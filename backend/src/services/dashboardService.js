@@ -1,91 +1,71 @@
-/**
+﻿/**
  * DASHBOARD SERVICE
  *
  * Purpose:
- * Generate dashboard summaries
- * for a specific customer.
+ * Generate dashboard summaries from
+ * the latest document-driven analysis.
  */
 
-const customers =
-    require("../data/customers.json");
+const fs = require("fs");
+const path = require("path");
 
-const contracts =
-    require("../data/contracts.json");
+const LATEST_ANALYSIS_PATH = path.join(
+    __dirname,
+    "../data/latestAnalysis.json"
+);
 
 
-function getDashboardData(customerId) {
+function loadLatestAnalysis() {
 
-    const customer = customers.find(
-        c => c.id === Number(customerId)
+    const raw = fs.readFileSync(
+        LATEST_ANALYSIS_PATH,
+        "utf8"
     );
 
-    const contract = contracts.find(
-        c => c.customerId === Number(customerId)
-    );
+    return JSON.parse(raw || "{}");
+}
 
-    if (!customer) {
+
+function getDashboardData() {
+
+    const analysis = loadLatestAnalysis();
+
+    if (!analysis.timestamp) {
 
         return {
-            error: "Customer not found"
+            risks: [],
+            renewalDate: null,
+            contractValue: null,
+            adoption: null,
+            nps: null,
+            recommendationCount: 0
         };
     }
 
-    /**
-     * Simple health score.
-     */
-    let healthScore = 100;
+    const health =
+        analysis.agentOutputs?.CustomerHealthAgent || {};
 
-    healthScore -=
-        (10 - customer.nps) * 5;
+    const contract =
+        analysis.agentOutputs?.ContractAgent || {};
 
-    healthScore -=
-        (100 - customer.featureAdoption) * 0.3;
+    const risks =
+        analysis.reasoning?.risks || [];
 
-    healthScore =
-        Math.max(0, Math.round(healthScore));
-
+    const recommendations =
+        analysis.recommendations || [];
 
     return {
-
-        customer: {
-
-            id: customer.id,
-
-            name: customer.name,
-
-            tier: customer.tier,
-
-            mrr: customer.mrr
-        },
-
-        health: {
-
-            score: healthScore,
-
-            nps: customer.nps,
-
-            csat: customer.csat,
-
-            adoption: customer.featureAdoption,
-
-            monthlyLogins:
-                customer.monthlyLogins
-        },
-
-        renewal: {
-
-            date:
-                contract?.renewalDate,
-
-            value:
-                contract?.contractValue,
-
-            autoRenew:
-                contract?.autoRenew
-        },
-
-        opportunities:
-            customer.openOpportunities
+        risks,
+        renewalDate:
+            contract.renewalDate || null,
+        contractValue:
+            contract.contractValue || null,
+        adoption:
+            health.adoption ?? null,
+        nps:
+            health.nps ?? null,
+        recommendationCount:
+            recommendations.length
     };
 }
 

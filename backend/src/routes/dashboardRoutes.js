@@ -1,4 +1,4 @@
-/**
+﻿/**
  * DASHBOARD ROUTES
  */
 
@@ -12,15 +12,13 @@ const router = express.Router();
 
 
 /**
- * GET /api/dashboard/:customerId
+ * GET /api/dashboard
  */
-router.get("/:customerId", (req, res) => {
+router.get("/", (req, res) => {
 
     const result =
 
-        getDashboardData(
-            req.params.customerId
-        );
+        getDashboardData();
 
     res.json(result);
 });

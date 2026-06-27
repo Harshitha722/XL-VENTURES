@@ -1,395 +1,396 @@
-[
+﻿[
     {
-        "customerId": 1,
-        "interaction": "Meeting notes: Acme adoption is 32%, NPS: 3, CSAT: 3.1, logins: 140, escalations: 3. Renewal date: 2026-08-15. Auto-renew is no. Discounts are allowed up to 12%. Opportunity: AI Assistant Add-on.",
-        "executionPlan": [
-            "CustomerHealthAgent",
-            "ContractAgent",
-            "CRMContextAgent"
-        ],
-        "inputContext": {
-            "sourceLabel": "Meeting notes",
-            "customerOverrides": {
-                "monthlyLogins": 140,
-                "featureAdoption": 32,
-                "nps": 3,
-                "csat": 3.1,
-                "previousEscalations": 3,
-                "openOpportunities": [
-                    "AI Assistant Add-on"
-                ]
-            },
-            "contractOverrides": {
-                "renewalDate": "2026-08-15",
-                "autoRenew": false,
-                "discountAllowed": true
-            },
-            "evidence": [
-                "Meeting notes: Acme adoption is 32%, NPS: 3, CSAT: 3.1, logins: 140, escalations: 3.",
-                "Renewal date: 2026-08-15.",
-                "Discounts are allowed up to 12%."
-            ]
-        },
-        "recommendations": [
-            {
-                "priority": "HIGH",
-                "action": "Schedule Executive Business Review"
-            },
-            {
-                "priority": "HIGH",
-                "action": "Escalate to Senior Customer Success Manager"
-            },
-            {
-                "priority": "HIGH",
-                "action": "Conduct Adoption Workshop"
-            },
-            {
-                "priority": "MEDIUM",
-                "action": "Initiate Renewal Discussion"
-            },
-            {
-                "priority": "MEDIUM",
-                "action": "Review Historical Support Issues"
-            },
-            {
-                "priority": "MEDIUM",
-                "action": "Offer Renewal Incentive"
-            },
-            {
-                "priority": "MEDIUM",
-                "action": "Explore Upsell Opportunities"
-            }
-        ],
-        "explanations": [
-            {
-                "recommendation": "Schedule Executive Business Review",
-                "priority": "HIGH",
-                "reason": "Customer exhibits strong churn indicators.",
-                "evidence": [
-                    "NPS: 3",
-                    "Adoption: 32%",
-                    "Escalations: 3"
-                ],
-                "confidence": 92
-            },
-            {
-                "recommendation": "Escalate to Senior Customer Success Manager",
-                "priority": "HIGH",
-                "reason": "Generated from business reasoning rules.",
-                "evidence": [
-                    "churn risk",
-                    "customer dissatisfaction",
-                    "low product adoption",
-                    "renewal risk",
-                    "frequent escalations"
-                ],
-                "confidence": 75
-            },
-            {
-                "recommendation": "Conduct Adoption Workshop",
-                "priority": "HIGH",
-                "reason": "Feature adoption is below acceptable levels.",
-                "evidence": [
-                    "Adoption: 32%"
-                ],
-                "confidence": 88
-            },
-            {
-                "recommendation": "Initiate Renewal Discussion",
-                "priority": "MEDIUM",
-                "reason": "Contract requires proactive renewal management.",
-                "evidence": [
-                    "Renewal Date: 2026-08-15",
-                    "Auto Renew: false"
-                ],
-                "confidence": 85
-            },
-            {
-                "recommendation": "Review Historical Support Issues",
-                "priority": "MEDIUM",
-                "reason": "Generated from business reasoning rules.",
-                "evidence": [
-                    "churn risk",
-                    "customer dissatisfaction",
-                    "low product adoption",
-                    "renewal risk",
-                    "frequent escalations"
-                ],
-                "confidence": 75
-            },
-            {
-                "recommendation": "Offer Renewal Incentive",
-                "priority": "MEDIUM",
-                "reason": "Retention incentives are permitted by contract.",
-                "evidence": [
-                    "Discount Allowed: true",
-                    "Max Discount: 15%"
-                ],
-                "confidence": 82
-            },
-            {
-                "recommendation": "Explore Upsell Opportunities",
-                "priority": "MEDIUM",
-                "reason": "Existing expansion opportunities are available.",
-                "evidence": [
-                    "AI Assistant Add-on"
-                ],
-                "confidence": 80
-            }
-        ],
-        "timestamp": "2026-06-27T11:44:10.777Z"
+        "interaction":  "Meeting notes: Acme adoption is 32%, NPS: 3, CSAT: 3.1, logins: 140, escalations: 3. Renewal date: 2026-08-15. Auto-renew is no. Discounts are allowed up to 12%. Opportunity: AI Assistant Add-on.",
+        "executionPlan":  [
+                              "CustomerHealthAgent",
+                              "ContractAgent",
+                              "CRMContextAgent"
+                          ],
+        "inputContext":  {
+                             "sourceLabel":  "Meeting notes",
+                             "customerOverrides":  {
+                                                       "monthlyLogins":  140,
+                                                       "featureAdoption":  32,
+                                                       "nps":  3,
+                                                       "csat":  3.1,
+                                                       "previousEscalations":  3,
+                                                       "openOpportunities":  [
+                                                                                 "AI Assistant Add-on"
+                                                                             ]
+                                                   },
+                             "contractOverrides":  {
+                                                       "renewalDate":  "2026-08-15",
+                                                       "autoRenew":  false,
+                                                       "discountAllowed":  true
+                                                   },
+                             "evidence":  [
+                                              "Meeting notes: Acme adoption is 32%, NPS: 3, CSAT: 3.1, logins: 140, escalations: 3.",
+                                              "Renewal date: 2026-08-15.",
+                                              "Discounts are allowed up to 12%."
+                                          ]
+                         },
+        "recommendations":  [
+                                {
+                                    "priority":  "HIGH",
+                                    "action":  "Schedule Executive Business Review"
+                                },
+                                {
+                                    "priority":  "HIGH",
+                                    "action":  "Escalate to Senior Customer Success Manager"
+                                },
+                                {
+                                    "priority":  "HIGH",
+                                    "action":  "Conduct Adoption Workshop"
+                                },
+                                {
+                                    "priority":  "MEDIUM",
+                                    "action":  "Initiate Renewal Discussion"
+                                },
+                                {
+                                    "priority":  "MEDIUM",
+                                    "action":  "Review Historical Support Issues"
+                                },
+                                {
+                                    "priority":  "MEDIUM",
+                                    "action":  "Offer Renewal Incentive"
+                                },
+                                {
+                                    "priority":  "MEDIUM",
+                                    "action":  "Explore Upsell Opportunities"
+                                }
+                            ],
+        "explanations":  [
+                             {
+                                 "recommendation":  "Schedule Executive Business Review",
+                                 "priority":  "HIGH",
+                                 "reason":  "Customer exhibits strong churn indicators.",
+                                 "evidence":  [
+                                                  "NPS: 3",
+                                                  "Adoption: 32%",
+                                                  "Escalations: 3"
+                                              ],
+                                 "confidence":  92
+                             },
+                             {
+                                 "recommendation":  "Escalate to Senior Customer Success Manager",
+                                 "priority":  "HIGH",
+                                 "reason":  "Generated from business reasoning rules.",
+                                 "evidence":  [
+                                                  "churn risk",
+                                                  "customer dissatisfaction",
+                                                  "low product adoption",
+                                                  "renewal risk",
+                                                  "frequent escalations"
+                                              ],
+                                 "confidence":  75
+                             },
+                             {
+                                 "recommendation":  "Conduct Adoption Workshop",
+                                 "priority":  "HIGH",
+                                 "reason":  "Feature adoption is below acceptable levels.",
+                                 "evidence":  [
+                                                  "Adoption: 32%"
+                                              ],
+                                 "confidence":  88
+                             },
+                             {
+                                 "recommendation":  "Initiate Renewal Discussion",
+                                 "priority":  "MEDIUM",
+                                 "reason":  "Contract requires proactive renewal management.",
+                                 "evidence":  [
+                                                  "Renewal Date: 2026-08-15",
+                                                  "Auto Renew: false"
+                                              ],
+                                 "confidence":  85
+                             },
+                             {
+                                 "recommendation":  "Review Historical Support Issues",
+                                 "priority":  "MEDIUM",
+                                 "reason":  "Generated from business reasoning rules.",
+                                 "evidence":  [
+                                                  "churn risk",
+                                                  "customer dissatisfaction",
+                                                  "low product adoption",
+                                                  "renewal risk",
+                                                  "frequent escalations"
+                                              ],
+                                 "confidence":  75
+                             },
+                             {
+                                 "recommendation":  "Offer Renewal Incentive",
+                                 "priority":  "MEDIUM",
+                                 "reason":  "Retention incentives are permitted by contract.",
+                                 "evidence":  [
+                                                  "Discount Allowed: true",
+                                                  "Max Discount: 15%"
+                                              ],
+                                 "confidence":  82
+                             },
+                             {
+                                 "recommendation":  "Explore Upsell Opportunities",
+                                 "priority":  "MEDIUM",
+                                 "reason":  "Existing expansion opportunities are available.",
+                                 "evidence":  [
+                                                  "AI Assistant Add-on"
+                                              ],
+                                 "confidence":  80
+                             }
+                         ],
+        "timestamp":  "2026-06-27T11:44:10.777Z"
     },
     {
-        "customerId": 1,
-        "interaction": "Meeting notes: adoption is 31%, NPS: 3, logins: 120, escalations: 3. Renewal date: 2026-08-15. Auto-renew is no. Discounts are allowed up to 12%.",
-        "executionPlan": [
-            "CustomerHealthAgent",
-            "ContractAgent",
-            "CRMContextAgent"
-        ],
-        "inputContext": {
-            "sourceType": "meeting",
-            "sourceLabel": "Meeting notes",
-            "fileName": null,
-            "extractedText": "Meeting notes: adoption is 31%, NPS: 3, logins: 120, escalations: 3. Renewal date: 2026-08-15. Auto-renew is no. Discounts are allowed up to 12%.",
-            "extractedSignals": {
-                "normalizedText": "Meeting notes: adoption is 31%, NPS: 3, logins: 120, escalations: 3. Renewal date: 2026-08-15. Auto-renew is no. Discounts are allowed up to 12%.",
-                "customer": {
-                    "monthlyLogins": 120,
-                    "featureAdoption": 31,
-                    "nps": 3,
-                    "previousEscalations": 3
-                },
-                "contract": {
-                    "renewalDate": "2026-08-15",
-                    "autoRenew": false,
-                    "discountAllowed": true,
-                    "maxDiscountPercent": 12
-                },
-                "evidence": [
-                    "Meeting notes: adoption is 31%, NPS: 3, logins: 120, escalations: 3.",
-                    "Renewal date: 2026-08-15.",
-                    "Discounts are allowed up to 12%."
-                ]
-            },
-            "customerOverrides": {
-                "monthlyLogins": 120,
-                "featureAdoption": 31,
-                "nps": 3,
-                "previousEscalations": 3
-            },
-            "contractOverrides": {
-                "renewalDate": "2026-08-15",
-                "autoRenew": false,
-                "discountAllowed": true,
-                "maxDiscountPercent": 12
-            },
-            "evidence": [
-                "Meeting notes: adoption is 31%, NPS: 3, logins: 120, escalations: 3.",
-                "Renewal date: 2026-08-15.",
-                "Discounts are allowed up to 12%."
-            ]
-        },
-        "recommendations": [
-            {
-                "priority": "HIGH",
-                "action": "Schedule Executive Business Review"
-            },
-            {
-                "priority": "HIGH",
-                "action": "Escalate to Senior Customer Success Manager"
-            },
-            {
-                "priority": "HIGH",
-                "action": "Conduct Adoption Workshop"
-            },
-            {
-                "priority": "MEDIUM",
-                "action": "Initiate Renewal Discussion"
-            },
-            {
-                "priority": "MEDIUM",
-                "action": "Review Historical Support Issues"
-            },
-            {
-                "priority": "MEDIUM",
-                "action": "Offer Renewal Incentive"
-            },
-            {
-                "priority": "MEDIUM",
-                "action": "Explore Upsell Opportunities"
-            }
-        ],
-        "explanations": [
-            {
-                "recommendation": "Schedule Executive Business Review",
-                "priority": "HIGH",
-                "reason": "Customer exhibits strong churn indicators.",
-                "evidence": [
-                    "NPS: 3",
-                    "Adoption: 31%",
-                    "Escalations: 3"
-                ],
-                "confidence": 92
-            },
-            {
-                "recommendation": "Escalate to Senior Customer Success Manager",
-                "priority": "HIGH",
-                "reason": "Generated from business reasoning rules.",
-                "evidence": [
-                    "churn risk",
-                    "customer dissatisfaction",
-                    "low product adoption",
-                    "renewal risk",
-                    "frequent escalations"
-                ],
-                "confidence": 75
-            },
-            {
-                "recommendation": "Conduct Adoption Workshop",
-                "priority": "HIGH",
-                "reason": "Feature adoption is below acceptable levels.",
-                "evidence": [
-                    "Adoption: 31%"
-                ],
-                "confidence": 88
-            },
-            {
-                "recommendation": "Initiate Renewal Discussion",
-                "priority": "MEDIUM",
-                "reason": "Contract requires proactive renewal management.",
-                "evidence": [
-                    "Renewal Date: 2026-08-15",
-                    "Auto Renew: false"
-                ],
-                "confidence": 85
-            },
-            {
-                "recommendation": "Review Historical Support Issues",
-                "priority": "MEDIUM",
-                "reason": "Generated from business reasoning rules.",
-                "evidence": [
-                    "churn risk",
-                    "customer dissatisfaction",
-                    "low product adoption",
-                    "renewal risk",
-                    "frequent escalations"
-                ],
-                "confidence": 75
-            },
-            {
-                "recommendation": "Offer Renewal Incentive",
-                "priority": "MEDIUM",
-                "reason": "Retention incentives are permitted by contract.",
-                "evidence": [
-                    "Discount Allowed: true",
-                    "Max Discount: 12%"
-                ],
-                "confidence": 82
-            },
-            {
-                "recommendation": "Explore Upsell Opportunities",
-                "priority": "MEDIUM",
-                "reason": "Existing expansion opportunities are available.",
-                "evidence": [
-                    "Analytics Module",
-                    "AI Assistant Add-on"
-                ],
-                "confidence": 80
-            }
-        ],
-        "timestamp": "2026-06-27T11:45:55.828Z"
+        "interaction":  "Meeting notes: adoption is 31%, NPS: 3, logins: 120, escalations: 3. Renewal date: 2026-08-15. Auto-renew is no. Discounts are allowed up to 12%.",
+        "executionPlan":  [
+                              "CustomerHealthAgent",
+                              "ContractAgent",
+                              "CRMContextAgent"
+                          ],
+        "inputContext":  {
+                             "sourceType":  "meeting",
+                             "sourceLabel":  "Meeting notes",
+                             "fileName":  null,
+                             "extractedText":  "Meeting notes: adoption is 31%, NPS: 3, logins: 120, escalations: 3. Renewal date: 2026-08-15. Auto-renew is no. Discounts are allowed up to 12%.",
+                             "extractedSignals":  {
+                                                      "normalizedText":  "Meeting notes: adoption is 31%, NPS: 3, logins: 120, escalations: 3. Renewal date: 2026-08-15. Auto-renew is no. Discounts are allowed up to 12%.",
+                                                      "customer":  {
+                                                                       "monthlyLogins":  120,
+                                                                       "featureAdoption":  31,
+                                                                       "nps":  3,
+                                                                       "previousEscalations":  3
+                                                                   },
+                                                      "contract":  {
+                                                                       "renewalDate":  "2026-08-15",
+                                                                       "autoRenew":  false,
+                                                                       "discountAllowed":  true,
+                                                                       "maxDiscountPercent":  12
+                                                                   },
+                                                      "evidence":  [
+                                                                       "Meeting notes: adoption is 31%, NPS: 3, logins: 120, escalations: 3.",
+                                                                       "Renewal date: 2026-08-15.",
+                                                                       "Discounts are allowed up to 12%."
+                                                                   ]
+                                                  },
+                             "customerOverrides":  {
+                                                       "monthlyLogins":  120,
+                                                       "featureAdoption":  31,
+                                                       "nps":  3,
+                                                       "previousEscalations":  3
+                                                   },
+                             "contractOverrides":  {
+                                                       "renewalDate":  "2026-08-15",
+                                                       "autoRenew":  false,
+                                                       "discountAllowed":  true,
+                                                       "maxDiscountPercent":  12
+                                                   },
+                             "evidence":  [
+                                              "Meeting notes: adoption is 31%, NPS: 3, logins: 120, escalations: 3.",
+                                              "Renewal date: 2026-08-15.",
+                                              "Discounts are allowed up to 12%."
+                                          ]
+                         },
+        "recommendations":  [
+                                {
+                                    "priority":  "HIGH",
+                                    "action":  "Schedule Executive Business Review"
+                                },
+                                {
+                                    "priority":  "HIGH",
+                                    "action":  "Escalate to Senior Customer Success Manager"
+                                },
+                                {
+                                    "priority":  "HIGH",
+                                    "action":  "Conduct Adoption Workshop"
+                                },
+                                {
+                                    "priority":  "MEDIUM",
+                                    "action":  "Initiate Renewal Discussion"
+                                },
+                                {
+                                    "priority":  "MEDIUM",
+                                    "action":  "Review Historical Support Issues"
+                                },
+                                {
+                                    "priority":  "MEDIUM",
+                                    "action":  "Offer Renewal Incentive"
+                                },
+                                {
+                                    "priority":  "MEDIUM",
+                                    "action":  "Explore Upsell Opportunities"
+                                }
+                            ],
+        "explanations":  [
+                             {
+                                 "recommendation":  "Schedule Executive Business Review",
+                                 "priority":  "HIGH",
+                                 "reason":  "Customer exhibits strong churn indicators.",
+                                 "evidence":  [
+                                                  "NPS: 3",
+                                                  "Adoption: 31%",
+                                                  "Escalations: 3"
+                                              ],
+                                 "confidence":  92
+                             },
+                             {
+                                 "recommendation":  "Escalate to Senior Customer Success Manager",
+                                 "priority":  "HIGH",
+                                 "reason":  "Generated from business reasoning rules.",
+                                 "evidence":  [
+                                                  "churn risk",
+                                                  "customer dissatisfaction",
+                                                  "low product adoption",
+                                                  "renewal risk",
+                                                  "frequent escalations"
+                                              ],
+                                 "confidence":  75
+                             },
+                             {
+                                 "recommendation":  "Conduct Adoption Workshop",
+                                 "priority":  "HIGH",
+                                 "reason":  "Feature adoption is below acceptable levels.",
+                                 "evidence":  [
+                                                  "Adoption: 31%"
+                                              ],
+                                 "confidence":  88
+                             },
+                             {
+                                 "recommendation":  "Initiate Renewal Discussion",
+                                 "priority":  "MEDIUM",
+                                 "reason":  "Contract requires proactive renewal management.",
+                                 "evidence":  [
+                                                  "Renewal Date: 2026-08-15",
+                                                  "Auto Renew: false"
+                                              ],
+                                 "confidence":  85
+                             },
+                             {
+                                 "recommendation":  "Review Historical Support Issues",
+                                 "priority":  "MEDIUM",
+                                 "reason":  "Generated from business reasoning rules.",
+                                 "evidence":  [
+                                                  "churn risk",
+                                                  "customer dissatisfaction",
+                                                  "low product adoption",
+                                                  "renewal risk",
+                                                  "frequent escalations"
+                                              ],
+                                 "confidence":  75
+                             },
+                             {
+                                 "recommendation":  "Offer Renewal Incentive",
+                                 "priority":  "MEDIUM",
+                                 "reason":  "Retention incentives are permitted by contract.",
+                                 "evidence":  [
+                                                  "Discount Allowed: true",
+                                                  "Max Discount: 12%"
+                                              ],
+                                 "confidence":  82
+                             },
+                             {
+                                 "recommendation":  "Explore Upsell Opportunities",
+                                 "priority":  "MEDIUM",
+                                 "reason":  "Existing expansion opportunities are available.",
+                                 "evidence":  [
+                                                  "Analytics Module",
+                                                  "AI Assistant Add-on"
+                                              ],
+                                 "confidence":  80
+                             }
+                         ],
+        "timestamp":  "2026-06-27T11:45:55.828Z"
     },
     {
-        "customerId": 2,
-        "interaction": "ACME CORPORATION\n\nEnterprise SaaS Agreement\n\nCustomer Name: Acme Corp\n\nContract Value: $300,000\n\nMonthly Recurring Revenue (MRR): $25,000\n\nRenewal Date: August 15, 2026\n\nAuto Renewal: No\n\nMaximum Discount Allowed: 15%\n\nSLA Terms:\n\n- 99.9% uptime guarantee\n\n- Priority support response within 2 hours\n\nTermination Clause:\n\nCustomer must provide 30 days written notice before cancellation.",
-        "executionPlan": [
-            "ContractAgent",
-            "KnowledgeAgent",
-            "CRMContextAgent"
-        ],
-        "inputContext": {
-            "sourceType": "text",
-            "sourceLabel": "Text note",
-            "fileName": null,
-            "extractedText": "ACME CORPORATION\n\nEnterprise SaaS Agreement\n\nCustomer Name: Acme Corp\n\nContract Value: $300,000\n\nMonthly Recurring Revenue (MRR): $25,000\n\nRenewal Date: August 15, 2026\n\nAuto Renewal: No\n\nMaximum Discount Allowed: 15%\n\nSLA Terms:\n\n- 99.9% uptime guarantee\n\n- Priority support response within 2 hours\n\nTermination Clause:\n\nCustomer must provide 30 days written notice before cancellation.",
-            "extractedSignals": {
-                "normalizedText": "ACME CORPORATION\n\nEnterprise SaaS Agreement\n\nCustomer Name: Acme Corp\n\nContract Value: $300,000\n\nMonthly Recurring Revenue (MRR): $25,000\n\nRenewal Date: August 15, 2026\n\nAuto Renewal: No\n\nMaximum Discount Allowed: 15%\n\nSLA Terms:\n\n- 99.9% uptime guarantee\n\n- Priority support response within 2 hours\n\nTermination Clause:\n\nCustomer must provide 30 days written notice before cancellation.",
-                "customer": {},
-                "contract": {
-                    "renewalDate": "August 15, 2026",
-                    "contractValue": 300000,
-                    "autoRenew": false,
-                    "discountAllowed": true
-                },
-                "evidence": [
-                    "Contract Value: $300,000",
-                    "Renewal Date: August 15, 2026",
-                    "Auto Renewal: No",
-                    "Maximum Discount Allowed: 15%",
-                    "- Priority support response within 2 hours"
-                ]
-            },
-            "customerOverrides": {},
-            "contractOverrides": {
-                "renewalDate": "August 15, 2026",
-                "contractValue": 300000,
-                "autoRenew": false,
-                "discountAllowed": true
-            },
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Maximum Discount Allowed: 15%",
-                "- Priority support response within 2 hours"
-            ]
-        },
-        "recommendations": [
-            {
-                "priority": "MEDIUM",
-                "action": "Initiate Renewal Discussion"
-            },
-            {
-                "priority": "MEDIUM",
-                "action": "Offer Renewal Incentive"
-            },
-            {
-                "priority": "MEDIUM",
-                "action": "Explore Upsell Opportunities"
-            }
-        ],
-        "explanations": [
-            {
-                "recommendation": "Initiate Renewal Discussion",
-                "priority": "MEDIUM",
-                "reason": "Contract requires proactive renewal management.",
-                "evidence": [
-                    "Renewal Date: August 15, 2026",
-                    "Auto Renew: false"
-                ],
-                "confidence": 85
-            },
-            {
-                "recommendation": "Offer Renewal Incentive",
-                "priority": "MEDIUM",
-                "reason": "Retention incentives are permitted by contract.",
-                "evidence": [
-                    "Discount Allowed: true",
-                    "Max Discount: 0%"
-                ],
-                "confidence": 82
-            },
-            {
-                "recommendation": "Explore Upsell Opportunities",
-                "priority": "MEDIUM",
-                "reason": "Existing expansion opportunities are available.",
-                "evidence": [
-                    "Workflow Automation"
-                ],
-                "confidence": 80
-            }
-        ],
-        "timestamp": "2026-06-27T11:50:18.884Z"
+        "interaction":  "ACME CORPORATION\n\nEnterprise SaaS Agreement\n\nCustomer Name: Acme Corp\n\nContract Value: $300,000\n\nMonthly Recurring Revenue (MRR): $25,000\n\nRenewal Date: August 15, 2026\n\nAuto Renewal: No\n\nMaximum Discount Allowed: 15%\n\nSLA Terms:\n\n- 99.9% uptime guarantee\n\n- Priority support response within 2 hours\n\nTermination Clause:\n\nCustomer must provide 30 days written notice before cancellation.",
+        "executionPlan":  [
+                              "ContractAgent",
+                              "KnowledgeAgent",
+                              "CRMContextAgent"
+                          ],
+        "inputContext":  {
+                             "sourceType":  "text",
+                             "sourceLabel":  "Text note",
+                             "fileName":  null,
+                             "extractedText":  "ACME CORPORATION\n\nEnterprise SaaS Agreement\n\nCustomer Name: Acme Corp\n\nContract Value: $300,000\n\nMonthly Recurring Revenue (MRR): $25,000\n\nRenewal Date: August 15, 2026\n\nAuto Renewal: No\n\nMaximum Discount Allowed: 15%\n\nSLA Terms:\n\n- 99.9% uptime guarantee\n\n- Priority support response within 2 hours\n\nTermination Clause:\n\nCustomer must provide 30 days written notice before cancellation.",
+                             "extractedSignals":  {
+                                                      "normalizedText":  "ACME CORPORATION\n\nEnterprise SaaS Agreement\n\nCustomer Name: Acme Corp\n\nContract Value: $300,000\n\nMonthly Recurring Revenue (MRR): $25,000\n\nRenewal Date: August 15, 2026\n\nAuto Renewal: No\n\nMaximum Discount Allowed: 15%\n\nSLA Terms:\n\n- 99.9% uptime guarantee\n\n- Priority support response within 2 hours\n\nTermination Clause:\n\nCustomer must provide 30 days written notice before cancellation.",
+                                                      "customer":  {
+
+                                                                   },
+                                                      "contract":  {
+                                                                       "renewalDate":  "August 15, 2026",
+                                                                       "contractValue":  300000,
+                                                                       "autoRenew":  false,
+                                                                       "discountAllowed":  true
+                                                                   },
+                                                      "evidence":  [
+                                                                       "Contract Value: $300,000",
+                                                                       "Renewal Date: August 15, 2026",
+                                                                       "Auto Renewal: No",
+                                                                       "Maximum Discount Allowed: 15%",
+                                                                       "- Priority support response within 2 hours"
+                                                                   ]
+                                                  },
+                             "customerOverrides":  {
+
+                                                   },
+                             "contractOverrides":  {
+                                                       "renewalDate":  "August 15, 2026",
+                                                       "contractValue":  300000,
+                                                       "autoRenew":  false,
+                                                       "discountAllowed":  true
+                                                   },
+                             "evidence":  [
+                                              "Contract Value: $300,000",
+                                              "Renewal Date: August 15, 2026",
+                                              "Auto Renewal: No",
+                                              "Maximum Discount Allowed: 15%",
+                                              "- Priority support response within 2 hours"
+                                          ]
+                         },
+        "recommendations":  [
+                                {
+                                    "priority":  "MEDIUM",
+                                    "action":  "Initiate Renewal Discussion"
+                                },
+                                {
+                                    "priority":  "MEDIUM",
+                                    "action":  "Offer Renewal Incentive"
+                                },
+                                {
+                                    "priority":  "MEDIUM",
+                                    "action":  "Explore Upsell Opportunities"
+                                }
+                            ],
+        "explanations":  [
+                             {
+                                 "recommendation":  "Initiate Renewal Discussion",
+                                 "priority":  "MEDIUM",
+                                 "reason":  "Contract requires proactive renewal management.",
+                                 "evidence":  [
+                                                  "Renewal Date: August 15, 2026",
+                                                  "Auto Renew: false"
+                                              ],
+                                 "confidence":  85
+                             },
+                             {
+                                 "recommendation":  "Offer Renewal Incentive",
+                                 "priority":  "MEDIUM",
+                                 "reason":  "Retention incentives are permitted by contract.",
+                                 "evidence":  [
+                                                  "Discount Allowed: true",
+                                                  "Max Discount: 0%"
+                                              ],
+                                 "confidence":  82
+                             },
+                             {
+                                 "recommendation":  "Explore Upsell Opportunities",
+                                 "priority":  "MEDIUM",
+                                 "reason":  "Existing expansion opportunities are available.",
+                                 "evidence":  [
+                                                  "Workflow Automation"
+                                              ],
+                                 "confidence":  80
+                             }
+                         ],
+        "timestamp":  "2026-06-27T11:50:18.884Z"
     }
 ]

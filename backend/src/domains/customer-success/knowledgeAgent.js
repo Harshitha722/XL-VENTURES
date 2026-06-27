@@ -1,4 +1,4 @@
-const PLAYBOOKS = {
+﻿const PLAYBOOKS = {
     lowAdoption: {
         trigger: "Low adoption",
         action: "Conduct Adoption Workshop"
@@ -16,7 +16,7 @@ const PLAYBOOKS = {
 /**
  * KNOWLEDGE AGENT
  *
- * Uses internal static mappings instead of playbooks.json.
+ * Uses internal static mappings derived from uploaded documents.
  * The shape stays modular so a vector database can replace this later.
  */
 function knowledgeAgent(uploadedText) {
@@ -59,3 +59,4 @@ function knowledgeAgent(uploadedText) {
 }
 
 module.exports = knowledgeAgent;
+

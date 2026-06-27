@@ -1,8 +1,7 @@
-/**
+﻿/**
  * CONTRACT AGENT
  *
  * Parses contractText directly with regex.
- * It does not use contracts.json.
  */
 function contractAgent(uploadedText) {
     const contractText = uploadedText.contractText || "";
@@ -71,3 +70,4 @@ function contractAgent(uploadedText) {
 }
 
 module.exports = contractAgent;
+

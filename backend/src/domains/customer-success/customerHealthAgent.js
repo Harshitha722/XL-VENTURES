@@ -1,8 +1,7 @@
-/**
+﻿/**
  * CUSTOMER HEALTH AGENT
  *
  * Reads uploaded meeting and email text.
- * It does not use customers.json.
  */
 function customerHealthAgent(uploadedText) {
     const combinedText = [
@@ -94,3 +93,4 @@ function customerHealthAgent(uploadedText) {
 }
 
 module.exports = customerHealthAgent;
+

@@ -1,8 +1,7 @@
-/**
+﻿/**
  * CRM CONTEXT AGENT
  *
  * Infers CRM-style context from uploaded documents.
- * It does not use customers.json.
  */
 function crmContextAgent(uploadedText) {
     const combinedText = [
@@ -71,3 +70,4 @@ function crmContextAgent(uploadedText) {
 }
 
 module.exports = crmContextAgent;
+

@@ -1,24 +1,44 @@
-const customers =
-require("../data/customers.json");
+﻿const fs = require("fs");
+const path = require("path");
+
+const LATEST_ANALYSIS_PATH = path.join(
+    __dirname,
+    "../data/latestAnalysis.json"
+);
 
 
-function getRiskScore(customerId) {
+function loadLatestAnalysis() {
 
-    const customer = customers.find(
-
-        c =>
-        c.id === Number(customerId)
+    const raw = fs.readFileSync(
+        LATEST_ANALYSIS_PATH,
+        "utf8"
     );
 
+    return JSON.parse(raw || "{}");
+}
 
-    if (!customer) {
+
+function getRiskScore() {
+
+    const analysis = loadLatestAnalysis();
+
+    if (!analysis.timestamp) {
 
         return {
-
-            error:
-                "Customer not found"
+            riskScore: 0,
+            riskLevel: "UNKNOWN",
+            risks: []
         };
     }
+
+    const health =
+        analysis.agentOutputs?.CustomerHealthAgent || {};
+
+    const crm =
+        analysis.agentOutputs?.CRMContextAgent || {};
+
+    const risks =
+        analysis.reasoning?.risks || [];
 
 
     let score = 0;
@@ -27,22 +47,34 @@ function getRiskScore(customerId) {
     /**
      * NPS impact
      */
-    score +=
-        (10 - customer.nps) * 8;
+    if (typeof health.nps === "number") {
+
+        score +=
+            (10 - health.nps) * 8;
+    }
 
 
     /**
      * Adoption impact
      */
-    score +=
-        (100 - customer.featureAdoption) * 0.5;
+    if (typeof health.adoption === "number") {
+
+        score +=
+            (100 - health.adoption) * 0.5;
+    }
 
 
     /**
      * Escalation impact
      */
+    if (typeof crm.escalations === "number") {
+
+        score +=
+            crm.escalations * 10;
+    }
+
     score +=
-        customer.previousEscalations * 10;
+        risks.length * 5;
 
 
     score =
@@ -67,17 +99,15 @@ function getRiskScore(customerId) {
 
     return {
 
-        customer:
-
-            customer.name,
-
         riskScore:
 
             score,
 
         riskLevel:
 
-            label
+            label,
+
+        risks
     };
 }
 

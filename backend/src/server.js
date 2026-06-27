@@ -1,4 +1,4 @@
-/**
+﻿/**
  * RENEWAI SERVER
  *
  * Main backend entry point.
@@ -22,8 +22,6 @@ const memoryRoutes =
 
 const dashboardRoutes =
     require("./routes/dashboardRoutes");
-
-
 
 const architectureRoutes =
     require("./routes/architectureRoutes");
@@ -62,7 +60,7 @@ app.get("/", (req, res) => {
         success: true,
 
         message:
-            "RenewAI Backend Running 🚀"
+            "RenewAI Backend Running"
     });
 });
 
@@ -117,23 +115,12 @@ app.use(
  * Dashboard APIs
  * =========================
  *
- * GET /api/dashboard/:customerId
+ * GET /api/dashboard
  */
 app.use(
     "/api/dashboard",
     dashboardRoutes
 );
-
-
-/**
- * =========================
- * Customer APIs
- * =========================
- *
- * GET /api/customers
- * GET /api/customers/:customerId
- */
-
 
 
 /**
@@ -154,7 +141,7 @@ app.use(
  * Risk Score APIs
  * =========================
  *
- * GET /api/risk-score/:customerId
+ * GET /api/risk-score
  */
 app.use(
     "/api/risk-score",
@@ -167,7 +154,7 @@ app.use(
  * Renewal Timeline APIs
  * =========================
  *
- * GET /api/timeline/:customerId
+ * GET /api/timeline
  */
 app.use(
     "/api/timeline",
@@ -199,6 +186,6 @@ app.use((req, res) => {
 app.listen(PORT, () => {
 
     console.log(
-        `🚀 RenewAI Backend running on port ${PORT}`
+        `RenewAI Backend running on port ${PORT}`
     );
 });

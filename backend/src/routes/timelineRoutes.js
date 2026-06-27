@@ -1,4 +1,4 @@
-const express = require("express");
+﻿const express = require("express");
 
 const {
     getRenewalTimeline
@@ -7,13 +7,11 @@ const {
 const router = express.Router();
 
 
-router.get("/:customerId", (req, res) => {
+router.get("/", (req, res) => {
 
     res.json(
 
-        getRenewalTimeline(
-            req.params.customerId
-        )
+        getRenewalTimeline()
     );
 });
 

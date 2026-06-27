@@ -1,22 +1,52 @@
-const contracts =
-require("../data/contracts.json");
+﻿const fs = require("fs");
+const path = require("path");
+
+const LATEST_ANALYSIS_PATH = path.join(
+    __dirname,
+    "../data/latestAnalysis.json"
+);
 
 
-function getRenewalTimeline(customerId) {
+function loadLatestAnalysis() {
 
-    const contract = contracts.find(
-
-        c =>
-        c.customerId === Number(customerId)
+    const raw = fs.readFileSync(
+        LATEST_ANALYSIS_PATH,
+        "utf8"
     );
 
+    return JSON.parse(raw || "{}");
+}
 
-    if (!contract) {
+
+function getTargetDate(renewalDate, daysBefore) {
+
+    const parsed = new Date(renewalDate);
+
+    if (Number.isNaN(parsed.getTime())) {
+
+        return null;
+    }
+
+    parsed.setDate(
+        parsed.getDate() - daysBefore
+    );
+
+    return parsed.toISOString().slice(0, 10);
+}
+
+
+function getRenewalTimeline() {
+
+    const analysis = loadLatestAnalysis();
+
+    const renewalDate =
+        analysis.agentOutputs?.ContractAgent?.renewalDate;
+
+    if (!renewalDate) {
 
         return {
-
-            error:
-                "Contract not found"
+            renewalDate: null,
+            milestones: []
         };
     }
 
@@ -24,7 +54,7 @@ function getRenewalTimeline(customerId) {
     return {
 
         renewalDate:
-            contract.renewalDate,
+            renewalDate,
 
         milestones: [
 
@@ -34,7 +64,10 @@ function getRenewalTimeline(customerId) {
                     "Renewal Discussion",
 
                 daysBefore:
-                    90
+                    90,
+
+                targetDate:
+                    getTargetDate(renewalDate, 90)
             },
 
             {
@@ -43,7 +76,10 @@ function getRenewalTimeline(customerId) {
                     "Executive Review",
 
                 daysBefore:
-                    60
+                    60,
+
+                targetDate:
+                    getTargetDate(renewalDate, 60)
             },
 
             {
@@ -52,7 +88,10 @@ function getRenewalTimeline(customerId) {
                     "Retention Offer",
 
                 daysBefore:
-                    30
+                    30,
+
+                targetDate:
+                    getTargetDate(renewalDate, 30)
             }
         ]
     };
