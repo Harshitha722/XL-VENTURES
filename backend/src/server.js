@@ -1,25 +1,58 @@
-// Import required packages
+/**
+ * RENEWAI SERVER
+ */
+
 const express = require("express");
 const cors = require("cors");
 
-// Create Express app
+const orchestrationRoutes =
+    require("./routes/orchestrationRoutes");
+
+
 const app = express();
 
-// Middlewares
+const PORT = 5000;
+
+
+/**
+ * Middlewares
+ */
 app.use(cors());
+
 app.use(express.json());
 
-// Health check route
+
+/**
+ * Health Check
+ */
 app.get("/", (req, res) => {
+
     res.json({
-        message: "RenewAI Backend Running"
+
+        message:
+            "RenewAI Backend Running 🚀"
     });
 });
 
-// Port configuration
-const PORT = 5000;
 
-// Start server
+/**
+ * Agentic Orchestration API
+ */
+app.use(
+
+    "/api/orchestrate",
+
+    orchestrationRoutes
+);
+
+
+/**
+ * Start Server
+ */
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+
+    console.log(
+
+        `🚀 Server running on port ${PORT}`
+    );
 });
