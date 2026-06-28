@@ -12,6 +12,8 @@ function Navbar() {
 
                 <Link to="/">Dashboard</Link>
 
+                <Link to="/dashboard">Dashboard</Link>
+
                 <Link to="/upload">Upload</Link>
 
                 <Link to="/planner">Planner</Link>
