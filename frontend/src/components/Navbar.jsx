@@ -22,8 +22,6 @@ function Navbar() {
 
                 <Link to="/memory">Memory</Link>
 
-                <Link to="/architecture">Architecture</Link>
-
                 <Link to="/metrics">Metrics</Link>
 
                 <Link to="/knowledge">Knowledge</Link>
