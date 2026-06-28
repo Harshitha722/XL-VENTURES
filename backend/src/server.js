@@ -6,6 +6,9 @@
 
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
 
 // Route Imports
 const orchestrationRoutes =
@@ -36,6 +39,25 @@ const timelineRoutes =
 const app = express();
 
 const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI;
+
+const connectToDatabase = async () => {
+    if (!MONGO_URI) {
+        console.warn("MONGO_URI is not set. Skipping MongoDB connection.");
+        return;
+    }
+
+    try {
+        await mongoose.connect(MONGO_URI, {
+            serverSelectionTimeoutMS: 10000
+        });
+        console.log("MongoDB connected successfully");
+    } catch (error) {
+        console.error("MongoDB connection failed:", error.message);
+    }
+};
+
+connectToDatabase();
 
 
 /**
