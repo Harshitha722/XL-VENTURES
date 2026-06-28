@@ -1,62 +1,39 @@
-﻿const PLAYBOOKS = {
-    lowAdoption: {
-        trigger: "Low adoption",
-        action: "Conduct Adoption Workshop"
-    },
-    escalation: {
-        trigger: "Escalation",
-        action: "Executive Business Review"
-    },
-    renewalRisk: {
-        trigger: "Renewal risk",
-        action: "Initiate Renewal Process"
-    }
-};
+const { retrievePlaybooks, keywordRetrieve } = require("../../knowledge/vectorStore");
 
-/**
- * KNOWLEDGE AGENT
- *
- * Uses internal static mappings derived from uploaded documents.
- * The shape stays modular so a vector database can replace this later.
- */
-function knowledgeAgent(uploadedText) {
-    const text = [
+function buildKnowledgeQuery(uploadedText) {
+    return [
         uploadedText.contractText,
         uploadedText.meetingText,
-        uploadedText.emailText
-    ]
-        .join("\n")
-        .toLowerCase();
+        uploadedText.emailText,
+        uploadedText.evidence?.join("\n")
+    ].filter(Boolean).join("\n\n");
+}
 
-    const playbooks = [];
+async function knowledgeAgent(uploadedText) {
+    const query = buildKnowledgeQuery(uploadedText);
+    const fallback = keywordRetrieve(query, 3);
 
-    if (text.includes("low adoption") || text.includes("adoption")) {
-        playbooks.push(PLAYBOOKS.lowAdoption);
+    try {
+        const retrievedKnowledge = await retrievePlaybooks(query, 3);
+
+        return {
+            retrievedKnowledge,
+            playbooks: retrievedKnowledge.map((item) => ({
+                trigger: item.title,
+                action: item.content
+            })),
+            evidence: retrievedKnowledge.map((item) => `${item.title} retrieved via ${item.retrievalMethod}.`)
+        };
+    } catch (error) {
+        return {
+            retrievedKnowledge: fallback,
+            playbooks: fallback.map((item) => ({
+                trigger: item.title,
+                action: item.content
+            })),
+            evidence: fallback.map((item) => `${item.title} retrieved via keyword fallback.`)
+        };
     }
-
-    if (
-        text.includes("escalation") ||
-        text.includes("escalate") ||
-        text.includes("executive review")
-    ) {
-        playbooks.push(PLAYBOOKS.escalation);
-    }
-
-    if (
-        text.includes("may not renew") ||
-        text.includes("renewal risk") ||
-        text.includes("auto renewal: no")
-    ) {
-        playbooks.push(PLAYBOOKS.renewalRisk);
-    }
-
-    return {
-        playbooks,
-        evidence: playbooks.map(
-            (playbook) => `${playbook.trigger} playbook selected.`
-        )
-    };
 }
 
 module.exports = knowledgeAgent;
-

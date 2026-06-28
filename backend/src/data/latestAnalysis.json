@@ -1,137 +1,243 @@
 {
-    "timestamp": "2026-06-28T08:18:27.933Z",
+    "timestamp": "2026-06-28T11:17:04.037Z",
     "domainDetection": {
         "domain": "Customer Success",
         "confidence": 98,
-        "reasoning": "The document is a 'Quarterly Customer Review' and discusses customer satisfaction, product feature considerations (Analytics Module, reporting dashboards), product adoption metrics, the absence of an executive sponsor, and the status of renewal discussions. These are all core concerns of a Customer Success function."
+        "reasoning": "The documents consistently discuss customer health, product adoption, satisfaction metrics (NPS, CSAT), onboarding issues, renewal concerns, potential expansion opportunities, SLA terms, and the involvement of executive sponsors in customer relationships. These topics are central to the Customer Success domain, even when financial stakeholders are mentioned in the context of renewal risks."
     },
     "executionPlan": [
         "CustomerHealthAgent",
         "ContractAgent",
+        "KnowledgeAgent",
         "DataCompletenessAgent"
     ],
-    "executionPlanReasoning": "The document discusses the lack of formal adoption metrics and that renewal discussions have not started.",
+    "executionPlanReasoning": "The documents highlight critical adoption issues impacting customer health and explicitly state concerns about contract renewal.",
     "agentOutputs": {
         "CustomerHealthAgent": {
-            "adoption": null,
-            "nps": null,
-            "csat": null,
-            "risk": "low",
-            "evidence": []
+            "adoption": 35,
+            "nps": 3,
+            "csat": 3.5,
+            "risk": "high",
+            "churnSignals": [
+                "We are unhappy with adoption.",
+                "Several teams are frustrated with onboarding.",
+                "We may not renew unless adoption improves.",
+                "Please schedule an executive review meeting.",
+                "The finance stakeholder has concerns.",
+                "We may consider expansion opportunities if adoption improves.",
+                "Please escalate this issue to senior leadership."
+            ],
+            "sentimentSummary": "The customer expresses strong dissatisfaction and frustration regarding current adoption and onboarding, leading to significant renewal concerns and requests for executive escalation.",
+            "evidence": [
+                "We are unhappy with adoption.",
+                "Current adoption is 35%.",
+                "NPS: 3",
+                "CSAT: 3.5",
+                "Several teams are frustrated with onboarding."
+            ]
         },
         "ContractAgent": {
-            "renewalDate": null,
-            "contractValue": null,
-            "autoRenew": null,
-            "discountAllowed": false,
-            "maximumDiscountPercent": 0,
-            "maxDiscountPercent": 0,
-            "slaTerms": null,
-            "sla": null,
-            "evidence": []
+            "renewalDate": "August 15, 2026",
+            "contractValue": 300000,
+            "autoRenew": false,
+            "discountAllowed": true,
+            "maximumDiscountPercent": 15,
+            "maxDiscountPercent": 15,
+            "slaTerms": "Priority support response within 2 hours.",
+            "sla": "Priority support response within 2 hours.",
+            "tier": "Enterprise",
+            "contractDuration": null,
+            "paymentTerms": null,
+            "renewalRisk": "medium",
+            "evidence": [
+                "Customer Tier: Enterprise",
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "Maximum Discount Allowed: 15%"
+            ]
+        },
+        "KnowledgeAgent": {
+            "retrievedKnowledge": [
+                {
+                    "id": "pb-001",
+                    "category": "churn_prevention",
+                    "title": "Executive Business Review (EBR) Playbook",
+                    "content": "When a customer exhibits high churn risk signals (NPS < 5, adoption < 40%, or explicit renewal concerns), initiate an Executive Business Review within 7 days. The EBR should include the customer's executive sponsor and your internal VP of Customer Success. Agenda: review ROI achieved, address top concerns, present renewal roadmap. Prepare a slide deck with usage metrics, outcomes delivered, and a 12-month value roadmap.",
+                    "tags": [
+                        "churn",
+                        "EBR",
+                        "executive",
+                        "renewal",
+                        "high-risk"
+                    ],
+                    "similarity": 49,
+                    "retrievalMethod": "keyword"
+                },
+                {
+                    "id": "pb-005",
+                    "category": "upsell",
+                    "title": "Expansion and Upsell Opportunity Playbook",
+                    "content": "Identify expansion opportunities when: (1) customer adoption is above 70%, (2) they have expressed interest in additional modules, (3) their team has grown. Steps: (1) Prepare a usage report showing value delivered, (2) Present product roadmap with upcoming features, (3) Propose expansion SKUs aligned with their pain points, (4) Involve your AE for commercial negotiation. Target: expand ARR by 20%+ on renewal.",
+                    "tags": [
+                        "upsell",
+                        "expansion",
+                        "ARR",
+                        "growth",
+                        "modules"
+                    ],
+                    "similarity": 47,
+                    "retrievalMethod": "keyword"
+                },
+                {
+                    "id": "pb-003",
+                    "category": "renewal",
+                    "title": "Proactive Renewal Management Playbook",
+                    "content": "Initiate renewal conversations 90 days before the renewal date. If auto-renewal is disabled, treat this as a high-priority renewal risk. Steps: (1) Review contract value and discount eligibility, (2) Schedule renewal discovery call with economic buyer, (3) Prepare a Business Value Assessment showing ROI over the contract period, (4) Present renewal proposal with multi-year incentive if applicable.",
+                    "tags": [
+                        "renewal",
+                        "contract",
+                        "auto-renew",
+                        "ARR",
+                        "retention"
+                    ],
+                    "similarity": 43,
+                    "retrievalMethod": "keyword"
+                }
+            ],
+            "playbooks": [
+                {
+                    "trigger": "Executive Business Review (EBR) Playbook",
+                    "action": "When a customer exhibits high churn risk signals (NPS < 5, adoption < 40%, or explicit renewal concerns), initiate an Executive Business Review within 7 days. The EBR should include the customer's executive sponsor and your internal VP of Customer Success. Agenda: review ROI achieved, address top concerns, present renewal roadmap. Prepare a slide deck with usage metrics, outcomes delivered, and a 12-month value roadmap."
+                },
+                {
+                    "trigger": "Expansion and Upsell Opportunity Playbook",
+                    "action": "Identify expansion opportunities when: (1) customer adoption is above 70%, (2) they have expressed interest in additional modules, (3) their team has grown. Steps: (1) Prepare a usage report showing value delivered, (2) Present product roadmap with upcoming features, (3) Propose expansion SKUs aligned with their pain points, (4) Involve your AE for commercial negotiation. Target: expand ARR by 20%+ on renewal."
+                },
+                {
+                    "trigger": "Proactive Renewal Management Playbook",
+                    "action": "Initiate renewal conversations 90 days before the renewal date. If auto-renewal is disabled, treat this as a high-priority renewal risk. Steps: (1) Review contract value and discount eligibility, (2) Schedule renewal discovery call with economic buyer, (3) Prepare a Business Value Assessment showing ROI over the contract period, (4) Present renewal proposal with multi-year incentive if applicable."
+                }
+            ],
+            "evidence": [
+                "Executive Business Review (EBR) Playbook retrieved via keyword.",
+                "Expansion and Upsell Opportunity Playbook retrieved via keyword.",
+                "Proactive Renewal Management Playbook retrieved via keyword."
+            ]
         },
         "DataCompletenessAgent": {
-            "available": [],
-            "missing": [
+            "available": [
                 "adoption metrics",
                 "NPS score",
                 "renewal date",
-                "contract value",
+                "contract value"
+            ],
+            "missing": [
                 "executive sponsor"
             ],
-            "confidence": 0
+            "confidence": 80
         }
     },
     "reasoning": {
-        "risks": [],
-        "opportunities": [],
+        "risks": [
+            "churn risk",
+            "customer dissatisfaction",
+            "low product adoption",
+            "renewal risk"
+        ],
+        "opportunities": [
+            "retention discount strategy"
+        ],
         "missingInformation": [
-            "adoption metrics",
-            "NPS score",
-            "renewal date",
-            "contract value",
             "executive sponsor",
             "renewal meeting confirmation"
         ],
         "dataCompleteness": {
-            "available": [],
-            "missing": [
+            "available": [
                 "adoption metrics",
                 "NPS score",
                 "renewal date",
-                "contract value",
+                "contract value"
+            ],
+            "missing": [
                 "executive sponsor"
             ],
-            "confidence": 0
-        }
+            "confidence": 80
+        },
+        "riskSummary": "This Enterprise customer is at high risk of non-renewal due to severe dissatisfaction with low adoption (35%) and onboarding frustrations, explicitly stating they may not renew unless adoption improves. The $300,000 contract does not auto-renew and requires immediate executive intervention.",
+        "opportunitySummary": "A conditional expansion opportunity exists if current adoption and value realization issues are successfully addressed.",
+        "urgency": "immediate",
+        "businessContext": "A critical Enterprise account is expressing strong dissatisfaction and frustration regarding product adoption and onboarding, leading to significant renewal concerns and requests for executive escalation.",
+        "priorityFocus": "Immediately initiate an Executive Business Review (EBR) within 7 days, involving the customer's executive sponsor and an internal VP of Customer Success, to address high churn risk and dissatisfaction."
     },
     "recommendations": [
         {
             "priority": "HIGH",
-            "action": "Initiate urgent internal data retrieval for core account details",
-            "timeline": "2 business days",
-            "impact": "Establish foundational clarity on renewal date and contract value to enable basic forecasting and risk assessment."
+            "action": "Initiate urgent internal data retrieval to identify the customer's executive sponsor and confirm renewal meeting details.",
+            "timeline": "Immediately (within 24-48 hours)",
+            "impact": "Enable Executive Business Review scheduling and prepare for critical renewal discussions."
         },
         {
             "priority": "HIGH",
-            "action": "Implement rapid customer health assessment via analytics and outreach",
-            "timeline": "5 business days",
-            "impact": "Obtain critical adoption metrics and NPS score to understand product value realization and customer satisfaction, identifying potential churn triggers."
+            "action": "Schedule an Executive Business Review (EBR) within 7 days, involving the identified customer's executive sponsor and an internal VP of Customer Success.",
+            "timeline": "7 days",
+            "impact": "Address high churn risk, mitigate severe dissatisfaction, and enable executive-level problem resolution."
         },
         {
             "priority": "HIGH",
-            "action": "Identify/establish executive sponsor and secure renewal meeting",
-            "timeline": "7 business days",
-            "impact": "Build strategic relationships at the executive level and ensure proactive engagement for renewal discussions, mitigating late-stage churn risk."
+            "action": "Conduct a deep dive analysis of available adoption metrics and NPS score to pinpoint specific areas of low product utilization and dissatisfaction. Develop a targeted value realization plan.",
+            "timeline": "Within 10 days",
+            "impact": "Improve product adoption, address the root cause of customer dissatisfaction, and demonstrate tangible value."
         }
     ],
     "explanations": [
         {
-            "recommendation": "Initiate urgent internal data retrieval for core account details",
+            "recommendation": "Initiate urgent internal data retrieval to identify the customer's executive sponsor and confirm renewal meeting details.",
             "priority": "HIGH",
-            "timeline": "2 business days",
-            "impact": "Establish foundational clarity on renewal date and contract value to enable basic forecasting and risk assessment.",
-            "reason": "Critical account information, including renewal date, contract value, and adoption metrics, is currently unavailable, and renewal discussions have not yet commenced, creating a significant blind spot for account health and future planning.",
-            "businessImpact": "Establishing foundational clarity on core account details enables basic forecasting and risk assessment, which is crucial for proactive account management and mitigating potential churn.",
+            "timeline": "Immediately (within 24-48 hours)",
+            "impact": "Enable Executive Business Review scheduling and prepare for critical renewal discussions.",
+            "reason": "Generated from business reasoning rules.",
+            "businessImpact": "Enable Executive Business Review scheduling and prepare for critical renewal discussions.",
             "evidence": [
-                "The Analytics Module is being considered for next quarter.",
-                "No formal adoption metrics are available yet.",
-                "No executive sponsor has been assigned.",
-                "Renewal discussions have not started.",
-                "Renewal date is listed as missing information."
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026"
             ],
-            "confidence": 91
+            "confidence": 89
         },
         {
-            "recommendation": "Implement rapid customer health assessment via analytics and outreach",
+            "recommendation": "Schedule an Executive Business Review (EBR) within 7 days, involving the identified customer's executive sponsor and an internal VP of Customer Success.",
             "priority": "HIGH",
-            "timeline": "5 business days",
-            "impact": "Obtain critical adoption metrics and NPS score to understand product value realization and customer satisfaction, identifying potential churn triggers.",
-            "reason": "Critical customer health metrics, including adoption and NPS, are currently unavailable, and renewal discussions have not yet commenced, necessitating an urgent assessment to identify potential churn risks.",
-            "businessImpact": "Proactive engagement reduces churn risk by addressing critical data gaps before renewal deadlines.",
+            "timeline": "7 days",
+            "impact": "Address high churn risk, mitigate severe dissatisfaction, and enable executive-level problem resolution.",
+            "reason": "Generated from business reasoning rules.",
+            "businessImpact": "Address high churn risk, mitigate severe dissatisfaction, and enable executive-level problem resolution.",
             "evidence": [
-                "The Analytics Module is being considered for next quarter.",
-                "No formal adoption metrics are available yet.",
-                "No executive sponsor has been assigned.",
-                "Renewal discussions have not started.",
-                "adoption metrics are listed as missing information."
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026"
             ],
-            "confidence": 92
+            "confidence": 89
         },
         {
-            "recommendation": "Identify/establish executive sponsor and secure renewal meeting",
+            "recommendation": "Conduct a deep dive analysis of available adoption metrics and NPS score to pinpoint specific areas of low product utilization and dissatisfaction. Develop a targeted value realization plan.",
             "priority": "HIGH",
-            "timeline": "7 business days",
-            "impact": "Build strategic relationships at the executive level and ensure proactive engagement for renewal discussions, mitigating late-stage churn risk.",
-            "reason": "Critical data regarding adoption and renewal readiness is missing, and executive sponsorship is unassigned, indicating significant renewal risk.",
-            "businessImpact": "Mitigating late-stage churn risk through proactive engagement and executive alignment.",
+            "timeline": "Within 10 days",
+            "impact": "Improve product adoption, address the root cause of customer dissatisfaction, and demonstrate tangible value.",
+            "reason": "Generated from business reasoning rules.",
+            "businessImpact": "Improve product adoption, address the root cause of customer dissatisfaction, and demonstrate tangible value.",
             "evidence": [
-                "The Analytics Module is being considered for next quarter.",
-                "No formal adoption metrics are available yet.",
-                "No executive sponsor has been assigned.",
-                "Renewal discussions have not started."
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026"
             ],
-            "confidence": 92
+            "confidence": 89
         }
     ]
 }

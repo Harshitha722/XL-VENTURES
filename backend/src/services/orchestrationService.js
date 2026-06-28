@@ -22,6 +22,10 @@ const explanationAgent =
 const dataCompletenessAgent =
     require("../agents/dataCompleteness/dataCompletenessAgent");
 
+const {
+    saveMemory
+} = require("../memory/memoryAgent");
+
 
 const LATEST_ANALYSIS_PATH = path.join(
     __dirname,
@@ -130,18 +134,18 @@ async function orchestrate(uploadedText) {
     /**
      * Run selected domain agents.
      */
-    executionPlan.forEach((agentName) => {
+    for (const agentName of executionPlan) {
 
         const agent =
             AgentRegistry[agentName];
 
         if (!agent) {
-            return;
+            continue;
         }
 
         agentOutputs[agentName] =
-            agent(orchestrationInput);
-    });
+            await agent(orchestrationInput);
+    }
 
 
     /**
@@ -158,7 +162,7 @@ async function orchestrate(uploadedText) {
      * Business reasoning layer.
      */
     const reasoning =
-        businessReasoningAgent(
+        await businessReasoningAgent(
             agentOutputs
         );
 
@@ -209,6 +213,14 @@ async function orchestrate(uploadedText) {
 
 
     saveLatestAnalysis(result);
+
+    saveMemory({
+        type: "analysis",
+        domainDetection,
+        executionPlan: result.executionPlan,
+        recommendations,
+        explanations
+    });
 
     return result;
 }

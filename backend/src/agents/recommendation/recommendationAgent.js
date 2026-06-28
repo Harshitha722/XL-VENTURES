@@ -1,5 +1,7 @@
 const { askGemini } = require("../../services/geminiService");
 const { parseJsonSafely } = require("../../utils/jsonUtils");
+const { getRecommendationMemoryContext } = require("../../memory/memoryRetriever");
+const BUSINESS_RULES = require("../../config/businessRules");
 
 function ruleBasedRecommendations(reasoning) {
 
@@ -340,6 +342,7 @@ function normalizeRecommendations(items, fallback) {
 
 async function recommendationAgent(reasoning) {
     const fallback = ruleBasedRecommendations(reasoning);
+    const memoryContext = getRecommendationMemoryContext();
 
     const prompt = `
 You are a Senior Customer Success Strategist.
@@ -348,7 +351,11 @@ Business Analysis:
 
 ${JSON.stringify(reasoning, null, 2)}
 
-Generate recommendations.
+Previously approved recommendation patterns:
+
+${memoryContext}
+
+Generate 3 to ${BUSINESS_RULES.recommendations.maxRecommendations} prioritized recommendations. Prefer actions similar to approved history when they fit the current facts.
 
 Return ONLY valid JSON:
 
@@ -366,10 +373,11 @@ Return ONLY valid JSON:
         const response = await askGemini(prompt);
         const parsed = parseJsonSafely(response, fallback);
 
-        return normalizeRecommendations(parsed, fallback);
+        return normalizeRecommendations(parsed, fallback)
+            .slice(0, BUSINESS_RULES.recommendations.maxRecommendations);
     }
     catch (error) {
-        return fallback;
+        return fallback.slice(0, BUSINESS_RULES.recommendations.maxRecommendations);
     }
 }
 

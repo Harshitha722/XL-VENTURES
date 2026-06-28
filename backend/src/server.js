@@ -35,6 +35,15 @@ const riskRoutes =
 const timelineRoutes =
     require("./routes/timelineRoutes");
 
+const metricsRoutes =
+    require("./routes/metricsRoutes");
+
+const knowledgeRoutes =
+    require("./routes/knowledgeRoutes");
+
+const businessRulesRoutes =
+    require("./routes/businessRulesRoutes");
+
 
 const app = express();
 
@@ -181,6 +190,21 @@ app.use(
 app.use(
     "/api/timeline",
     timelineRoutes
+);
+
+app.use(
+    "/api/metrics",
+    metricsRoutes
+);
+
+app.use(
+    "/api/knowledge",
+    knowledgeRoutes
+);
+
+app.use(
+    "/api/business-rules",
+    businessRulesRoutes
 );
 
 

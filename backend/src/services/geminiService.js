@@ -14,13 +14,11 @@ function getClient() {
     if (!process.env.GEMINI_API_KEY) {
         return null;
     }
-
     if (!client) {
         client = new GoogleGenAI({
             apiKey: process.env.GEMINI_API_KEY
         });
     }
-
     return client;
 }
 
@@ -36,7 +34,12 @@ async function askGemini(prompt) {
         contents: prompt
     });
 
-    return response.text || "";
+    // Fix: response.text is a method in @google/genai v2, not a property
+    const text = typeof response.text === "function"
+        ? response.text()
+        : (response.candidates?.[0]?.content?.parts?.[0]?.text || "");
+
+    return text;
 }
 
 module.exports = {

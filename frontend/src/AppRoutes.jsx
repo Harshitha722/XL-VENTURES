@@ -9,6 +9,8 @@ import AnalysisPage from "./pages/AnalysisPage";
 import RecommendationsPage from "./pages/RecommendationsPage";
 import MemoryPage from "./pages/MemoryPage";
 import ArchitecturePage from "./pages/ArchitecturePage";
+import MetricsPage from "./pages/MetricsPage";
+import KnowledgeBasePage from "./pages/KnowledgeBasePage";
 
 
 function AppRoutes() {
@@ -54,6 +56,16 @@ function AppRoutes() {
                 <Route
                     path="/architecture"
                     element={<ArchitecturePage />}
+                />
+
+                <Route
+                    path="/metrics"
+                    element={<MetricsPage />}
+                />
+
+                <Route
+                    path="/knowledge"
+                    element={<KnowledgeBasePage />}
                 />
 
             </Routes>
