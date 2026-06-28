@@ -1,27 +1,39 @@
 {
-    "timestamp": "2026-06-28T09:54:49.956Z",
+    "timestamp": "2026-06-28T11:17:04.037Z",
     "domainDetection": {
         "domain": "Customer Success",
         "confidence": 98,
-        "reasoning": "The documents center around customer health, product adoption (35% adoption, onboarding issues), key performance indicators (NPS, CSAT), renewal status (concerns, may not renew), and potential expansion opportunities (Analytics Module, AI Assistant). They also highlight the need for executive engagement (executive sponsor, executive review meeting, escalate to senior leadership) to manage the customer relationship and ensure retention."
+        "reasoning": "The documents consistently discuss customer health, product adoption, satisfaction metrics (NPS, CSAT), onboarding issues, renewal concerns, potential expansion opportunities, SLA terms, and the involvement of executive sponsors in customer relationships. These topics are central to the Customer Success domain, even when financial stakeholders are mentioned in the context of renewal risks."
     },
     "executionPlan": [
         "CustomerHealthAgent",
         "ContractAgent",
         "KnowledgeAgent",
-        "CRMContextAgent",
         "DataCompletenessAgent"
     ],
-    "executionPlanReasoning": "Fallback planner selected agents using deterministic rules.",
+    "executionPlanReasoning": "The documents highlight critical adoption issues impacting customer health and explicitly state concerns about contract renewal.",
     "agentOutputs": {
         "CustomerHealthAgent": {
             "adoption": 35,
             "nps": 3,
             "csat": 3.5,
             "risk": "high",
+            "churnSignals": [
+                "We are unhappy with adoption.",
+                "Several teams are frustrated with onboarding.",
+                "We may not renew unless adoption improves.",
+                "Please schedule an executive review meeting.",
+                "The finance stakeholder has concerns.",
+                "We may consider expansion opportunities if adoption improves.",
+                "Please escalate this issue to senior leadership."
+            ],
+            "sentimentSummary": "The customer expresses strong dissatisfaction and frustration regarding current adoption and onboarding, leading to significant renewal concerns and requests for executive escalation.",
             "evidence": [
-                "Customer frustration detected in uploaded documents.",
-                "Customer stated they may not renew."
+                "We are unhappy with adoption.",
+                "Current adoption is 35%.",
+                "NPS: 3",
+                "CSAT: 3.5",
+                "Several teams are frustrated with onboarding."
             ]
         },
         "ContractAgent": {
@@ -33,138 +45,84 @@
             "maxDiscountPercent": 15,
             "slaTerms": "Priority support response within 2 hours.",
             "sla": "Priority support response within 2 hours.",
+            "tier": "Enterprise",
+            "contractDuration": null,
+            "paymentTerms": null,
+            "renewalRisk": "medium",
             "evidence": [
+                "Customer Tier: Enterprise",
+                "Contract Value: $300,000",
                 "Renewal Date: August 15, 2026",
-                "Contract Value: 300000",
-                "Auto renewal disabled.",
-                "Maximum discount allowed: 15%"
+                "Auto Renewal: No",
+                "Maximum Discount Allowed: 15%"
             ]
         },
         "KnowledgeAgent": {
+            "retrievedKnowledge": [
+                {
+                    "id": "pb-001",
+                    "category": "churn_prevention",
+                    "title": "Executive Business Review (EBR) Playbook",
+                    "content": "When a customer exhibits high churn risk signals (NPS < 5, adoption < 40%, or explicit renewal concerns), initiate an Executive Business Review within 7 days. The EBR should include the customer's executive sponsor and your internal VP of Customer Success. Agenda: review ROI achieved, address top concerns, present renewal roadmap. Prepare a slide deck with usage metrics, outcomes delivered, and a 12-month value roadmap.",
+                    "tags": [
+                        "churn",
+                        "EBR",
+                        "executive",
+                        "renewal",
+                        "high-risk"
+                    ],
+                    "similarity": 49,
+                    "retrievalMethod": "keyword"
+                },
+                {
+                    "id": "pb-005",
+                    "category": "upsell",
+                    "title": "Expansion and Upsell Opportunity Playbook",
+                    "content": "Identify expansion opportunities when: (1) customer adoption is above 70%, (2) they have expressed interest in additional modules, (3) their team has grown. Steps: (1) Prepare a usage report showing value delivered, (2) Present product roadmap with upcoming features, (3) Propose expansion SKUs aligned with their pain points, (4) Involve your AE for commercial negotiation. Target: expand ARR by 20%+ on renewal.",
+                    "tags": [
+                        "upsell",
+                        "expansion",
+                        "ARR",
+                        "growth",
+                        "modules"
+                    ],
+                    "similarity": 47,
+                    "retrievalMethod": "keyword"
+                },
+                {
+                    "id": "pb-003",
+                    "category": "renewal",
+                    "title": "Proactive Renewal Management Playbook",
+                    "content": "Initiate renewal conversations 90 days before the renewal date. If auto-renewal is disabled, treat this as a high-priority renewal risk. Steps: (1) Review contract value and discount eligibility, (2) Schedule renewal discovery call with economic buyer, (3) Prepare a Business Value Assessment showing ROI over the contract period, (4) Present renewal proposal with multi-year incentive if applicable.",
+                    "tags": [
+                        "renewal",
+                        "contract",
+                        "auto-renew",
+                        "ARR",
+                        "retention"
+                    ],
+                    "similarity": 43,
+                    "retrievalMethod": "keyword"
+                }
+            ],
             "playbooks": [
                 {
-                    "trigger": "Customer Renewal Playbook",
-                    "action": "Schedule an Executive Business Review",
-                    "category": "playbooks",
-                    "source": "playbooks/customer-renewal-playbook.md",
-                    "score": 235,
-                    "snippets": [
-                        {
-                            "heading": "RECOMMENDED ACTIONS",
-                            "text": "1. Schedule an Executive Business Review. 2. Review customer business objectives. 3. Conduct a Product Adoption Workshop. 4. Identify executive sponsor. 5. Discuss renewal timeline. 6. Review open support issues. 7. Create customer success action plan. 8....",
-                            "score": 56
-                        },
-                        {
-                            "heading": "WHEN TO USE",
-                            "text": "- Renewal date is within 30 days. - Customer health score is below 70. - Customer has raised multiple concerns. - Product adoption is low. - Executive stakeholders are not engaged.",
-                            "score": 51
-                        }
-                    ]
+                    "trigger": "Executive Business Review (EBR) Playbook",
+                    "action": "When a customer exhibits high churn risk signals (NPS < 5, adoption < 40%, or explicit renewal concerns), initiate an Executive Business Review within 7 days. The EBR should include the customer's executive sponsor and your internal VP of Customer Success. Agenda: review ROI achieved, address top concerns, present renewal roadmap. Prepare a slide deck with usage metrics, outcomes delivered, and a 12-month value roadmap."
                 },
                 {
-                    "trigger": "Churn Prevention Guide",
-                    "action": "Executive Business Review",
-                    "category": "best_practices",
-                    "source": "best_practices/churn-prevention-guide.md",
-                    "score": 161,
-                    "snippets": [
-                        {
-                            "heading": "RECOMMENDED ACTIONS",
-                            "text": "1. Executive Business Review. 2. Product Adoption Workshop. 3. Customer Success Plan. 4. Weekly Follow-up. 5. Renewal Discussion. 6. Escalate high-value accounts.",
-                            "score": 55
-                        },
-                        {
-                            "heading": "EARLY WARNING SIGNALS",
-                            "text": "- Usage declined more than 40%. - Renewal within 30 days. - Low NPS. - Multiple complaints. - Executive disengagement. - Competitor mentioned.",
-                            "score": 45
-                        }
-                    ]
+                    "trigger": "Expansion and Upsell Opportunity Playbook",
+                    "action": "Identify expansion opportunities when: (1) customer adoption is above 70%, (2) they have expressed interest in additional modules, (3) their team has grown. Steps: (1) Prepare a usage report showing value delivered, (2) Present product roadmap with upcoming features, (3) Propose expansion SKUs aligned with their pain points, (4) Involve your AE for commercial negotiation. Target: expand ARR by 20%+ on renewal."
                 },
                 {
-                    "trigger": "Customer Support Escalation Playbook",
-                    "action": "Escalate to Support Manager",
-                    "category": "playbooks",
-                    "source": "playbooks/customer-support-escalation-playbook.md",
-                    "score": 121,
-                    "snippets": [
-                        {
-                            "heading": "RECOMMENDED ACTIONS",
-                            "text": "1. Escalate to Support Manager. 2. Notify Engineering Team. 3. Provide workaround. 4. Schedule customer update call. 5. Monitor issue until resolution. 6. Share RCA after resolution.",
-                            "score": 29
-                        },
-                        {
-                            "heading": "WHEN TO USE",
-                            "text": "- Multiple unresolved tickets. - SLA violations. - Customer dissatisfaction. - Critical production issue.",
-                            "score": 26
-                        }
-                    ]
-                },
-                {
-                    "trigger": "Product Adoption Playbook",
-                    "action": "Conduct onboarding session",
-                    "category": "playbooks",
-                    "source": "playbooks/product-adoption-playbook.md",
-                    "score": 120,
-                    "snippets": [
-                        {
-                            "heading": "INDICATORS",
-                            "text": "- Login frequency decreased. - Less than 50% feature adoption. - New users not onboarded. - Support tickets related to onboarding.",
-                            "score": 29
-                        },
-                        {
-                            "heading": "RECOMMENDED ACTIONS",
-                            "text": "1. Conduct onboarding session. 2. Schedule product walkthrough. 3. Share product documentation. 4. Assign Customer Success Manager. 5. Track adoption every week. 6. Review product analytics. 7. Schedule follow-up after 14 days.",
-                            "score": 27
-                        }
-                    ]
-                },
-                {
-                    "trigger": "Pricing Documentation",
-                    "action": "Review knowledge guidance",
-                    "category": "product_docs",
-                    "source": "product_docs/pricing-documentation.md",
-                    "score": 107,
-                    "snippets": [
-                        {
-                            "heading": "ENTERPRISE PLAN",
-                            "text": "Dedicated Success Manager. Quarterly Executive Reviews. Premium Support. Custom Integrations.",
-                            "score": 34
-                        },
-                        {
-                            "heading": "DISCOUNT POLICY",
-                            "text": "More than 500 licenses Eligible for enterprise discount. Renewals may receive negotiated pricing.",
-                            "score": 28
-                        }
-                    ]
+                    "trigger": "Proactive Renewal Management Playbook",
+                    "action": "Initiate renewal conversations 90 days before the renewal date. If auto-renewal is disabled, treat this as a high-priority renewal risk. Steps: (1) Review contract value and discount eligibility, (2) Schedule renewal discovery call with economic buyer, (3) Prepare a Business Value Assessment showing ROI over the contract period, (4) Present renewal proposal with multi-year incentive if applicable."
                 }
             ],
             "evidence": [
-                "Customer Renewal Playbook / RECOMMENDED ACTIONS: 1. Schedule an Executive Business Review. 2. Review customer business objectives. 3. Conduct a Product Adoption Workshop. 4. Identify executive sponsor. 5. Discuss renewal timeline. 6. Review open support issues. 7. Create customer success action plan. 8.... (playbooks/customer-renewal-playbook.md)",
-                "Customer Renewal Playbook / WHEN TO USE: - Renewal date is within 30 days. - Customer health score is below 70. - Customer has raised multiple concerns. - Product adoption is low. - Executive stakeholders are not engaged. (playbooks/customer-renewal-playbook.md)",
-                "Churn Prevention Guide / RECOMMENDED ACTIONS: 1. Executive Business Review. 2. Product Adoption Workshop. 3. Customer Success Plan. 4. Weekly Follow-up. 5. Renewal Discussion. 6. Escalate high-value accounts. (best_practices/churn-prevention-guide.md)",
-                "Churn Prevention Guide / EARLY WARNING SIGNALS: - Usage declined more than 40%. - Renewal within 30 days. - Low NPS. - Multiple complaints. - Executive disengagement. - Competitor mentioned. (best_practices/churn-prevention-guide.md)",
-                "Customer Support Escalation Playbook / RECOMMENDED ACTIONS: 1. Escalate to Support Manager. 2. Notify Engineering Team. 3. Provide workaround. 4. Schedule customer update call. 5. Monitor issue until resolution. 6. Share RCA after resolution. (playbooks/customer-support-escalation-playbook.md)",
-                "Customer Support Escalation Playbook / WHEN TO USE: - Multiple unresolved tickets. - SLA violations. - Customer dissatisfaction. - Critical production issue. (playbooks/customer-support-escalation-playbook.md)",
-                "Product Adoption Playbook / INDICATORS: - Login frequency decreased. - Less than 50% feature adoption. - New users not onboarded. - Support tickets related to onboarding. (playbooks/product-adoption-playbook.md)",
-                "Product Adoption Playbook / RECOMMENDED ACTIONS: 1. Conduct onboarding session. 2. Schedule product walkthrough. 3. Share product documentation. 4. Assign Customer Success Manager. 5. Track adoption every week. 6. Review product analytics. 7. Schedule follow-up after 14 days. (playbooks/product-adoption-playbook.md)"
-            ]
-        },
-        "CRMContextAgent": {
-            "tier": "Enterprise",
-            "opportunities": [
-                "Analytics Module",
-                "AI Assistant",
-                "Expansion Discussion"
-            ],
-            "stakeholders": [
-                "Executive Sponsor",
-                "Finance Stakeholder"
-            ],
-            "escalations": 2,
-            "evidence": [
-                "Enterprise tier inferred from uploaded documents.",
-                "Expansion or product opportunity detected.",
-                "Escalation language detected in uploaded documents."
+                "Executive Business Review (EBR) Playbook retrieved via keyword.",
+                "Expansion and Upsell Opportunity Playbook retrieved via keyword.",
+                "Proactive Renewal Management Playbook retrieved via keyword."
             ]
         },
         "DataCompletenessAgent": {
@@ -172,11 +130,12 @@
                 "adoption metrics",
                 "NPS score",
                 "renewal date",
-                "contract value",
+                "contract value"
+            ],
+            "missing": [
                 "executive sponsor"
             ],
-            "missing": [],
-            "confidence": 100
+            "confidence": 80
         }
     },
     "reasoning": {
@@ -184,14 +143,13 @@
             "churn risk",
             "customer dissatisfaction",
             "low product adoption",
-            "renewal risk",
-            "frequent escalations"
+            "renewal risk"
         ],
         "opportunities": [
-            "retention discount strategy",
-            "upsell opportunity"
+            "retention discount strategy"
         ],
         "missingInformation": [
+            "executive sponsor",
             "renewal meeting confirmation"
         ],
         "dataCompleteness": {
@@ -199,316 +157,87 @@
                 "adoption metrics",
                 "NPS score",
                 "renewal date",
-                "contract value",
+                "contract value"
+            ],
+            "missing": [
                 "executive sponsor"
             ],
-            "missing": [],
-            "confidence": 100
+            "confidence": 80
         },
-        "knowledgeGuidance": [
-            {
-                "title": "Customer Renewal Playbook",
-                "action": "Schedule an Executive Business Review",
-                "category": "playbooks",
-                "source": "playbooks/customer-renewal-playbook.md",
-                "score": 235
-            },
-            {
-                "title": "Churn Prevention Guide",
-                "action": "Executive Business Review",
-                "category": "best_practices",
-                "source": "best_practices/churn-prevention-guide.md",
-                "score": 161
-            },
-            {
-                "title": "Customer Support Escalation Playbook",
-                "action": "Escalate to Support Manager",
-                "category": "playbooks",
-                "source": "playbooks/customer-support-escalation-playbook.md",
-                "score": 121
-            },
-            {
-                "title": "Product Adoption Playbook",
-                "action": "Conduct onboarding session",
-                "category": "playbooks",
-                "source": "playbooks/product-adoption-playbook.md",
-                "score": 120
-            },
-            {
-                "title": "Pricing Documentation",
-                "action": "Review knowledge guidance",
-                "category": "product_docs",
-                "source": "product_docs/pricing-documentation.md",
-                "score": 107
-            }
-        ]
+        "riskSummary": "This Enterprise customer is at high risk of non-renewal due to severe dissatisfaction with low adoption (35%) and onboarding frustrations, explicitly stating they may not renew unless adoption improves. The $300,000 contract does not auto-renew and requires immediate executive intervention.",
+        "opportunitySummary": "A conditional expansion opportunity exists if current adoption and value realization issues are successfully addressed.",
+        "urgency": "immediate",
+        "businessContext": "A critical Enterprise account is expressing strong dissatisfaction and frustration regarding product adoption and onboarding, leading to significant renewal concerns and requests for executive escalation.",
+        "priorityFocus": "Immediately initiate an Executive Business Review (EBR) within 7 days, involving the customer's executive sponsor and an internal VP of Customer Success, to address high churn risk and dissatisfaction."
     },
     "recommendations": [
         {
             "priority": "HIGH",
-            "action": "Schedule Executive Business Review",
-            "timeline": "7 days",
-            "impact": "Reduce churn probability"
+            "action": "Initiate urgent internal data retrieval to identify the customer's executive sponsor and confirm renewal meeting details.",
+            "timeline": "Immediately (within 24-48 hours)",
+            "impact": "Enable Executive Business Review scheduling and prepare for critical renewal discussions."
         },
         {
             "priority": "HIGH",
-            "action": "Escalate to Senior Customer Success Manager",
-            "timeline": "3 days",
-            "impact": "Improve customer sentiment"
+            "action": "Schedule an Executive Business Review (EBR) within 7 days, involving the identified customer's executive sponsor and an internal VP of Customer Success.",
+            "timeline": "7 days",
+            "impact": "Address high churn risk, mitigate severe dissatisfaction, and enable executive-level problem resolution."
         },
         {
             "priority": "HIGH",
-            "action": "Conduct Adoption Workshop",
-            "timeline": "14 days",
-            "impact": "Increase product adoption"
-        },
-        {
-            "priority": "MEDIUM",
-            "action": "Initiate Renewal Discussion",
-            "timeline": "7 days",
-            "impact": "Protect renewal revenue"
-        },
-        {
-            "priority": "MEDIUM",
-            "action": "Review Historical Support Issues",
-            "timeline": "10 days",
-            "impact": "Reduce recurring escalations"
-        },
-        {
-            "priority": "MEDIUM",
-            "action": "Offer Renewal Incentive",
-            "timeline": "14 days",
-            "impact": "Improve retention likelihood"
-        },
-        {
-            "priority": "MEDIUM",
-            "action": "Explore Upsell Opportunities",
-            "timeline": "30 days",
-            "impact": "Identify expansion revenue"
-        },
-        {
-            "priority": "LOW",
-            "action": "Schedule Renewal Planning Meeting",
-            "timeline": "14 days",
-            "impact": "Create renewal action plan"
-        },
-        {
-            "priority": "HIGH",
-            "action": "Schedule an Executive Business Review",
-            "timeline": "7 days",
-            "impact": "Apply internal guidance from Customer Renewal Playbook"
-        },
-        {
-            "priority": "MEDIUM",
-            "action": "Executive Business Review",
-            "timeline": "7 days",
-            "impact": "Apply internal guidance from Churn Prevention Guide"
-        },
-        {
-            "priority": "HIGH",
-            "action": "Escalate to Support Manager",
-            "timeline": "7 days",
-            "impact": "Apply internal guidance from Customer Support Escalation Playbook"
-        },
-        {
-            "priority": "HIGH",
-            "action": "Conduct onboarding session",
-            "timeline": "7 days",
-            "impact": "Apply internal guidance from Product Adoption Playbook"
+            "action": "Conduct a deep dive analysis of available adoption metrics and NPS score to pinpoint specific areas of low product utilization and dissatisfaction. Develop a targeted value realization plan.",
+            "timeline": "Within 10 days",
+            "impact": "Improve product adoption, address the root cause of customer dissatisfaction, and demonstrate tangible value."
         }
     ],
     "explanations": [
         {
-            "recommendation": "Schedule Executive Business Review",
+            "recommendation": "Initiate urgent internal data retrieval to identify the customer's executive sponsor and confirm renewal meeting details.",
+            "priority": "HIGH",
+            "timeline": "Immediately (within 24-48 hours)",
+            "impact": "Enable Executive Business Review scheduling and prepare for critical renewal discussions.",
+            "reason": "Generated from business reasoning rules.",
+            "businessImpact": "Enable Executive Business Review scheduling and prepare for critical renewal discussions.",
+            "evidence": [
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026"
+            ],
+            "confidence": 89
+        },
+        {
+            "recommendation": "Schedule an Executive Business Review (EBR) within 7 days, involving the identified customer's executive sponsor and an internal VP of Customer Success.",
             "priority": "HIGH",
             "timeline": "7 days",
-            "impact": "Reduce churn probability",
-            "reason": "Customer exhibits strong churn indicators.",
-            "businessImpact": "Reduce churn probability",
+            "impact": "Address high churn risk, mitigate severe dissatisfaction, and enable executive-level problem resolution.",
+            "reason": "Generated from business reasoning rules.",
+            "businessImpact": "Address high churn risk, mitigate severe dissatisfaction, and enable executive-level problem resolution.",
             "evidence": [
                 "Contract Value: $300,000",
                 "Renewal Date: August 15, 2026",
                 "Auto Renewal: No",
-                "Customer Renewal Playbook / RECOMMENDED ACTIONS: 1. Schedule an Executive Business Review. 2. Review customer business objectives. 3. Conduct a Product Adoption Workshop. 4. Identify executive sponsor. 5. Discuss renewal timeline. 6. Review open support issues. 7. Create customer success action plan. 8.... (playbooks/customer-renewal-playbook.md)",
-                "Customer Renewal Playbook / WHEN TO USE: - Renewal date is within 30 days. - Customer health score is below 70. - Customer has raised multiple concerns. - Product adoption is low. - Executive stakeholders are not engaged. (playbooks/customer-renewal-playbook.md)"
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026"
             ],
-            "confidence": 92
+            "confidence": 89
         },
         {
-            "recommendation": "Escalate to Senior Customer Success Manager",
+            "recommendation": "Conduct a deep dive analysis of available adoption metrics and NPS score to pinpoint specific areas of low product utilization and dissatisfaction. Develop a targeted value realization plan.",
             "priority": "HIGH",
-            "timeline": "3 days",
-            "impact": "Improve customer sentiment",
+            "timeline": "Within 10 days",
+            "impact": "Improve product adoption, address the root cause of customer dissatisfaction, and demonstrate tangible value.",
             "reason": "Generated from business reasoning rules.",
-            "businessImpact": "Improve customer sentiment",
+            "businessImpact": "Improve product adoption, address the root cause of customer dissatisfaction, and demonstrate tangible value.",
             "evidence": [
                 "Contract Value: $300,000",
                 "Renewal Date: August 15, 2026",
                 "Auto Renewal: No",
-                "Customer Renewal Playbook / RECOMMENDED ACTIONS: 1. Schedule an Executive Business Review. 2. Review customer business objectives. 3. Conduct a Product Adoption Workshop. 4. Identify executive sponsor. 5. Discuss renewal timeline. 6. Review open support issues. 7. Create customer success action plan. 8.... (playbooks/customer-renewal-playbook.md)",
-                "Customer Renewal Playbook / WHEN TO USE: - Renewal date is within 30 days. - Customer health score is below 70. - Customer has raised multiple concerns. - Product adoption is low. - Executive stakeholders are not engaged. (playbooks/customer-renewal-playbook.md)"
-            ],
-            "confidence": 75
-        },
-        {
-            "recommendation": "Conduct Adoption Workshop",
-            "priority": "HIGH",
-            "timeline": "14 days",
-            "impact": "Increase product adoption",
-            "reason": "Feature adoption is below acceptable levels.",
-            "businessImpact": "Increase product adoption",
-            "evidence": [
                 "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Customer Renewal Playbook / RECOMMENDED ACTIONS: 1. Schedule an Executive Business Review. 2. Review customer business objectives. 3. Conduct a Product Adoption Workshop. 4. Identify executive sponsor. 5. Discuss renewal timeline. 6. Review open support issues. 7. Create customer success action plan. 8.... (playbooks/customer-renewal-playbook.md)",
-                "Customer Renewal Playbook / WHEN TO USE: - Renewal date is within 30 days. - Customer health score is below 70. - Customer has raised multiple concerns. - Product adoption is low. - Executive stakeholders are not engaged. (playbooks/customer-renewal-playbook.md)"
+                "Renewal Date: August 15, 2026"
             ],
-            "confidence": 88
-        },
-        {
-            "recommendation": "Initiate Renewal Discussion",
-            "priority": "MEDIUM",
-            "timeline": "7 days",
-            "impact": "Protect renewal revenue",
-            "reason": "Contract requires proactive renewal management.",
-            "businessImpact": "Protect renewal revenue",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Customer Renewal Playbook / RECOMMENDED ACTIONS: 1. Schedule an Executive Business Review. 2. Review customer business objectives. 3. Conduct a Product Adoption Workshop. 4. Identify executive sponsor. 5. Discuss renewal timeline. 6. Review open support issues. 7. Create customer success action plan. 8.... (playbooks/customer-renewal-playbook.md)",
-                "Customer Renewal Playbook / WHEN TO USE: - Renewal date is within 30 days. - Customer health score is below 70. - Customer has raised multiple concerns. - Product adoption is low. - Executive stakeholders are not engaged. (playbooks/customer-renewal-playbook.md)"
-            ],
-            "confidence": 85
-        },
-        {
-            "recommendation": "Review Historical Support Issues",
-            "priority": "MEDIUM",
-            "timeline": "10 days",
-            "impact": "Reduce recurring escalations",
-            "reason": "Generated from business reasoning rules.",
-            "businessImpact": "Reduce recurring escalations",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Customer Renewal Playbook / RECOMMENDED ACTIONS: 1. Schedule an Executive Business Review. 2. Review customer business objectives. 3. Conduct a Product Adoption Workshop. 4. Identify executive sponsor. 5. Discuss renewal timeline. 6. Review open support issues. 7. Create customer success action plan. 8.... (playbooks/customer-renewal-playbook.md)",
-                "Customer Renewal Playbook / WHEN TO USE: - Renewal date is within 30 days. - Customer health score is below 70. - Customer has raised multiple concerns. - Product adoption is low. - Executive stakeholders are not engaged. (playbooks/customer-renewal-playbook.md)"
-            ],
-            "confidence": 75
-        },
-        {
-            "recommendation": "Offer Renewal Incentive",
-            "priority": "MEDIUM",
-            "timeline": "14 days",
-            "impact": "Improve retention likelihood",
-            "reason": "Retention incentives are permitted by contract.",
-            "businessImpact": "Improve retention likelihood",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Customer Renewal Playbook / RECOMMENDED ACTIONS: 1. Schedule an Executive Business Review. 2. Review customer business objectives. 3. Conduct a Product Adoption Workshop. 4. Identify executive sponsor. 5. Discuss renewal timeline. 6. Review open support issues. 7. Create customer success action plan. 8.... (playbooks/customer-renewal-playbook.md)",
-                "Customer Renewal Playbook / WHEN TO USE: - Renewal date is within 30 days. - Customer health score is below 70. - Customer has raised multiple concerns. - Product adoption is low. - Executive stakeholders are not engaged. (playbooks/customer-renewal-playbook.md)"
-            ],
-            "confidence": 82
-        },
-        {
-            "recommendation": "Explore Upsell Opportunities",
-            "priority": "MEDIUM",
-            "timeline": "30 days",
-            "impact": "Identify expansion revenue",
-            "reason": "Existing expansion opportunities are available.",
-            "businessImpact": "Identify expansion revenue",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Customer Renewal Playbook / RECOMMENDED ACTIONS: 1. Schedule an Executive Business Review. 2. Review customer business objectives. 3. Conduct a Product Adoption Workshop. 4. Identify executive sponsor. 5. Discuss renewal timeline. 6. Review open support issues. 7. Create customer success action plan. 8.... (playbooks/customer-renewal-playbook.md)",
-                "Customer Renewal Playbook / WHEN TO USE: - Renewal date is within 30 days. - Customer health score is below 70. - Customer has raised multiple concerns. - Product adoption is low. - Executive stakeholders are not engaged. (playbooks/customer-renewal-playbook.md)"
-            ],
-            "confidence": 80
-        },
-        {
-            "recommendation": "Schedule Renewal Planning Meeting",
-            "priority": "LOW",
-            "timeline": "14 days",
-            "impact": "Create renewal action plan",
-            "reason": "Renewal planning activities have not been confirmed.",
-            "businessImpact": "Create renewal action plan",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Customer Renewal Playbook / RECOMMENDED ACTIONS: 1. Schedule an Executive Business Review. 2. Review customer business objectives. 3. Conduct a Product Adoption Workshop. 4. Identify executive sponsor. 5. Discuss renewal timeline. 6. Review open support issues. 7. Create customer success action plan. 8.... (playbooks/customer-renewal-playbook.md)",
-                "Customer Renewal Playbook / WHEN TO USE: - Renewal date is within 30 days. - Customer health score is below 70. - Customer has raised multiple concerns. - Product adoption is low. - Executive stakeholders are not engaged. (playbooks/customer-renewal-playbook.md)"
-            ],
-            "confidence": 55
-        },
-        {
-            "recommendation": "Schedule an Executive Business Review",
-            "priority": "HIGH",
-            "timeline": "7 days",
-            "impact": "Apply internal guidance from Customer Renewal Playbook",
-            "reason": "Generated from business reasoning rules.",
-            "businessImpact": "Apply internal guidance from Customer Renewal Playbook",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Customer Renewal Playbook / RECOMMENDED ACTIONS: 1. Schedule an Executive Business Review. 2. Review customer business objectives. 3. Conduct a Product Adoption Workshop. 4. Identify executive sponsor. 5. Discuss renewal timeline. 6. Review open support issues. 7. Create customer success action plan. 8.... (playbooks/customer-renewal-playbook.md)",
-                "Customer Renewal Playbook / WHEN TO USE: - Renewal date is within 30 days. - Customer health score is below 70. - Customer has raised multiple concerns. - Product adoption is low. - Executive stakeholders are not engaged. (playbooks/customer-renewal-playbook.md)"
-            ],
-            "confidence": 75
-        },
-        {
-            "recommendation": "Executive Business Review",
-            "priority": "MEDIUM",
-            "timeline": "7 days",
-            "impact": "Apply internal guidance from Churn Prevention Guide",
-            "reason": "Generated from business reasoning rules.",
-            "businessImpact": "Apply internal guidance from Churn Prevention Guide",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Churn Prevention Guide / RECOMMENDED ACTIONS: 1. Executive Business Review. 2. Product Adoption Workshop. 3. Customer Success Plan. 4. Weekly Follow-up. 5. Renewal Discussion. 6. Escalate high-value accounts. (best_practices/churn-prevention-guide.md)",
-                "Churn Prevention Guide / EARLY WARNING SIGNALS: - Usage declined more than 40%. - Renewal within 30 days. - Low NPS. - Multiple complaints. - Executive disengagement. - Competitor mentioned. (best_practices/churn-prevention-guide.md)"
-            ],
-            "confidence": 75
-        },
-        {
-            "recommendation": "Escalate to Support Manager",
-            "priority": "HIGH",
-            "timeline": "7 days",
-            "impact": "Apply internal guidance from Customer Support Escalation Playbook",
-            "reason": "Generated from business reasoning rules.",
-            "businessImpact": "Apply internal guidance from Customer Support Escalation Playbook",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Customer Support Escalation Playbook / RECOMMENDED ACTIONS: 1. Escalate to Support Manager. 2. Notify Engineering Team. 3. Provide workaround. 4. Schedule customer update call. 5. Monitor issue until resolution. 6. Share RCA after resolution. (playbooks/customer-support-escalation-playbook.md)",
-                "Customer Support Escalation Playbook / WHEN TO USE: - Multiple unresolved tickets. - SLA violations. - Customer dissatisfaction. - Critical production issue. (playbooks/customer-support-escalation-playbook.md)"
-            ],
-            "confidence": 75
-        },
-        {
-            "recommendation": "Conduct onboarding session",
-            "priority": "HIGH",
-            "timeline": "7 days",
-            "impact": "Apply internal guidance from Product Adoption Playbook",
-            "reason": "Generated from business reasoning rules.",
-            "businessImpact": "Apply internal guidance from Product Adoption Playbook",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Product Adoption Playbook / INDICATORS: - Login frequency decreased. - Less than 50% feature adoption. - New users not onboarded. - Support tickets related to onboarding. (playbooks/product-adoption-playbook.md)",
-                "Product Adoption Playbook / RECOMMENDED ACTIONS: 1. Conduct onboarding session. 2. Schedule product walkthrough. 3. Share product documentation. 4. Assign Customer Success Manager. 5. Track adoption every week. 6. Review product analytics. 7. Schedule follow-up after 14 days. (playbooks/product-adoption-playbook.md)"
-            ],
-            "confidence": 75
+            "confidence": 89
         }
     ]
 }

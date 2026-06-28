@@ -562,5 +562,1163 @@
         ],
         "reviewedAt": "2026-06-28T08:19:09.902Z",
         "timestamp": "2026-06-28T08:19:09.902Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 50,
+            "reasoning": "Fallback domain used because domain detection was unavailable."
+        },
+        "executionPlan": [
+            "CustomerHealthAgent",
+            "ContractAgent",
+            "CRMContextAgent",
+            "DataCompletenessAgent"
+        ],
+        "recommendations": [
+            {
+                "priority": "HIGH",
+                "action": "Schedule Executive Business Review",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Escalate to Senior Customer Success Manager",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Conduct Adoption Workshop",
+                "timeline": "14 days",
+                "impact": "Increase product adoption"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Initiate Renewal Discussion",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Offer Renewal Incentive",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Explore Upsell Opportunities",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue"
+            },
+            {
+                "priority": "LOW",
+                "action": "Schedule Renewal Planning Meeting",
+                "timeline": "14 days",
+                "impact": "Create renewal action plan"
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Schedule Executive Business Review",
+                "priority": "HIGH",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability",
+                "reason": "Customer exhibits strong churn indicators.",
+                "businessImpact": "Reduce churn probability",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "NPS: 3",
+                    "Adoption: 32%"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Escalate to Senior Customer Success Manager",
+                "priority": "HIGH",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Improve customer sentiment",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000"
+                ],
+                "confidence": 91
+            },
+            {
+                "recommendation": "Conduct Adoption Workshop",
+                "priority": "HIGH",
+                "timeline": "14 days",
+                "impact": "Increase product adoption",
+                "reason": "Feature adoption is below acceptable levels.",
+                "businessImpact": "Increase product adoption",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Adoption: 32%"
+                ],
+                "confidence": 97
+            },
+            {
+                "recommendation": "Initiate Renewal Discussion",
+                "priority": "MEDIUM",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue",
+                "reason": "Contract requires proactive renewal management.",
+                "businessImpact": "Protect renewal revenue",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Renewal Date: 2026-08-30",
+                    "Auto Renew: false"
+                ],
+                "confidence": 95
+            },
+            {
+                "recommendation": "Offer Renewal Incentive",
+                "priority": "MEDIUM",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood",
+                "reason": "Retention incentives are permitted by contract.",
+                "businessImpact": "Improve retention likelihood",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Discount Allowed: true",
+                    "Max Discount: 10%"
+                ],
+                "confidence": 94
+            },
+            {
+                "recommendation": "Explore Upsell Opportunities",
+                "priority": "MEDIUM",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue",
+                "reason": "Existing expansion opportunities are available.",
+                "businessImpact": "Identify expansion revenue",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Analytics Module"
+                ],
+                "confidence": 93
+            },
+            {
+                "recommendation": "Schedule Renewal Planning Meeting",
+                "priority": "LOW",
+                "timeline": "14 days",
+                "impact": "Create renewal action plan",
+                "reason": "Renewal planning activities have not been confirmed.",
+                "businessImpact": "Create renewal action plan",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No"
+                ],
+                "confidence": 78
+            }
+        ],
+        "timestamp": "2026-06-28T10:05:16.605Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 50,
+            "reasoning": "Fallback domain used because domain detection was unavailable."
+        },
+        "executionPlan": [
+            "CustomerHealthAgent",
+            "ContractAgent",
+            "CRMContextAgent",
+            "KnowledgeAgent",
+            "DataCompletenessAgent"
+        ],
+        "recommendations": [
+            {
+                "priority": "HIGH",
+                "action": "Schedule Executive Business Review",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Escalate to Senior Customer Success Manager",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Conduct Adoption Workshop",
+                "timeline": "14 days",
+                "impact": "Increase product adoption"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Initiate Renewal Discussion",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Offer Renewal Incentive",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Explore Upsell Opportunities",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue"
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Schedule Executive Business Review",
+                "priority": "HIGH",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability",
+                "reason": "Customer exhibits strong churn indicators.",
+                "businessImpact": "Reduce churn probability",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "NPS: 3",
+                    "Adoption: 32%"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Escalate to Senior Customer Success Manager",
+                "priority": "HIGH",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Improve customer sentiment",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000"
+                ],
+                "confidence": 96
+            },
+            {
+                "recommendation": "Conduct Adoption Workshop",
+                "priority": "HIGH",
+                "timeline": "14 days",
+                "impact": "Increase product adoption",
+                "reason": "Feature adoption is below acceptable levels.",
+                "businessImpact": "Increase product adoption",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Adoption: 32%"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Initiate Renewal Discussion",
+                "priority": "MEDIUM",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue",
+                "reason": "Contract requires proactive renewal management.",
+                "businessImpact": "Protect renewal revenue",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Renewal Date: 2026-08-30",
+                    "Auto Renew: false"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Offer Renewal Incentive",
+                "priority": "MEDIUM",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood",
+                "reason": "Retention incentives are permitted by contract.",
+                "businessImpact": "Improve retention likelihood",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Discount Allowed: true",
+                    "Max Discount: 10%"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Explore Upsell Opportunities",
+                "priority": "MEDIUM",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue",
+                "reason": "Existing expansion opportunities are available.",
+                "businessImpact": "Identify expansion revenue",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Analytics Module"
+                ],
+                "confidence": 98
+            }
+        ],
+        "timestamp": "2026-06-28T10:06:23.988Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 50,
+            "reasoning": "Fallback domain used because domain detection was unavailable."
+        },
+        "executionPlan": [
+            "CustomerHealthAgent",
+            "ContractAgent",
+            "CRMContextAgent",
+            "KnowledgeAgent",
+            "DataCompletenessAgent"
+        ],
+        "recommendations": [
+            {
+                "priority": "HIGH",
+                "action": "Schedule Executive Business Review",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Escalate to Senior Customer Success Manager",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Conduct Adoption Workshop",
+                "timeline": "14 days",
+                "impact": "Increase product adoption"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Initiate Renewal Discussion",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Offer Renewal Incentive",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Explore Upsell Opportunities",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue"
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Schedule Executive Business Review",
+                "priority": "HIGH",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability",
+                "reason": "Customer exhibits strong churn indicators.",
+                "businessImpact": "Reduce churn probability",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "NPS: 3",
+                    "Adoption: 32%"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Escalate to Senior Customer Success Manager",
+                "priority": "HIGH",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Improve customer sentiment",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000"
+                ],
+                "confidence": 96
+            },
+            {
+                "recommendation": "Conduct Adoption Workshop",
+                "priority": "HIGH",
+                "timeline": "14 days",
+                "impact": "Increase product adoption",
+                "reason": "Feature adoption is below acceptable levels.",
+                "businessImpact": "Increase product adoption",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Adoption: 32%"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Initiate Renewal Discussion",
+                "priority": "MEDIUM",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue",
+                "reason": "Contract requires proactive renewal management.",
+                "businessImpact": "Protect renewal revenue",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Renewal Date: 2026-08-30",
+                    "Auto Renew: false"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Offer Renewal Incentive",
+                "priority": "MEDIUM",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood",
+                "reason": "Retention incentives are permitted by contract.",
+                "businessImpact": "Improve retention likelihood",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Discount Allowed: true",
+                    "Max Discount: 10%"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Explore Upsell Opportunities",
+                "priority": "MEDIUM",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue",
+                "reason": "Existing expansion opportunities are available.",
+                "businessImpact": "Identify expansion revenue",
+                "evidence": [
+                    "Renewal Date: 2026-08-30",
+                    "Contract Value: $120,000",
+                    "Auto Renewal: No",
+                    "Analytics Module"
+                ],
+                "confidence": 98
+            }
+        ],
+        "timestamp": "2026-06-28T10:07:12.520Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 50,
+            "reasoning": "Fallback domain used because domain detection was unavailable."
+        },
+        "executionPlan": [
+            "CustomerHealthAgent",
+            "ContractAgent",
+            "KnowledgeAgent",
+            "CRMContextAgent",
+            "DataCompletenessAgent"
+        ],
+        "recommendations": [
+            {
+                "priority": "HIGH",
+                "action": "Schedule Executive Business Review",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Escalate to Senior Customer Success Manager",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Conduct Adoption Workshop",
+                "timeline": "14 days",
+                "impact": "Increase product adoption"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Initiate Renewal Discussion",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Review Historical Support Issues",
+                "timeline": "10 days",
+                "impact": "Reduce recurring escalations"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Offer Renewal Incentive",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood"
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Schedule Executive Business Review",
+                "priority": "HIGH",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability",
+                "reason": "Customer exhibits strong churn indicators.",
+                "businessImpact": "Reduce churn probability",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "NPS: 3",
+                    "Adoption: 35%"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Escalate to Senior Customer Success Manager",
+                "priority": "HIGH",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Improve customer sentiment",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026"
+                ],
+                "confidence": 96
+            },
+            {
+                "recommendation": "Conduct Adoption Workshop",
+                "priority": "HIGH",
+                "timeline": "14 days",
+                "impact": "Increase product adoption",
+                "reason": "Feature adoption is below acceptable levels.",
+                "businessImpact": "Increase product adoption",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Adoption: 35%"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Initiate Renewal Discussion",
+                "priority": "MEDIUM",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue",
+                "reason": "Contract requires proactive renewal management.",
+                "businessImpact": "Protect renewal revenue",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renew: false"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Review Historical Support Issues",
+                "priority": "MEDIUM",
+                "timeline": "10 days",
+                "impact": "Reduce recurring escalations",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Reduce recurring escalations",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026"
+                ],
+                "confidence": 96
+            },
+            {
+                "recommendation": "Offer Renewal Incentive",
+                "priority": "MEDIUM",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood",
+                "reason": "Retention incentives are permitted by contract.",
+                "businessImpact": "Improve retention likelihood",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Discount Allowed: true",
+                    "Max Discount: 15%"
+                ],
+                "confidence": 98
+            }
+        ],
+        "timestamp": "2026-06-28T10:11:56.065Z"
+    },
+    {
+        "type": "recommendationApproval",
+        "source": "latestAnalysis",
+        "analysisTimestamp": "2026-06-28T10:11:56.057Z",
+        "humanFeedback": "approved",
+        "approvedRecommendations": [
+            {
+                "recommendation": "Schedule Executive Business Review",
+                "priority": "HIGH",
+                "reason": "Customer exhibits strong churn indicators.",
+                "confidence": 98,
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "NPS: 3",
+                    "Adoption: 35%"
+                ],
+                "status": "approved",
+                "approvedAt": "2026-06-28T10:13:39.479Z"
+            }
+        ],
+        "reviewedAt": "2026-06-28T10:13:39.479Z",
+        "timestamp": "2026-06-28T10:13:39.479Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 50,
+            "reasoning": "Fallback domain used because domain detection was unavailable."
+        },
+        "executionPlan": [
+            "CustomerHealthAgent",
+            "ContractAgent",
+            "CRMContextAgent",
+            "KnowledgeAgent",
+            "DataCompletenessAgent"
+        ],
+        "recommendations": [
+            {
+                "priority": "MEDIUM",
+                "action": "Explore Upsell Opportunities",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Request Contract Information",
+                "timeline": "3 days",
+                "impact": "Clarify renewal exposure"
+            },
+            {
+                "priority": "LOW",
+                "action": "Verify Contract Value Information",
+                "timeline": "5 days",
+                "impact": "Improve revenue forecasting"
+            },
+            {
+                "priority": "LOW",
+                "action": "Schedule Renewal Planning Meeting",
+                "timeline": "14 days",
+                "impact": "Create renewal action plan"
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Explore Upsell Opportunities",
+                "priority": "MEDIUM",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue",
+                "reason": "Existing expansion opportunities are available.",
+                "businessImpact": "Identify expansion revenue",
+                "evidence": [
+                    "Adoption is at 82%.",
+                    "Usage has been strong adoption across all departments.",
+                    "The analytics team has requested access to the Analytics Module for deeper reporting.",
+                    "Analytics Module",
+                    "Expansion Discussion"
+                ],
+                "confidence": 78
+            },
+            {
+                "recommendation": "Request Contract Information",
+                "priority": "HIGH",
+                "timeline": "3 days",
+                "impact": "Clarify renewal exposure",
+                "reason": "Contract renewal details are unavailable.",
+                "businessImpact": "Clarify renewal exposure",
+                "evidence": [
+                    "Adoption is at 82%.",
+                    "Usage has been strong adoption across all departments.",
+                    "The analytics team has requested access to the Analytics Module for deeper reporting."
+                ],
+                "confidence": 70
+            },
+            {
+                "recommendation": "Verify Contract Value Information",
+                "priority": "LOW",
+                "timeline": "5 days",
+                "impact": "Improve revenue forecasting",
+                "reason": "Contract value information is missing.",
+                "businessImpact": "Improve revenue forecasting",
+                "evidence": [
+                    "Adoption is at 82%.",
+                    "Usage has been strong adoption across all departments.",
+                    "The analytics team has requested access to the Analytics Module for deeper reporting."
+                ],
+                "confidence": 63
+            },
+            {
+                "recommendation": "Schedule Renewal Planning Meeting",
+                "priority": "LOW",
+                "timeline": "14 days",
+                "impact": "Create renewal action plan",
+                "reason": "Renewal planning activities have not been confirmed.",
+                "businessImpact": "Create renewal action plan",
+                "evidence": [
+                    "Adoption is at 82%.",
+                    "Usage has been strong adoption across all departments.",
+                    "The analytics team has requested access to the Analytics Module for deeper reporting."
+                ],
+                "confidence": 63
+            }
+        ],
+        "timestamp": "2026-06-28T10:57:43.148Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 50,
+            "reasoning": "Fallback domain used because domain detection was unavailable."
+        },
+        "executionPlan": [
+            "CustomerHealthAgent",
+            "ContractAgent",
+            "CRMContextAgent",
+            "KnowledgeAgent",
+            "DataCompletenessAgent"
+        ],
+        "recommendations": [
+            {
+                "priority": "MEDIUM",
+                "action": "Explore Upsell Opportunities",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Request Contract Information",
+                "timeline": "3 days",
+                "impact": "Clarify renewal exposure"
+            },
+            {
+                "priority": "LOW",
+                "action": "Verify Contract Value Information",
+                "timeline": "5 days",
+                "impact": "Improve revenue forecasting"
+            },
+            {
+                "priority": "LOW",
+                "action": "Schedule Renewal Planning Meeting",
+                "timeline": "14 days",
+                "impact": "Create renewal action plan"
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Explore Upsell Opportunities",
+                "priority": "MEDIUM",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue",
+                "reason": "Existing expansion opportunities are available.",
+                "businessImpact": "Identify expansion revenue",
+                "evidence": [
+                    "Adoption is at 82%.",
+                    "Usage has been strong adoption across all departments.",
+                    "The analytics team has requested access to the Analytics Module for deeper reporting.",
+                    "Analytics Module",
+                    "Expansion Discussion"
+                ],
+                "confidence": 78
+            },
+            {
+                "recommendation": "Request Contract Information",
+                "priority": "HIGH",
+                "timeline": "3 days",
+                "impact": "Clarify renewal exposure",
+                "reason": "Contract renewal details are unavailable.",
+                "businessImpact": "Clarify renewal exposure",
+                "evidence": [
+                    "Adoption is at 82%.",
+                    "Usage has been strong adoption across all departments.",
+                    "The analytics team has requested access to the Analytics Module for deeper reporting."
+                ],
+                "confidence": 70
+            },
+            {
+                "recommendation": "Verify Contract Value Information",
+                "priority": "LOW",
+                "timeline": "5 days",
+                "impact": "Improve revenue forecasting",
+                "reason": "Contract value information is missing.",
+                "businessImpact": "Improve revenue forecasting",
+                "evidence": [
+                    "Adoption is at 82%.",
+                    "Usage has been strong adoption across all departments.",
+                    "The analytics team has requested access to the Analytics Module for deeper reporting."
+                ],
+                "confidence": 63
+            },
+            {
+                "recommendation": "Schedule Renewal Planning Meeting",
+                "priority": "LOW",
+                "timeline": "14 days",
+                "impact": "Create renewal action plan",
+                "reason": "Renewal planning activities have not been confirmed.",
+                "businessImpact": "Create renewal action plan",
+                "evidence": [
+                    "Adoption is at 82%.",
+                    "Usage has been strong adoption across all departments.",
+                    "The analytics team has requested access to the Analytics Module for deeper reporting."
+                ],
+                "confidence": 63
+            }
+        ],
+        "timestamp": "2026-06-28T10:59:14.742Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 50,
+            "reasoning": "Fallback domain used because domain detection was unavailable."
+        },
+        "executionPlan": [
+            "CustomerHealthAgent",
+            "ContractAgent",
+            "KnowledgeAgent",
+            "CRMContextAgent",
+            "DataCompletenessAgent"
+        ],
+        "recommendations": [
+            {
+                "priority": "HIGH",
+                "action": "Schedule Executive Business Review",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Escalate to Senior Customer Success Manager",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Conduct Adoption Workshop",
+                "timeline": "14 days",
+                "impact": "Increase product adoption"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Review Historical Support Issues",
+                "timeline": "10 days",
+                "impact": "Reduce recurring escalations"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Explore Upsell Opportunities",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Request Contract Information",
+                "timeline": "3 days",
+                "impact": "Clarify renewal exposure"
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Schedule Executive Business Review",
+                "priority": "HIGH",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability",
+                "reason": "Customer exhibits strong churn indicators.",
+                "businessImpact": "Reduce churn probability",
+                "evidence": [
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%.",
+                    "Several teams are frustrated with onboarding.",
+                    "NPS: 3",
+                    "Adoption: 35%"
+                ],
+                "confidence": 89
+            },
+            {
+                "recommendation": "Escalate to Senior Customer Success Manager",
+                "priority": "HIGH",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Improve customer sentiment",
+                "evidence": [
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%.",
+                    "Several teams are frustrated with onboarding.",
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%."
+                ],
+                "confidence": 82
+            },
+            {
+                "recommendation": "Conduct Adoption Workshop",
+                "priority": "HIGH",
+                "timeline": "14 days",
+                "impact": "Increase product adoption",
+                "reason": "Feature adoption is below acceptable levels.",
+                "businessImpact": "Increase product adoption",
+                "evidence": [
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%.",
+                    "Several teams are frustrated with onboarding.",
+                    "Adoption: 35%"
+                ],
+                "confidence": 88
+            },
+            {
+                "recommendation": "Review Historical Support Issues",
+                "priority": "MEDIUM",
+                "timeline": "10 days",
+                "impact": "Reduce recurring escalations",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Reduce recurring escalations",
+                "evidence": [
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%.",
+                    "Several teams are frustrated with onboarding.",
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%."
+                ],
+                "confidence": 82
+            },
+            {
+                "recommendation": "Explore Upsell Opportunities",
+                "priority": "MEDIUM",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue",
+                "reason": "Existing expansion opportunities are available.",
+                "businessImpact": "Identify expansion revenue",
+                "evidence": [
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%.",
+                    "Several teams are frustrated with onboarding.",
+                    "Analytics Module",
+                    "Expansion Discussion"
+                ],
+                "confidence": 84
+            },
+            {
+                "recommendation": "Request Contract Information",
+                "priority": "HIGH",
+                "timeline": "3 days",
+                "impact": "Clarify renewal exposure",
+                "reason": "Contract renewal details are unavailable.",
+                "businessImpact": "Clarify renewal exposure",
+                "evidence": [
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%.",
+                    "Several teams are frustrated with onboarding."
+                ],
+                "confidence": 76
+            }
+        ],
+        "timestamp": "2026-06-28T11:09:51.233Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 98,
+            "reasoning": "The documents consistently discuss customer health, product adoption, satisfaction metrics (NPS, CSAT), onboarding issues, renewal concerns, potential expansion opportunities, SLA terms, and the involvement of executive sponsors in customer relationships. These topics are central to the Customer Success domain, even when financial stakeholders are mentioned in the context of renewal risks."
+        },
+        "executionPlan": [
+            "CustomerHealthAgent",
+            "ContractAgent",
+            "KnowledgeAgent",
+            "DataCompletenessAgent"
+        ],
+        "recommendations": [
+            {
+                "priority": "HIGH",
+                "action": "Initiate urgent internal data retrieval to identify the customer's executive sponsor and confirm renewal meeting details.",
+                "timeline": "Immediately (within 24-48 hours)",
+                "impact": "Enable Executive Business Review scheduling and prepare for critical renewal discussions."
+            },
+            {
+                "priority": "HIGH",
+                "action": "Schedule an Executive Business Review (EBR) within 7 days, involving the identified customer's executive sponsor and an internal VP of Customer Success.",
+                "timeline": "7 days",
+                "impact": "Address high churn risk, mitigate severe dissatisfaction, and enable executive-level problem resolution."
+            },
+            {
+                "priority": "HIGH",
+                "action": "Conduct a deep dive analysis of available adoption metrics and NPS score to pinpoint specific areas of low product utilization and dissatisfaction. Develop a targeted value realization plan.",
+                "timeline": "Within 10 days",
+                "impact": "Improve product adoption, address the root cause of customer dissatisfaction, and demonstrate tangible value."
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Initiate urgent internal data retrieval to identify the customer's executive sponsor and confirm renewal meeting details.",
+                "priority": "HIGH",
+                "timeline": "Immediately (within 24-48 hours)",
+                "impact": "Enable Executive Business Review scheduling and prepare for critical renewal discussions.",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Enable Executive Business Review scheduling and prepare for critical renewal discussions.",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026"
+                ],
+                "confidence": 89
+            },
+            {
+                "recommendation": "Schedule an Executive Business Review (EBR) within 7 days, involving the identified customer's executive sponsor and an internal VP of Customer Success.",
+                "priority": "HIGH",
+                "timeline": "7 days",
+                "impact": "Address high churn risk, mitigate severe dissatisfaction, and enable executive-level problem resolution.",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Address high churn risk, mitigate severe dissatisfaction, and enable executive-level problem resolution.",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026"
+                ],
+                "confidence": 89
+            },
+            {
+                "recommendation": "Conduct a deep dive analysis of available adoption metrics and NPS score to pinpoint specific areas of low product utilization and dissatisfaction. Develop a targeted value realization plan.",
+                "priority": "HIGH",
+                "timeline": "Within 10 days",
+                "impact": "Improve product adoption, address the root cause of customer dissatisfaction, and demonstrate tangible value.",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Improve product adoption, address the root cause of customer dissatisfaction, and demonstrate tangible value.",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026"
+                ],
+                "confidence": 89
+            }
+        ],
+        "timestamp": "2026-06-28T11:17:04.047Z"
+    },
+    {
+        "type": "recommendationApproval",
+        "source": "latestAnalysis",
+        "analysisTimestamp": "2026-06-28T11:17:04.037Z",
+        "humanFeedback": "approved",
+        "approvedRecommendations": [
+            {
+                "recommendation": "Initiate urgent internal data retrieval to identify the customer's executive sponsor and confirm renewal meeting details.",
+                "priority": "HIGH",
+                "reason": "Generated from business reasoning rules.",
+                "confidence": 89,
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026"
+                ],
+                "status": "approved",
+                "approvedAt": "2026-06-28T11:18:46.793Z"
+            }
+        ],
+        "reviewedAt": "2026-06-28T11:18:46.793Z",
+        "timestamp": "2026-06-28T11:18:46.793Z"
+    },
+    {
+        "type": "recommendationApproval",
+        "source": "latestAnalysis",
+        "analysisTimestamp": "2026-06-28T11:17:04.037Z",
+        "humanFeedback": "approved",
+        "approvedRecommendations": [
+            {
+                "recommendation": "Schedule an Executive Business Review (EBR) within 7 days, involving the identified customer's executive sponsor and an internal VP of Customer Success.",
+                "priority": "HIGH",
+                "reason": "Generated from business reasoning rules.",
+                "confidence": 89,
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026"
+                ],
+                "status": "approved",
+                "approvedAt": "2026-06-28T11:18:48.582Z"
+            }
+        ],
+        "reviewedAt": "2026-06-28T11:18:48.582Z",
+        "timestamp": "2026-06-28T11:18:48.582Z"
+    },
+    {
+        "type": "recommendationApproval",
+        "source": "latestAnalysis",
+        "analysisTimestamp": "2026-06-28T11:17:04.037Z",
+        "humanFeedback": "approved",
+        "approvedRecommendations": [
+            {
+                "recommendation": "Conduct a deep dive analysis of available adoption metrics and NPS score to pinpoint specific areas of low product utilization and dissatisfaction. Develop a targeted value realization plan.",
+                "priority": "HIGH",
+                "reason": "Generated from business reasoning rules.",
+                "confidence": 89,
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026"
+                ],
+                "status": "approved",
+                "approvedAt": "2026-06-28T11:18:51.087Z"
+            }
+        ],
+        "reviewedAt": "2026-06-28T11:18:51.087Z",
+        "timestamp": "2026-06-28T11:18:51.087Z"
     }
 ]

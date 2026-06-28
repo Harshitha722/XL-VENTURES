@@ -146,10 +146,16 @@ function normalizePlan(parsed, fallbackAgents) {
         ? parsed.agents.filter((agent) => AVAILABLE_AGENTS.includes(agent))
         : [];
 
+    const selectedAgents = agents.length
+        ? agents
+        : fallbackAgents;
+
+    if (!selectedAgents.includes("KnowledgeAgent")) {
+        selectedAgents.push("KnowledgeAgent");
+    }
+
     return {
-        agents: agents.length
-            ? [...new Set(agents)]
-            : fallbackAgents,
+        agents: [...new Set(selectedAgents)],
 
         reasoning: typeof parsed?.reasoning === "string" && parsed.reasoning.trim()
             ? parsed.reasoning.trim()
@@ -213,8 +219,12 @@ ${documentText}
         return normalizePlan(parsed, fallbackAgents);
     }
     catch (error) {
+        const agents = fallbackAgents.includes("KnowledgeAgent")
+            ? fallbackAgents
+            : [...fallbackAgents, "KnowledgeAgent"];
+
         return {
-            agents: fallbackAgents,
+            agents: [...new Set(agents)],
             reasoning: "Fallback planner selected agents using deterministic rules."
         };
     }

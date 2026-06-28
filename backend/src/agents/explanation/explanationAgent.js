@@ -1,5 +1,18 @@
 ﻿const { askGemini } = require("../../services/geminiService");
 const { parseJsonSafely } = require("../../utils/jsonUtils");
+const { getRecommendationMemoryContext } = require("../../memory/memoryRetriever");
+
+function computeDynamicConfidence(base, evidence, agentOutputs, reasoning) {
+    const completeness = reasoning.dataCompleteness?.confidence ?? 50;
+    const evidenceBonus = Math.min((evidence || []).length * 4, 16);
+    const riskBonus = reasoning.risks?.length ? 6 : 0;
+    const knowledgeBonus = agentOutputs.KnowledgeAgent?.retrievedKnowledge?.length ? 5 : 0;
+
+    return Math.max(
+        35,
+        Math.min(98, Math.round((base * 0.45) + (completeness * 0.35) + evidenceBonus + riskBonus + knowledgeBonus))
+    );
+}
 
 function getKnowledgeEvidence(action, agentOutputs) {
     const playbooks = agentOutputs.KnowledgeAgent?.playbooks || [];
@@ -332,7 +345,7 @@ function ruleBasedExplanations(
 
             evidence,
 
-            confidence
+            confidence: computeDynamicConfidence(confidence, evidence, agentOutputs, reasoning)
         };
     });
 }
@@ -388,10 +401,8 @@ async function explanationAgent(
         orchestrationInput
     );
 
-    const documentEvidence = [
-        ...(orchestrationInput.evidence || []),
-        ...(agentOutputs.KnowledgeAgent?.evidence || [])
-    ];
+    const documentEvidence = orchestrationInput.evidence || [];
+    const memoryContext = getRecommendationMemoryContext();
 
     try {
         const explanations = [];
@@ -415,6 +426,10 @@ ${JSON.stringify(reasoning, null, 2)}
 Evidence:
 
 ${JSON.stringify(documentEvidence, null, 2)}
+
+Approved recommendation memory:
+
+${memoryContext}
 
 Return ONLY valid JSON:
 

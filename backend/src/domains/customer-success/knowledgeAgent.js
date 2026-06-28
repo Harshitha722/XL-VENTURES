@@ -1,55 +1,39 @@
-﻿const {
-    loadKnowledgeBase,
-    retrieveKnowledge
-} = require("../../services/knowledgeRetriever");
+const { retrievePlaybooks, keywordRetrieve } = require("../../knowledge/vectorStore");
 
-function buildQuery(uploadedText) {
+function buildKnowledgeQuery(uploadedText) {
     return [
         uploadedText.contractText,
         uploadedText.meetingText,
         uploadedText.emailText,
-        ...(uploadedText.evidence || [])
-    ]
-        .filter(Boolean)
-        .join("\n");
+        uploadedText.evidence?.join("\n")
+    ].filter(Boolean).join("\n\n");
 }
 
-/**
- * KNOWLEDGE AGENT
- *
- * Retrieves the most relevant internal knowledge chunks for the uploaded
- * customer context. This is local lexical RAG; the retriever can be swapped
- * with embeddings/vector search later without changing this output contract.
- */
-function knowledgeAgent(uploadedText) {
-    const query = buildQuery(uploadedText || {});
-    const matches = retrieveKnowledge(query, {
-        limit: 5
-    });
+async function knowledgeAgent(uploadedText) {
+    const query = buildKnowledgeQuery(uploadedText);
+    const fallback = keywordRetrieve(query, 3);
 
-    const playbooks = matches.map((match) => ({
-        trigger: match.title,
-        action: match.action,
-        category: match.category,
-        source: match.source,
-        score: match.score,
-        snippets: match.snippets
-    }));
+    try {
+        const retrievedKnowledge = await retrievePlaybooks(query, 3);
 
-    return {
-        playbooks,
-        evidence: matches.flatMap((match) =>
-            match.snippets.map((snippet) =>
-                `${match.title} / ${snippet.heading}: ${snippet.text} (${match.source})`
-            )
-        ).slice(0, 8)
-    };
+        return {
+            retrievedKnowledge,
+            playbooks: retrievedKnowledge.map((item) => ({
+                trigger: item.title,
+                action: item.content
+            })),
+            evidence: retrievedKnowledge.map((item) => `${item.title} retrieved via ${item.retrievalMethod}.`)
+        };
+    } catch (error) {
+        return {
+            retrievedKnowledge: fallback,
+            playbooks: fallback.map((item) => ({
+                trigger: item.title,
+                action: item.content
+            })),
+            evidence: fallback.map((item) => `${item.title} retrieved via keyword fallback.`)
+        };
+    }
 }
-
-knowledgeAgent.loadKnowledgeBase =
-    loadKnowledgeBase;
-
-knowledgeAgent.retrieveKnowledge =
-    retrieveKnowledge;
 
 module.exports = knowledgeAgent;

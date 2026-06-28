@@ -31,6 +31,14 @@ function Navbar() {
                     Architecture
                 </Link>
 
+                <Link to="/metrics">
+                    Metrics
+                </Link>
+
+                <Link to="/knowledge">
+                    Knowledge
+                </Link>
+
             </div>
 
         </nav>
