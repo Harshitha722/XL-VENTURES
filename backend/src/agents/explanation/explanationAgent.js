@@ -1,4 +1,4 @@
-const { askGemini } = require("../../services/geminiService");
+﻿const { askGemini } = require("../../services/geminiService");
 const { parseJsonSafely } = require("../../utils/jsonUtils");
 const { getRecommendationMemoryContext } = require("../../memory/memoryRetriever");
 
@@ -12,6 +12,26 @@ function computeDynamicConfidence(base, evidence, agentOutputs, reasoning) {
         35,
         Math.min(98, Math.round((base * 0.45) + (completeness * 0.35) + evidenceBonus + riskBonus + knowledgeBonus))
     );
+}
+
+function getKnowledgeEvidence(action, agentOutputs) {
+    const playbooks = agentOutputs.KnowledgeAgent?.playbooks || [];
+    const normalizedAction = String(action || "").toLowerCase();
+
+    const related = playbooks.filter((playbook) =>
+        String(playbook.action || "").toLowerCase() === normalizedAction ||
+        normalizedAction.includes(String(playbook.trigger || "").toLowerCase())
+    );
+
+    const selected = related.length
+        ? related
+        : playbooks.slice(0, 2);
+
+    return selected.flatMap((playbook) =>
+        (playbook.snippets || []).map((snippet) =>
+            `${playbook.trigger} / ${snippet.heading}: ${snippet.text} (${playbook.source})`
+        )
+    ).slice(0, 4);
 }
 
 function ruleBasedExplanations(
@@ -276,6 +296,34 @@ function ruleBasedExplanations(
         }
 
 
+        const knowledgeEvidence = getKnowledgeEvidence(
+            item.action,
+            agentOutputs
+        );
+
+        if (knowledgeEvidence.length) {
+
+            if (!evidence.length) {
+                reason =
+                    "Generated from retrieved internal knowledge guidance.";
+
+                confidence = Math.max(confidence, 82);
+            }
+
+            evidence = [
+
+                ...(orchestrationInput.evidence || []).slice(0, 3),
+
+                ...knowledgeEvidence,
+
+                ...evidence
+
+            ]
+                .filter(Boolean)
+                .filter((entry, index, self) => self.indexOf(entry) === index)
+                .slice(0, 5);
+        }
+
         return {
 
             recommendation:
@@ -418,3 +466,5 @@ module.exports =
     explanationAgent;
 
     
+
+

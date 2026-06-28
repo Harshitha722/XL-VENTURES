@@ -1,4 +1,4 @@
-const { askGemini } = require("../../services/geminiService");
+﻿const { askGemini } = require("../../services/geminiService");
 const { parseJsonSafely } = require("../../utils/jsonUtils");
 
 const AVAILABLE_AGENTS = [
@@ -73,7 +73,12 @@ function ruleBasedPlanner(uploadedText) {
         text.includes("issue") ||
         text.includes("support") ||
         text.includes("escalate") ||
-        text.includes("playbook")
+        text.includes("playbook") ||
+        text.includes("renew") ||
+        text.includes("adoption") ||
+        text.includes("discount") ||
+        text.includes("competitor") ||
+        text.includes("sla")
 
     ) {
 
@@ -229,3 +234,4 @@ plannerAgent.ruleBasedPlanner = ruleBasedPlanner;
 
 module.exports =
     plannerAgent;
+

@@ -1,4 +1,4 @@
-const { askGemini } = require("../../services/geminiService");
+﻿const { askGemini } = require("../../services/geminiService");
 const { parseJsonSafely } = require("../../utils/jsonUtils");
 const { getRecommendationMemoryContext } = require("../../memory/memoryRetriever");
 const BUSINESS_RULES = require("../../config/businessRules");
@@ -287,6 +287,41 @@ function ruleBasedRecommendations(reasoning) {
     });
 
 
+
+    /**
+     * =========================
+     * Handle Retrieved Knowledge
+     * =========================
+     */
+    (reasoning.knowledgeGuidance || [])
+        .filter((item) =>
+            item &&
+            item.action &&
+            item.action !== "Review knowledge guidance"
+        )
+        .slice(0, 5)
+        .forEach((item) => {
+
+            recommendations.push({
+
+                priority:
+                    item.category === "playbooks" || item.category === "policies"
+                        ? "HIGH"
+                        : "MEDIUM",
+
+                action:
+                    item.action,
+
+                timeline:
+                    item.category === "policies"
+                        ? "3 days"
+                        : "7 days",
+
+                impact:
+                    `Apply internal guidance from ${item.title}`
+            });
+        });
+
     /**
      * Remove duplicate actions.
      */
@@ -386,3 +421,4 @@ recommendationAgent.ruleBasedRecommendations = ruleBasedRecommendations;
 
 module.exports =
     recommendationAgent;
+
