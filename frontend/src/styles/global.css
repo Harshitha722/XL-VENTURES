@@ -13,14 +13,14 @@ body {
         "Segoe UI",
         sans-serif;
     color: #14213d;
-    background: #eef3f8;
+    background:#eef3f8;
 }
 
 button,
 input,
 select,
 textarea {
-    font: inherit;
+    font: inherit ;
 }
 
 .app-shell {
