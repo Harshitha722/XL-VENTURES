@@ -1,4 +1,4 @@
-/**
+﻿/**
  * BUSINESS REASONING AGENT
  *
  * Purpose:
@@ -23,6 +23,9 @@ function businessReasoningAgent(agentOutputs) {
 
     const crm =
         agentOutputs.CRMContextAgent;
+
+    const knowledge =
+        agentOutputs.KnowledgeAgent;
 
     const completeness =
         agentOutputs.DataCompletenessAgent;
@@ -146,11 +149,19 @@ function businessReasoningAgent(agentOutputs) {
             [...new Set(missingInformation)],
 
         dataCompleteness:
-            completeness
+            completeness,
+
+        knowledgeGuidance:
+            knowledge?.playbooks?.map((playbook) => ({
+                title: playbook.trigger,
+                action: playbook.action,
+                category: playbook.category,
+                source: playbook.source,
+                score: playbook.score
+            })) || []
     };
 }
 
 
 module.exports =
     businessReasoningAgent;
-    

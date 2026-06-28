@@ -1,62 +1,55 @@
-﻿const PLAYBOOKS = {
-    lowAdoption: {
-        trigger: "Low adoption",
-        action: "Conduct Adoption Workshop"
-    },
-    escalation: {
-        trigger: "Escalation",
-        action: "Executive Business Review"
-    },
-    renewalRisk: {
-        trigger: "Renewal risk",
-        action: "Initiate Renewal Process"
-    }
-};
+﻿const {
+    loadKnowledgeBase,
+    retrieveKnowledge
+} = require("../../services/knowledgeRetriever");
+
+function buildQuery(uploadedText) {
+    return [
+        uploadedText.contractText,
+        uploadedText.meetingText,
+        uploadedText.emailText,
+        ...(uploadedText.evidence || [])
+    ]
+        .filter(Boolean)
+        .join("\n");
+}
 
 /**
  * KNOWLEDGE AGENT
  *
- * Uses internal static mappings derived from uploaded documents.
- * The shape stays modular so a vector database can replace this later.
+ * Retrieves the most relevant internal knowledge chunks for the uploaded
+ * customer context. This is local lexical RAG; the retriever can be swapped
+ * with embeddings/vector search later without changing this output contract.
  */
 function knowledgeAgent(uploadedText) {
-    const text = [
-        uploadedText.contractText,
-        uploadedText.meetingText,
-        uploadedText.emailText
-    ]
-        .join("\n")
-        .toLowerCase();
+    const query = buildQuery(uploadedText || {});
+    const matches = retrieveKnowledge(query, {
+        limit: 5
+    });
 
-    const playbooks = [];
-
-    if (text.includes("low adoption") || text.includes("adoption")) {
-        playbooks.push(PLAYBOOKS.lowAdoption);
-    }
-
-    if (
-        text.includes("escalation") ||
-        text.includes("escalate") ||
-        text.includes("executive review")
-    ) {
-        playbooks.push(PLAYBOOKS.escalation);
-    }
-
-    if (
-        text.includes("may not renew") ||
-        text.includes("renewal risk") ||
-        text.includes("auto renewal: no")
-    ) {
-        playbooks.push(PLAYBOOKS.renewalRisk);
-    }
+    const playbooks = matches.map((match) => ({
+        trigger: match.title,
+        action: match.action,
+        category: match.category,
+        source: match.source,
+        score: match.score,
+        snippets: match.snippets
+    }));
 
     return {
         playbooks,
-        evidence: playbooks.map(
-            (playbook) => `${playbook.trigger} playbook selected.`
-        )
+        evidence: matches.flatMap((match) =>
+            match.snippets.map((snippet) =>
+                `${match.title} / ${snippet.heading}: ${snippet.text} (${match.source})`
+            )
+        ).slice(0, 8)
     };
 }
 
-module.exports = knowledgeAgent;
+knowledgeAgent.loadKnowledgeBase =
+    loadKnowledgeBase;
 
+knowledgeAgent.retrieveKnowledge =
+    retrieveKnowledge;
+
+module.exports = knowledgeAgent;

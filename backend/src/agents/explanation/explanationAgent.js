@@ -1,5 +1,25 @@
-const { askGemini } = require("../../services/geminiService");
+﻿const { askGemini } = require("../../services/geminiService");
 const { parseJsonSafely } = require("../../utils/jsonUtils");
+
+function getKnowledgeEvidence(action, agentOutputs) {
+    const playbooks = agentOutputs.KnowledgeAgent?.playbooks || [];
+    const normalizedAction = String(action || "").toLowerCase();
+
+    const related = playbooks.filter((playbook) =>
+        String(playbook.action || "").toLowerCase() === normalizedAction ||
+        normalizedAction.includes(String(playbook.trigger || "").toLowerCase())
+    );
+
+    const selected = related.length
+        ? related
+        : playbooks.slice(0, 2);
+
+    return selected.flatMap((playbook) =>
+        (playbook.snippets || []).map((snippet) =>
+            `${playbook.trigger} / ${snippet.heading}: ${snippet.text} (${playbook.source})`
+        )
+    ).slice(0, 4);
+}
 
 function ruleBasedExplanations(
     recommendations,
@@ -263,6 +283,34 @@ function ruleBasedExplanations(
         }
 
 
+        const knowledgeEvidence = getKnowledgeEvidence(
+            item.action,
+            agentOutputs
+        );
+
+        if (knowledgeEvidence.length) {
+
+            if (!evidence.length) {
+                reason =
+                    "Generated from retrieved internal knowledge guidance.";
+
+                confidence = Math.max(confidence, 82);
+            }
+
+            evidence = [
+
+                ...(orchestrationInput.evidence || []).slice(0, 3),
+
+                ...knowledgeEvidence,
+
+                ...evidence
+
+            ]
+                .filter(Boolean)
+                .filter((entry, index, self) => self.indexOf(entry) === index)
+                .slice(0, 5);
+        }
+
         return {
 
             recommendation:
@@ -340,7 +388,10 @@ async function explanationAgent(
         orchestrationInput
     );
 
-    const documentEvidence = orchestrationInput.evidence || [];
+    const documentEvidence = [
+        ...(orchestrationInput.evidence || []),
+        ...(agentOutputs.KnowledgeAgent?.evidence || [])
+    ];
 
     try {
         const explanations = [];
@@ -400,3 +451,5 @@ module.exports =
     explanationAgent;
 
     
+
+
