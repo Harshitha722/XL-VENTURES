@@ -11,6 +11,8 @@ import AnalysisPage from "./pages/AnalysisPage";
 import RecommendationsPage from "./pages/RecommendationsPage";
 import MemoryPage from "./pages/MemoryPage";
 import ArchitecturePage from "./pages/ArchitecturePage";
+import ScenarioAnalysisPage from "./pages/ScenarioAnalysisPage";
+import DevilsAdvocatePage from "./pages/DevilsAdvocatePage";
 import MetricsPage from "./pages/MetricsPage";
 import KnowledgeBasePage from "./pages/KnowledgeBasePage";
 
@@ -30,6 +32,8 @@ function AppLayout() {
                     <Route path="/upload" element={<UploadPage />} />
                     <Route path="/planner" element={<PlannerPage />} />
                     <Route path="/analysis" element={<AnalysisPage />} />
+                    <Route path="/scenario-analysis" element={<ScenarioAnalysisPage />} />
+                    <Route path="/devils-advocate" element={<DevilsAdvocatePage />} />
                     <Route path="/recommendations" element={<RecommendationsPage />} />
                     <Route path="/memory" element={<MemoryPage />} />
                     <Route path="/architecture" element={<ArchitecturePage />} />

@@ -10,6 +10,15 @@ const mongoose = require("mongoose");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
 
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+if (!GEMINI_API_KEY) {
+    console.warn(
+        "WARNING: GEMINI_API_KEY or GOOGLE_API_KEY is not configured. " +
+        "Gemini requests will fail and the app will fall back to heuristic behavior. " +
+        "Create backend/.env from backend/.env.example and set your API key."
+    );
+}
+
 // Route Imports
 const orchestrationRoutes =
     require("./routes/orchestrationRoutes");
@@ -43,6 +52,12 @@ const knowledgeRoutes =
 
 const businessRulesRoutes =
     require("./routes/businessRulesRoutes");
+
+const scenarioRoutes =
+    require("./routes/scenarioRoutes");
+
+const devilsAdvocateRoutes =
+    require("./routes/devilsAdvocateRoutes");
 
 
 const app = express();
@@ -200,6 +215,16 @@ app.use(
 app.use(
     "/api/knowledge",
     knowledgeRoutes
+);
+
+app.use(
+    "/api/scenario-analysis",
+    scenarioRoutes
+);
+
+app.use(
+    "/api/devils-advocate",
+    devilsAdvocateRoutes
 );
 
 app.use(

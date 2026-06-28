@@ -375,44 +375,80 @@ function normalizeRecommendations(items, fallback) {
     return normalized.length ? normalized : fallback;
 }
 
-async function recommendationAgent(reasoning) {
+async function recommendationAgent(reasoning, scenarioAnalysis = {}, devilsAdvocateReview = {}) {
     const fallback = ruleBasedRecommendations(reasoning);
     const memoryContext = getRecommendationMemoryContext();
 
     const prompt = `
 You are a Senior Customer Success Strategist.
+You receive business reasoning, multiple simulated scenarios, and a Devil's Advocate critique.
 
 Business Analysis:
-
 ${JSON.stringify(reasoning, null, 2)}
 
-Previously approved recommendation patterns:
+Simulated Scenarios:
+${JSON.stringify(scenarioAnalysis.scenarios || [], null, 2)}
 
+Best Scenario:
+${JSON.stringify(scenarioAnalysis.bestScenario || {}, null, 2)}
+
+Devil's Advocate Feedback:
+${JSON.stringify(devilsAdvocateReview, null, 2)}
+
+Previously approved recommendation patterns:
 ${memoryContext}
 
-Generate 3 to ${BUSINESS_RULES.recommendations.maxRecommendations} prioritized recommendations. Prefer actions similar to approved history when they fit the current facts.
+Generate the Final Next Best Action, evidence, and confidence. If the Devil's Advocate review identifies a better alternative, incorporate that into your final decision.
 
 Return ONLY valid JSON:
-
-[
-  {
+{
+  "finalRecommendation": {
     "priority": "HIGH",
-    "action": "Schedule Executive Review",
+    "action": "Quarterly Payment Plan",
     "timeline": "7 days",
-    "impact": "Reduce churn probability"
-  }
-]
+    "impact": "Highest long-term business value"
+  },
+  "reason": "Highest long-term business value.",
+  "evidence": [
+    "91% renewal probability",
+    "Revenue preserved",
+    "Lower churn risk",
+    "Devil's Advocate found discount unnecessary"
+  ],
+  "confidence": 93
+}
 `;
 
     try {
         const response = await askGemini(prompt);
-        const parsed = parseJsonSafely(response, fallback);
+        const parsed = parseJsonSafely(response, {
+            finalRecommendation: null,
+            reason: "",
+            evidence: [],
+            confidence: 0
+        });
 
-        return normalizeRecommendations(parsed, fallback)
-            .slice(0, BUSINESS_RULES.recommendations.maxRecommendations);
+        const recommendations = normalizeRecommendations(
+            parsed.finalRecommendation ? [parsed.finalRecommendation] : fallback,
+            fallback
+        ).slice(0, BUSINESS_RULES.recommendations.maxRecommendations);
+
+        return {
+            recommendations,
+            finalRecommendation: parsed.finalRecommendation || recommendations[0] || null,
+            reason: parsed.reason || "Based on the highest scoring scenario and business context.",
+            evidence: Array.isArray(parsed.evidence) ? parsed.evidence : [],
+            confidence: Number(parsed.confidence) || 0
+        };
     }
     catch (error) {
-        return fallback.slice(0, BUSINESS_RULES.recommendations.maxRecommendations);
+        return {
+            recommendations: fallback.slice(0, BUSINESS_RULES.recommendations.maxRecommendations),
+            finalRecommendation: fallback[0] || null,
+            reason: "Based on deterministic recommendation rules.",
+            evidence: [],
+            confidence: 0
+        };
     }
 }
 

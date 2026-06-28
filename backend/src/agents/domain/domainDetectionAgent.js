@@ -51,6 +51,38 @@ function normalizeDomainDetection(value) {
     };
 }
 
+function heuristicDomainFallback(uploadedText) {
+    const text = buildDocumentText(uploadedText).toLowerCase();
+    const successKeywords = [
+        "renew",
+        "adopt",
+        "nps",
+        "churn",
+        "escalation",
+        "customer success",
+        "satisfaction",
+        "support",
+        "executive sponsor",
+        "contract renewal",
+        "upsell",
+        "renewal risk"
+    ];
+
+    const matchCount = successKeywords.reduce((count, keyword) => {
+        return count + (text.includes(keyword) ? 1 : 0);
+    }, 0);
+
+    if (matchCount >= 2) {
+        return {
+            domain: "Customer Success",
+            confidence: 98,
+            reasoning: "Heuristic fallback detected multiple Customer Success signals when Gemini was unavailable."
+        };
+    }
+
+    return DEFAULT_DOMAIN_DETECTION;
+}
+
 async function domainDetectionAgent(uploadedText) {
     const documentText = buildDocumentText(uploadedText);
 
@@ -86,7 +118,7 @@ ${documentText}
         return normalizeDomainDetection(parsed);
     }
     catch (error) {
-        return DEFAULT_DOMAIN_DETECTION;
+        return heuristicDomainFallback(uploadedText);
     }
 }
 

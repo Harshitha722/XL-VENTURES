@@ -11,12 +11,15 @@ const MODEL_NAME = "gemini-2.5-flash";
 let client = null;
 
 function getClient() {
-    if (!process.env.GEMINI_API_KEY) {
+    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+
+    if (!apiKey) {
         return null;
     }
+
     if (!client) {
         client = new GoogleGenAI({
-            apiKey: process.env.GEMINI_API_KEY
+            apiKey
         });
     }
     return client;

@@ -70,6 +70,14 @@ textarea {
     background: rgba(255, 255, 255, 0.1);
 }
 
+.sidebar a.logout-link {
+    color: #ff8a85;
+}
+
+.sidebar a.logout-link:hover {
+    background: rgba(255, 138, 133, 0.15);
+}
+
 .app-main {
     flex: 1;
     padding: 32px;
@@ -1044,13 +1052,38 @@ textarea {
     gap: 12px;
 }
 
+.analysis-columns article {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.analysis-columns article ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+}
+
+.analysis-columns article li {
+    color: #334e68;
+    font-size: 14px;
+}
+
 .analysis-columns > div,
 .recommendation-list,
-.evidence-panel {
+.evidence-panel,
+.selected-card {
     padding: 16px;
     background: #ffffff;
     border: 1px solid #e0e8f0;
     border-radius: 8px;
+}
+
+.selected-card {
+    border-color: #2563eb;
+    background: #f0f5ff;
 }
 
 .analysis-columns h3,

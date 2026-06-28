@@ -13,6 +13,12 @@ const AgentRegistry =
 const businessReasoningAgent =
     require("../agents/reasoning/businessReasoningAgent");
 
+const scenarioSimulationAgent =
+    require("../agents/simulation/scenarioSimulationAgent");
+
+const devilsAdvocateAgent =
+    require("../agents/critique/devilsAdvocateAgent");
+
 const recommendationAgent =
     require("../agents/recommendation/recommendationAgent");
 
@@ -168,12 +174,46 @@ async function orchestrate(uploadedText) {
 
 
     /**
+     * Scenario simulation layer.
+     */
+    const scenarioAnalysis =
+        await scenarioSimulationAgent({
+            agentOutputs,
+            reasoning,
+            orchestrationInput
+        });
+
+
+    /**
+     * Devil's Advocate critique.
+     */
+    const devilsAdvocateReview =
+        await devilsAdvocateAgent({
+            bestScenario: scenarioAnalysis.bestScenario,
+            reasoning,
+            agentOutputs
+        });
+
+
+    /**
      * Generate recommendations.
      */
-    const recommendations =
+    const recommendationResult =
         await recommendationAgent(
-            reasoning
+            reasoning,
+            scenarioAnalysis,
+            devilsAdvocateReview
         );
+
+    const recommendations =
+        Array.isArray(recommendationResult.recommendations)
+            ? recommendationResult.recommendations
+            : recommendationResult;
+
+    const finalRecommendation =
+        recommendationResult.finalRecommendation ||
+        recommendations[0] ||
+        null;
 
 
     /**
@@ -197,7 +237,9 @@ async function orchestrate(uploadedText) {
 
         executionPlan: [
             ...executionPlan,
-            "DataCompletenessAgent"
+            "DataCompletenessAgent",
+            "ScenarioSimulationAgent",
+            "DevilsAdvocateAgent"
         ],
 
         executionPlanReasoning,
@@ -205,6 +247,12 @@ async function orchestrate(uploadedText) {
         agentOutputs,
 
         reasoning,
+
+        scenarioAnalysis,
+
+        devilsAdvocateReview,
+
+        finalRecommendation,
 
         recommendations,
 
@@ -218,6 +266,10 @@ async function orchestrate(uploadedText) {
         type: "analysis",
         domainDetection,
         executionPlan: result.executionPlan,
+        reasoning,
+        scenarioAnalysis,
+        devilsAdvocateReview,
+        finalRecommendation,
         recommendations,
         explanations
     });

@@ -170,6 +170,10 @@ function Home() {
           <div className="flow-arrow">↓</div>
           <div className="flow-node">Business Reasoning Agent</div>
           <div className="flow-arrow">↓</div>
+          <div className="flow-node">Scenario Simulation Agent</div>
+          <div className="flow-arrow">↓</div>
+          <div className="flow-node">Devil's Advocate Agent</div>
+          <div className="flow-arrow">↓</div>
           <div className="flow-node">Recommendation Agent</div>
           <div className="flow-arrow">↓</div>
           <div className="flow-node">Human Review</div>

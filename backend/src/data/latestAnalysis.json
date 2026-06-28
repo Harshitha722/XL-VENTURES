@@ -1,17 +1,20 @@
 {
-    "timestamp": "2026-06-28T14:22:46.573Z",
+    "timestamp": "2026-06-28T17:06:29.401Z",
     "domainDetection": {
         "domain": "Customer Success",
-        "confidence": 99,
-        "reasoning": "The documents consistently refer to customer contracts, renewal dates, adoption metrics (NPS, CSAT), customer dissatisfaction, potential non-renewal, expansion opportunities, and the involvement of executive stakeholders in customer reviews and escalations. These are all critical aspects of managing customer relationships and ensuring their success and retention."
+        "confidence": 98,
+        "reasoning": "The documents consistently highlight themes central to Customer Success, including customer renewal dates, adoption metrics (NPS, CSAT), onboarding issues, executive sponsor engagement in quarterly reviews, customer escalations due to dissatisfaction, and potential expansion opportunities linked to customer success and product adoption."
     },
     "executionPlan": [
         "CustomerHealthAgent",
         "ContractAgent",
         "KnowledgeAgent",
-        "DataCompletenessAgent"
+        "CRMContextAgent",
+        "DataCompletenessAgent",
+        "ScenarioSimulationAgent",
+        "DevilsAdvocateAgent"
     ],
-    "executionPlanReasoning": "The documents clearly indicate significant adoption issues and low NPS, posing a direct threat to the upcoming contract renewal.",
+    "executionPlanReasoning": "Fallback planner selected agents using deterministic rules.",
     "agentOutputs": {
         "CustomerHealthAgent": {
             "adoption": 35,
@@ -112,17 +115,34 @@
                 "Low Adoption Intervention Playbook retrieved via embedding."
             ]
         },
+        "CRMContextAgent": {
+            "tier": "Enterprise",
+            "opportunities": [
+                "Analytics Module",
+                "AI Assistant",
+                "Expansion Discussion"
+            ],
+            "stakeholders": [
+                "Executive Sponsor",
+                "Finance Stakeholder"
+            ],
+            "escalations": 2,
+            "executiveSponsor": null,
+            "openSupportTickets": null,
+            "lastEngagementSentiment": "neutral",
+            "expansionPotential": "medium",
+            "evidence": []
+        },
         "DataCompletenessAgent": {
             "available": [
                 "adoption metrics",
                 "NPS score",
                 "renewal date",
-                "contract value"
-            ],
-            "missing": [
+                "contract value",
                 "executive sponsor"
             ],
-            "confidence": 80
+            "missing": [],
+            "confidence": 100
         }
     },
     "reasoning": {
@@ -130,13 +150,14 @@
             "churn risk",
             "customer dissatisfaction",
             "low product adoption",
-            "renewal risk"
+            "renewal risk",
+            "frequent escalations"
         ],
         "opportunities": [
-            "retention discount strategy"
+            "retention discount strategy",
+            "upsell opportunity"
         ],
         "missingInformation": [
-            "executive sponsor",
             "renewal meeting confirmation"
         ],
         "dataCompleteness": {
@@ -144,12 +165,11 @@
                 "adoption metrics",
                 "NPS score",
                 "renewal date",
-                "contract value"
-            ],
-            "missing": [
+                "contract value",
                 "executive sponsor"
             ],
-            "confidence": 80
+            "missing": [],
+            "confidence": 100
         },
         "knowledgeGuidance": [
             {
@@ -180,6 +200,85 @@
         "businessContext": "",
         "priorityFocus": ""
     },
+    "scenarioAnalysis": {
+        "scenarios": [
+            {
+                "id": "scenario-1",
+                "name": "Strategic EBR, Adoption Workshop & Analytics Deep Dive",
+                "summary": "Execute the customer's requested Executive Business Review within 7 days, involving internal and customer executives to address overall satisfaction, ROI, and future roadmap. Simultaneously, initiate an Accelerated Adoption Program, including a hands-on workshop led by a Solutions Engineer to improve onboarding and feature usage. Integrate a detailed discussion and demo of the Analytics Module, positioning it as a key solution to their data needs and a driver for increased value and adoption.",
+                "renewalProbability": 80,
+                "churnProbability": 20,
+                "revenueImpact": "Positive",
+                "customerSatisfaction": "High",
+                "confidence": 85
+            },
+            {
+                "id": "scenario-2",
+                "name": "Accelerated Adoption Program & Value Validation (Pre-EBR)",
+                "summary": "Prioritize an intensive 30-day Accelerated Adoption Program, including a hands-on workshop led by a Solutions Engineer to immediately address onboarding frustrations and low feature usage. Defer the Executive Business Review until demonstrable adoption improvements can be presented, aiming to build positive momentum. Once improvements are validated, schedule the EBR to review progress, reinforce value, and discuss the Analytics Module as a further enhancement.",
+                "renewalProbability": 65,
+                "churnProbability": 35,
+                "revenueImpact": "Neutral",
+                "customerSatisfaction": "Medium",
+                "confidence": 70
+            },
+            {
+                "id": "scenario-3",
+                "name": "Proactive Discounted Renewal Offer & Analytics Pitch",
+                "summary": "Immediately acknowledge customer dissatisfaction and proactively offer a tiered discount (e.g., 10-15%) for a multi-year renewal to secure the contract and mitigate immediate churn risk. Simultaneously, pitch the Analytics Module as a solution to their data visibility problems, hoping it will drive future perceived value. Postpone deeper operational reviews and adoption workshops until the renewal is secured, focusing on the financial incentive to retain the customer.",
+                "renewalProbability": 45,
+                "churnProbability": 55,
+                "revenueImpact": "Negative",
+                "customerSatisfaction": "Low",
+                "confidence": 40
+            }
+        ],
+        "selectedScenarioId": "scenario-1",
+        "bestScenario": {
+            "id": "scenario-1",
+            "name": "Strategic EBR, Adoption Workshop & Analytics Deep Dive",
+            "summary": "Execute the customer's requested Executive Business Review within 7 days, involving internal and customer executives to address overall satisfaction, ROI, and future roadmap. Simultaneously, initiate an Accelerated Adoption Program, including a hands-on workshop led by a Solutions Engineer to improve onboarding and feature usage. Integrate a detailed discussion and demo of the Analytics Module, positioning it as a key solution to their data needs and a driver for increased value and adoption.",
+            "renewalProbability": 80,
+            "churnProbability": 20,
+            "revenueImpact": "Positive",
+            "customerSatisfaction": "High",
+            "confidence": 85
+        }
+    },
+    "devilsAdvocateReview": {
+        "scenarioId": "scenario-1",
+        "scenarioName": "Strategic EBR, Adoption Workshop & Analytics Deep Dive",
+        "potentialWeaknesses": [
+            "Potential revenue impact from the selected option.",
+            "The selected scenario may create customer expectations that are hard to sustain."
+        ],
+        "longTermDisadvantages": [
+            "Margin pressure could harm future renewal negotiations.",
+            "It may reduce ability to pursue higher-value upsell opportunities."
+        ],
+        "revenueTradeOffs": [
+            "Short-term renewal may come at the cost of long-term revenue growth."
+        ],
+        "customerRelationshipRisks": [
+            "Customers may expect similar concessions in the next cycle."
+        ],
+        "alternative": {
+            "name": "Quarterly Payment Plan",
+            "summary": "A balanced approach that preserves revenue while improving renewal probability.",
+            "renewalProbability": 91,
+            "churnProbability": 9,
+            "revenueImpact": "Medium",
+            "customerSatisfaction": "High",
+            "confidence": 88
+        },
+        "finalVerdict": "The selected scenario should be reviewed for risk; a more balanced alternative may be preferable."
+    },
+    "finalRecommendation": {
+        "priority": "HIGH",
+        "action": "Schedule Executive Business Review",
+        "timeline": "7 days",
+        "impact": "Reduce churn probability"
+    },
     "recommendations": [
         {
             "priority": "HIGH",
@@ -207,15 +306,15 @@
         },
         {
             "priority": "MEDIUM",
-            "action": "Offer Renewal Incentive",
-            "timeline": "14 days",
-            "impact": "Improve retention likelihood"
+            "action": "Review Historical Support Issues",
+            "timeline": "10 days",
+            "impact": "Reduce recurring escalations"
         },
         {
             "priority": "MEDIUM",
-            "action": "Identify Executive Sponsor",
-            "timeline": "10 days",
-            "impact": "Strengthen executive alignment"
+            "action": "Offer Renewal Incentive",
+            "timeline": "14 days",
+            "impact": "Improve retention likelihood"
         }
     ],
     "explanations": [
@@ -233,7 +332,7 @@
                 "NPS: 3",
                 "Adoption: 35%"
             ],
-            "confidence": 96
+            "confidence": 98
         },
         {
             "recommendation": "Escalate to Senior Customer Success Manager",
@@ -249,7 +348,7 @@
                 "Contract Value: $300,000",
                 "Renewal Date: August 15, 2026"
             ],
-            "confidence": 89
+            "confidence": 96
         },
         {
             "recommendation": "Conduct Adoption Workshop",
@@ -264,7 +363,7 @@
                 "Auto Renewal: No",
                 "Adoption: 35%"
             ],
-            "confidence": 95
+            "confidence": 98
         },
         {
             "recommendation": "Initiate Renewal Discussion",
@@ -280,7 +379,23 @@
                 "Renewal Date: August 15, 2026",
                 "Auto Renew: false"
             ],
-            "confidence": 93
+            "confidence": 98
+        },
+        {
+            "recommendation": "Review Historical Support Issues",
+            "priority": "MEDIUM",
+            "timeline": "10 days",
+            "impact": "Reduce recurring escalations",
+            "reason": "Generated from business reasoning rules.",
+            "businessImpact": "Reduce recurring escalations",
+            "evidence": [
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No",
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026"
+            ],
+            "confidence": 96
         },
         {
             "recommendation": "Offer Renewal Incentive",
@@ -296,21 +411,7 @@
                 "Discount Allowed: true",
                 "Max Discount: 15%"
             ],
-            "confidence": 92
-        },
-        {
-            "recommendation": "Identify Executive Sponsor",
-            "priority": "MEDIUM",
-            "timeline": "10 days",
-            "impact": "Strengthen executive alignment",
-            "reason": "No executive sponsor or stakeholder was identified.",
-            "businessImpact": "Strengthen executive alignment",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No"
-            ],
-            "confidence": 78
+            "confidence": 98
         }
     ]
 }

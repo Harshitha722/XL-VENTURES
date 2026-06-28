@@ -111,57 +111,47 @@ function PlannerPage() {
                         className="timeline-panel"
                     >
 
-                        {executionPlan.map(
-                            (agent, index) => (
+                        {executionPlan.map((agent, index) => (
 
-                                <article
-                                    key={agent}
-                                    className="timeline-step"
-                                >
+                            <article
+                                key={agent}
+                                className="timeline-step"
+                            >
 
-                                    <span>
-                                        {index + 1}
-                                    </span>
+                                <span>
+                                    {index + 1}
+                                </span>
 
-                                    <div>
+                                <div>
 
-                                        <h3>
-                                            {agent}
-                                        </h3>
+                                    <h3>
+                                        {agent}
+                                    </h3>
 
-                                        <p>
+                                    <p>
+                                        {agent === "CustomerHealthAgent"
+                                            ? "Detects adoption, NPS, satisfaction, and churn indicators."
+                                            : agent === "ContractAgent"
+                                            ? "Extracts contract value, renewals, discounts, and SLA terms."
+                                            : agent === "CRMContextAgent"
+                                            ? "Finds opportunities, stakeholders, and escalation signals."
+                                            : agent === "KnowledgeAgent"
+                                            ? "Matches internal playbooks and best practices."
+                                            : agent === "DataCompletenessAgent"
+                                            ? "Measures available information and detects missing business data."
+                                            : agent === "ScenarioSimulationAgent"
+                                            ? "Generates multiple business outcome scenarios and confidence estimates."
+                                            : agent === "DevilsAdvocateAgent"
+                                            ? "Challenges the best scenario and surfaces hidden risks or alternatives."
+                                            : "Selected from uploaded document content."
+                                        }
+                                    </p>
 
-                                            {
-                                                agent ===
-                                                    "CustomerHealthAgent"
-                                                    ? "Detects adoption, NPS, satisfaction, and churn indicators."
+                                </div>
 
-                                                    : agent ===
-                                                        "ContractAgent"
-                                                        ? "Extracts contract value, renewals, discounts, and SLA terms."
+                            </article>
 
-                                                        : agent ===
-                                                            "CRMContextAgent"
-                                                            ? "Finds opportunities, stakeholders, and escalation signals."
-
-                                                            : agent ===
-                                                                "KnowledgeAgent"
-                                                                ? "Matches internal playbooks and best practices."
-
-                                                                : agent ===
-                                                                    "DataCompletenessAgent"
-                                                                    ? "Measures available information and detects missing business data."
-
-                                                                    : "Selected from uploaded document content."
-                                            }
-
-                                        </p>
-
-                                    </div>
-
-                                </article>
-                            )
-                        )}
+                        ))}
 
                     </section>
 
