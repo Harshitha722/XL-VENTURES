@@ -512,5 +512,55 @@
         ],
         "reviewedAt": "2026-06-28T06:26:31.283Z",
         "timestamp": "2026-06-28T06:26:31.283Z"
+    },
+    {
+        "type": "recommendationApproval",
+        "source": "latestAnalysis",
+        "analysisTimestamp": "2026-06-28T08:15:39.987Z",
+        "humanFeedback": "approved",
+        "approvedRecommendations": [
+            {
+                "recommendation": "Conduct a deep dive analysis of adoption metrics and NPS score to pinpoint specific areas of low product utilization and dissatisfaction. Develop a targeted value realization plan.",
+                "priority": "HIGH",
+                "reason": "The customer is experiencing significantly low product adoption (35%) and dissatisfaction, evidenced by complaints about onboarding and overall unhappiness with adoption. This situation is critical given the upcoming renewal date of August 15, 2026, and the lack of an auto-renewal clause.",
+                "confidence": 92,
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Current adoption is 35%.",
+                    "We are unhappy with adoption."
+                ],
+                "status": "approved",
+                "approvedAt": "2026-06-28T08:16:57.019Z"
+            }
+        ],
+        "reviewedAt": "2026-06-28T08:16:57.019Z",
+        "timestamp": "2026-06-28T08:16:57.019Z"
+    },
+    {
+        "type": "recommendationApproval",
+        "source": "latestAnalysis",
+        "analysisTimestamp": "2026-06-28T08:18:27.933Z",
+        "humanFeedback": "approved",
+        "approvedRecommendations": [
+            {
+                "recommendation": "Initiate urgent internal data retrieval for core account details",
+                "priority": "HIGH",
+                "reason": "Critical account information, including renewal date, contract value, and adoption metrics, is currently unavailable, and renewal discussions have not yet commenced, creating a significant blind spot for account health and future planning.",
+                "confidence": 91,
+                "evidence": [
+                    "The Analytics Module is being considered for next quarter.",
+                    "No formal adoption metrics are available yet.",
+                    "No executive sponsor has been assigned.",
+                    "Renewal discussions have not started.",
+                    "Renewal date is listed as missing information."
+                ],
+                "status": "approved",
+                "approvedAt": "2026-06-28T08:19:09.902Z"
+            }
+        ],
+        "reviewedAt": "2026-06-28T08:19:09.902Z",
+        "timestamp": "2026-06-28T08:19:09.902Z"
     }
 ]

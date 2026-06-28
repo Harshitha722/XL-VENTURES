@@ -1,252 +1,137 @@
 {
-    "timestamp": "2026-06-28T06:25:34.883Z",
+    "timestamp": "2026-06-28T08:18:27.933Z",
+    "domainDetection": {
+        "domain": "Customer Success",
+        "confidence": 98,
+        "reasoning": "The document is a 'Quarterly Customer Review' and discusses customer satisfaction, product feature considerations (Analytics Module, reporting dashboards), product adoption metrics, the absence of an executive sponsor, and the status of renewal discussions. These are all core concerns of a Customer Success function."
+    },
     "executionPlan": [
         "CustomerHealthAgent",
         "ContractAgent",
-        "KnowledgeAgent",
-        "CRMContextAgent",
         "DataCompletenessAgent"
     ],
+    "executionPlanReasoning": "The document discusses the lack of formal adoption metrics and that renewal discussions have not started.",
     "agentOutputs": {
         "CustomerHealthAgent": {
-            "adoption": 35,
-            "nps": 3,
-            "csat": 3.5,
-            "risk": "high",
-            "evidence": [
-                "Customer frustration detected in uploaded documents.",
-                "Customer stated they may not renew."
-            ]
+            "adoption": null,
+            "nps": null,
+            "csat": null,
+            "risk": "low",
+            "evidence": []
         },
         "ContractAgent": {
-            "renewalDate": "August 15, 2026",
-            "contractValue": 300000,
-            "autoRenew": false,
-            "discountAllowed": true,
-            "maximumDiscountPercent": 15,
-            "maxDiscountPercent": 15,
-            "slaTerms": "Priority support response within 2 hours.",
-            "sla": "Priority support response within 2 hours.",
-            "evidence": [
-                "Renewal Date: August 15, 2026",
-                "Contract Value: 300000",
-                "Auto renewal disabled.",
-                "Maximum discount allowed: 15%"
-            ]
-        },
-        "KnowledgeAgent": {
-            "playbooks": [
-                {
-                    "trigger": "Low adoption",
-                    "action": "Conduct Adoption Workshop"
-                },
-                {
-                    "trigger": "Escalation",
-                    "action": "Executive Business Review"
-                },
-                {
-                    "trigger": "Renewal risk",
-                    "action": "Initiate Renewal Process"
-                }
-            ],
-            "evidence": [
-                "Low adoption playbook selected.",
-                "Escalation playbook selected.",
-                "Renewal risk playbook selected."
-            ]
-        },
-        "CRMContextAgent": {
-            "tier": "Enterprise",
-            "opportunities": [
-                "Analytics Module",
-                "AI Assistant",
-                "Expansion Discussion"
-            ],
-            "stakeholders": [
-                "Executive Sponsor",
-                "Finance Stakeholder"
-            ],
-            "escalations": 2,
-            "evidence": [
-                "Enterprise tier inferred from uploaded documents.",
-                "Expansion or product opportunity detected.",
-                "Escalation language detected in uploaded documents."
-            ]
+            "renewalDate": null,
+            "contractValue": null,
+            "autoRenew": null,
+            "discountAllowed": false,
+            "maximumDiscountPercent": 0,
+            "maxDiscountPercent": 0,
+            "slaTerms": null,
+            "sla": null,
+            "evidence": []
         },
         "DataCompletenessAgent": {
-            "available": [
+            "available": [],
+            "missing": [
                 "adoption metrics",
                 "NPS score",
                 "renewal date",
                 "contract value",
                 "executive sponsor"
             ],
-            "missing": [],
-            "confidence": 100
+            "confidence": 0
         }
     },
     "reasoning": {
-        "risks": [
-            "churn risk",
-            "customer dissatisfaction",
-            "low product adoption",
-            "renewal risk",
-            "frequent escalations"
-        ],
-        "opportunities": [
-            "retention discount strategy",
-            "upsell opportunity"
-        ],
+        "risks": [],
+        "opportunities": [],
         "missingInformation": [
+            "adoption metrics",
+            "NPS score",
+            "renewal date",
+            "contract value",
+            "executive sponsor",
             "renewal meeting confirmation"
         ],
         "dataCompleteness": {
-            "available": [
+            "available": [],
+            "missing": [
                 "adoption metrics",
                 "NPS score",
                 "renewal date",
                 "contract value",
                 "executive sponsor"
             ],
-            "missing": [],
-            "confidence": 100
+            "confidence": 0
         }
     },
     "recommendations": [
         {
             "priority": "HIGH",
-            "action": "Schedule Executive Business Review"
+            "action": "Initiate urgent internal data retrieval for core account details",
+            "timeline": "2 business days",
+            "impact": "Establish foundational clarity on renewal date and contract value to enable basic forecasting and risk assessment."
         },
         {
             "priority": "HIGH",
-            "action": "Escalate to Senior Customer Success Manager"
+            "action": "Implement rapid customer health assessment via analytics and outreach",
+            "timeline": "5 business days",
+            "impact": "Obtain critical adoption metrics and NPS score to understand product value realization and customer satisfaction, identifying potential churn triggers."
         },
         {
             "priority": "HIGH",
-            "action": "Conduct Adoption Workshop"
-        },
-        {
-            "priority": "MEDIUM",
-            "action": "Initiate Renewal Discussion"
-        },
-        {
-            "priority": "MEDIUM",
-            "action": "Review Historical Support Issues"
-        },
-        {
-            "priority": "MEDIUM",
-            "action": "Offer Renewal Incentive"
-        },
-        {
-            "priority": "MEDIUM",
-            "action": "Explore Upsell Opportunities"
-        },
-        {
-            "priority": "LOW",
-            "action": "Schedule Renewal Planning Meeting"
+            "action": "Identify/establish executive sponsor and secure renewal meeting",
+            "timeline": "7 business days",
+            "impact": "Build strategic relationships at the executive level and ensure proactive engagement for renewal discussions, mitigating late-stage churn risk."
         }
     ],
     "explanations": [
         {
-            "recommendation": "Schedule Executive Business Review",
+            "recommendation": "Initiate urgent internal data retrieval for core account details",
             "priority": "HIGH",
-            "reason": "Customer exhibits strong churn indicators.",
+            "timeline": "2 business days",
+            "impact": "Establish foundational clarity on renewal date and contract value to enable basic forecasting and risk assessment.",
+            "reason": "Critical account information, including renewal date, contract value, and adoption metrics, is currently unavailable, and renewal discussions have not yet commenced, creating a significant blind spot for account health and future planning.",
+            "businessImpact": "Establishing foundational clarity on core account details enables basic forecasting and risk assessment, which is crucial for proactive account management and mitigating potential churn.",
             "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "NPS: 3",
-                "Adoption: 35%"
+                "The Analytics Module is being considered for next quarter.",
+                "No formal adoption metrics are available yet.",
+                "No executive sponsor has been assigned.",
+                "Renewal discussions have not started.",
+                "Renewal date is listed as missing information."
+            ],
+            "confidence": 91
+        },
+        {
+            "recommendation": "Implement rapid customer health assessment via analytics and outreach",
+            "priority": "HIGH",
+            "timeline": "5 business days",
+            "impact": "Obtain critical adoption metrics and NPS score to understand product value realization and customer satisfaction, identifying potential churn triggers.",
+            "reason": "Critical customer health metrics, including adoption and NPS, are currently unavailable, and renewal discussions have not yet commenced, necessitating an urgent assessment to identify potential churn risks.",
+            "businessImpact": "Proactive engagement reduces churn risk by addressing critical data gaps before renewal deadlines.",
+            "evidence": [
+                "The Analytics Module is being considered for next quarter.",
+                "No formal adoption metrics are available yet.",
+                "No executive sponsor has been assigned.",
+                "Renewal discussions have not started.",
+                "adoption metrics are listed as missing information."
             ],
             "confidence": 92
         },
         {
-            "recommendation": "Escalate to Senior Customer Success Manager",
+            "recommendation": "Identify/establish executive sponsor and secure renewal meeting",
             "priority": "HIGH",
-            "reason": "Generated from business reasoning rules.",
+            "timeline": "7 business days",
+            "impact": "Build strategic relationships at the executive level and ensure proactive engagement for renewal discussions, mitigating late-stage churn risk.",
+            "reason": "Critical data regarding adoption and renewal readiness is missing, and executive sponsorship is unassigned, indicating significant renewal risk.",
+            "businessImpact": "Mitigating late-stage churn risk through proactive engagement and executive alignment.",
             "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026"
+                "The Analytics Module is being considered for next quarter.",
+                "No formal adoption metrics are available yet.",
+                "No executive sponsor has been assigned.",
+                "Renewal discussions have not started."
             ],
-            "confidence": 75
-        },
-        {
-            "recommendation": "Conduct Adoption Workshop",
-            "priority": "HIGH",
-            "reason": "Feature adoption is below acceptable levels.",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Adoption: 35%"
-            ],
-            "confidence": 88
-        },
-        {
-            "recommendation": "Initiate Renewal Discussion",
-            "priority": "MEDIUM",
-            "reason": "Contract requires proactive renewal management.",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Renewal Date: August 15, 2026",
-                "Auto Renew: false"
-            ],
-            "confidence": 85
-        },
-        {
-            "recommendation": "Review Historical Support Issues",
-            "priority": "MEDIUM",
-            "reason": "Generated from business reasoning rules.",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026"
-            ],
-            "confidence": 75
-        },
-        {
-            "recommendation": "Offer Renewal Incentive",
-            "priority": "MEDIUM",
-            "reason": "Retention incentives are permitted by contract.",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Discount Allowed: true",
-                "Max Discount: 15%"
-            ],
-            "confidence": 82
-        },
-        {
-            "recommendation": "Explore Upsell Opportunities",
-            "priority": "MEDIUM",
-            "reason": "Existing expansion opportunities are available.",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Analytics Module",
-                "AI Assistant"
-            ],
-            "confidence": 80
-        },
-        {
-            "recommendation": "Schedule Renewal Planning Meeting",
-            "priority": "LOW",
-            "reason": "Renewal planning activities have not been confirmed.",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No"
-            ],
-            "confidence": 55
+            "confidence": 92
         }
     ]
 }

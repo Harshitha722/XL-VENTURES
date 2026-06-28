@@ -1,13 +1,7 @@
-/**
- * EXPLANATION AGENT
- *
- * Purpose:
- * Explain every recommendation
- * using reasons, evidence,
- * and confidence scores.
- */
+const { askGemini } = require("../../services/geminiService");
+const { parseJsonSafely } = require("../../utils/jsonUtils");
 
-function explanationAgent(
+function ruleBasedExplanations(
     recommendations,
     agentOutputs,
     reasoning,
@@ -277,7 +271,16 @@ function explanationAgent(
             priority:
                 item.priority,
 
+            timeline:
+                item.timeline,
+
+            impact:
+                item.impact,
+
             reason,
+
+            businessImpact:
+                item.impact || "Recommended action supports the current business priorities.",
 
             evidence,
 
@@ -285,6 +288,112 @@ function explanationAgent(
         };
     });
 }
+
+function normalizeExplanation(parsed, fallback, documentEvidence) {
+    if (!parsed || typeof parsed !== "object") {
+        return fallback;
+    }
+
+    const evidence = Array.isArray(parsed.evidence)
+        ? parsed.evidence.filter((item) => typeof item === "string" && item.trim())
+        : [];
+
+    return {
+        ...fallback,
+
+        reason:
+            typeof parsed.reason === "string" && parsed.reason.trim()
+                ? parsed.reason.trim()
+                : fallback.reason,
+
+        confidence:
+            Number.isFinite(Number(parsed.confidence))
+                ? Math.max(0, Math.min(100, Math.round(Number(parsed.confidence))))
+                : fallback.confidence,
+
+        businessImpact:
+            typeof parsed.businessImpact === "string" && parsed.businessImpact.trim()
+                ? parsed.businessImpact.trim()
+                : fallback.businessImpact,
+
+        evidence: [
+            ...documentEvidence,
+            ...evidence,
+            ...(fallback.evidence || [])
+        ]
+            .filter(Boolean)
+            .filter((item, index, self) => self.indexOf(item) === index)
+            .slice(0, 5)
+    };
+}
+
+async function explanationAgent(
+    recommendations,
+    agentOutputs,
+    reasoning,
+    orchestrationInput = {}
+) {
+    const fallbacks = ruleBasedExplanations(
+        recommendations,
+        agentOutputs,
+        reasoning,
+        orchestrationInput
+    );
+
+    const documentEvidence = orchestrationInput.evidence || [];
+
+    try {
+        const explanations = [];
+
+        for (const fallback of fallbacks) {
+            const recommendation = recommendations.find(
+                (item) => item.action === fallback.recommendation
+            ) || {};
+
+            const prompt = `
+You are an enterprise explanation engine.
+
+Recommendation:
+
+${JSON.stringify(recommendation, null, 2)}
+
+Business Analysis:
+
+${JSON.stringify(reasoning, null, 2)}
+
+Evidence:
+
+${JSON.stringify(documentEvidence, null, 2)}
+
+Return ONLY valid JSON:
+
+{
+  "reason": "The customer exhibits declining adoption and upcoming renewal deadlines.",
+  "confidence": 91,
+  "businessImpact": "Proactive engagement reduces churn risk.",
+  "evidence": [
+    "...",
+    "..."
+  ]
+}
+`;
+
+            const response = await askGemini(prompt);
+            const parsed = parseJsonSafely(response, fallback);
+
+            explanations.push(
+                normalizeExplanation(parsed, fallback, documentEvidence.slice(0, 3))
+            );
+        }
+
+        return explanations;
+    }
+    catch (error) {
+        return fallbacks;
+    }
+}
+
+explanationAgent.ruleBasedExplanations = ruleBasedExplanations;
 
 
 module.exports =

@@ -233,6 +233,27 @@ function RecommendationsPage() {
                                     </p>
 
 
+                                    <p>
+                                        <strong>
+                                            Business Impact:
+                                        </strong>
+                                        {" "}
+                                        {item.businessImpact || item.impact || "Supports the recommended business outcome."}
+                                    </p>
+
+
+                                    {item.timeline && (
+
+                                        <p>
+                                            <strong>
+                                                Timeline:
+                                            </strong>
+                                            {" "}
+                                            {item.timeline}
+                                        </p>
+                                    )}
+
+
                                     {item.evidence?.length > 0 && (
 
                                         <ul

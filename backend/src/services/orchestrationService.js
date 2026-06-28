@@ -4,6 +4,9 @@ const path = require("path");
 const plannerAgent =
     require("../agents/planner/plannerAgent");
 
+const domainDetectionAgent =
+    require("../agents/domain/domainDetectionAgent");
+
 const AgentRegistry =
     require("../agents/shared/agentRegistry");
 
@@ -84,7 +87,7 @@ function saveLatestAnalysis(result) {
 /**
  * Main orchestration pipeline.
  */
-function orchestrate(uploadedText) {
+async function orchestrate(uploadedText) {
 
     const evidence =
         buildEvidence(uploadedText);
@@ -107,8 +110,18 @@ function orchestrate(uploadedText) {
     /**
      * Planner decides which agents to run.
      */
+    const domainDetection =
+        await domainDetectionAgent(orchestrationInput);
+
+
+    const plannerResult =
+        await plannerAgent(orchestrationInput);
+
     const executionPlan =
-        plannerAgent(orchestrationInput);
+        plannerResult.agents;
+
+    const executionPlanReasoning =
+        plannerResult.reasoning;
 
 
     const agentOutputs = {};
@@ -154,7 +167,7 @@ function orchestrate(uploadedText) {
      * Generate recommendations.
      */
     const recommendations =
-        recommendationAgent(
+        await recommendationAgent(
             reasoning
         );
 
@@ -163,7 +176,7 @@ function orchestrate(uploadedText) {
      * Explain recommendations.
      */
     const explanations =
-        explanationAgent(
+        await explanationAgent(
             recommendations,
             agentOutputs,
             reasoning,
@@ -176,10 +189,14 @@ function orchestrate(uploadedText) {
         timestamp:
             new Date().toISOString(),
 
+        domainDetection,
+
         executionPlan: [
             ...executionPlan,
             "DataCompletenessAgent"
         ],
+
+        executionPlanReasoning,
 
         agentOutputs,
 

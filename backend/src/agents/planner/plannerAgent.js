@@ -1,13 +1,14 @@
-/**
- * PLANNER AGENT
- *
- * Purpose:
- * Analyze uploaded documents
- * and determine which agents
- * should execute.
- */
+const { askGemini } = require("../../services/geminiService");
+const { parseJsonSafely } = require("../../utils/jsonUtils");
 
-function plannerAgent(uploadedText) {
+const AVAILABLE_AGENTS = [
+    "CustomerHealthAgent",
+    "ContractAgent",
+    "KnowledgeAgent",
+    "CRMContextAgent"
+];
+
+function ruleBasedPlanner(uploadedText) {
 
     const text = [
 
@@ -114,10 +115,7 @@ function plannerAgent(uploadedText) {
 
         return [
 
-            "CustomerHealthAgent",
-            "ContractAgent",
-            "KnowledgeAgent",
-            "CRMContextAgent"
+            ...AVAILABLE_AGENTS
         ];
     }
 
@@ -128,6 +126,96 @@ function plannerAgent(uploadedText) {
     return [...new Set(executionPlan)];
 }
 
+function buildDocumentText(uploadedText) {
+    return [
+        uploadedText.contractText,
+        uploadedText.meetingText,
+        uploadedText.emailText
+    ]
+        .filter(Boolean)
+        .join("\n\n");
+}
+
+function normalizePlan(parsed, fallbackAgents) {
+    const agents = Array.isArray(parsed?.agents)
+        ? parsed.agents.filter((agent) => AVAILABLE_AGENTS.includes(agent))
+        : [];
+
+    return {
+        agents: agents.length
+            ? [...new Set(agents)]
+            : fallbackAgents,
+
+        reasoning: typeof parsed?.reasoning === "string" && parsed.reasoning.trim()
+            ? parsed.reasoning.trim()
+            : "Fallback planner selected agents using deterministic rules."
+    };
+}
+
+async function plannerAgent(uploadedText) {
+    const fallbackAgents = ruleBasedPlanner(uploadedText);
+    const documentText = buildDocumentText(uploadedText);
+
+    const prompt = `
+You are the orchestration planner for RenewAI.
+
+Available agents:
+
+CustomerHealthAgent:
+- Adoption
+- Usage
+- NPS
+- Churn
+
+ContractAgent:
+- Contracts
+- Renewals
+- Discounts
+- SLAs
+
+CRMContextAgent:
+- Stakeholders
+- Executive sponsors
+- Expansion opportunities
+
+KnowledgeAgent:
+- Support tickets
+- Customer complaints
+- Technical issues
+
+Return ONLY valid JSON:
+
+{
+  "agents": [
+    "CustomerHealthAgent",
+    "ContractAgent"
+  ],
+  "reasoning": "The documents discuss adoption issues and contract renewals."
+}
+
+Documents:
+
+${documentText}
+`;
+
+    try {
+        const response = await askGemini(prompt);
+        const parsed = parseJsonSafely(response, {
+            agents: fallbackAgents,
+            reasoning: "Fallback planner selected agents using deterministic rules."
+        });
+
+        return normalizePlan(parsed, fallbackAgents);
+    }
+    catch (error) {
+        return {
+            agents: fallbackAgents,
+            reasoning: "Fallback planner selected agents using deterministic rules."
+        };
+    }
+}
+
+plannerAgent.ruleBasedPlanner = ruleBasedPlanner;
 
 module.exports =
     plannerAgent;

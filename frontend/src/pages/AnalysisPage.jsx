@@ -213,7 +213,7 @@ function AnalysisPage() {
                                                 (item) => (
 
                                                     <li key={item}>
-                                                        ✓ {item}
+                                                        Available: {item}
                                                     </li>
                                                 )
                                             )}
@@ -241,7 +241,7 @@ function AnalysisPage() {
                                                 (item) => (
 
                                                     <li key={item}>
-                                                        ✗ {item}
+                                                        Missing: {item}
                                                     </li>
                                                 )
                                             )}

@@ -61,7 +61,7 @@ router.post(
             }
 
             const result =
-                orchestrate(uploadedText);
+                await orchestrate(uploadedText);
 
             res.json(result);
         }

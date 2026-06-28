@@ -1,12 +1,7 @@
-/**
- * RECOMMENDATION AGENT
- *
- * Purpose:
- * Convert business insights
- * into actionable recommendations.
- */
+const { askGemini } = require("../../services/geminiService");
+const { parseJsonSafely } = require("../../utils/jsonUtils");
 
-function recommendationAgent(reasoning) {
+function ruleBasedRecommendations(reasoning) {
 
     const recommendations = [];
 
@@ -26,7 +21,13 @@ function recommendationAgent(reasoning) {
                     priority: "HIGH",
 
                     action:
-                        "Schedule Executive Business Review"
+                        "Schedule Executive Business Review",
+
+                    timeline:
+                        "7 days",
+
+                    impact:
+                        "Reduce churn probability"
                 });
 
                 break;
@@ -39,7 +40,13 @@ function recommendationAgent(reasoning) {
                     priority: "HIGH",
 
                     action:
-                        "Conduct Adoption Workshop"
+                        "Conduct Adoption Workshop",
+
+                    timeline:
+                        "14 days",
+
+                    impact:
+                        "Increase product adoption"
                 });
 
                 break;
@@ -52,7 +59,13 @@ function recommendationAgent(reasoning) {
                     priority: "MEDIUM",
 
                     action:
-                        "Initiate Renewal Discussion"
+                        "Initiate Renewal Discussion",
+
+                    timeline:
+                        "7 days",
+
+                    impact:
+                        "Protect renewal revenue"
                 });
 
                 break;
@@ -65,7 +78,13 @@ function recommendationAgent(reasoning) {
                     priority: "HIGH",
 
                     action:
-                        "Escalate to Senior Customer Success Manager"
+                        "Escalate to Senior Customer Success Manager",
+
+                    timeline:
+                        "3 days",
+
+                    impact:
+                        "Improve customer sentiment"
                 });
 
                 break;
@@ -78,7 +97,13 @@ function recommendationAgent(reasoning) {
                     priority: "MEDIUM",
 
                     action:
-                        "Review Historical Support Issues"
+                        "Review Historical Support Issues",
+
+                    timeline:
+                        "10 days",
+
+                    impact:
+                        "Reduce recurring escalations"
                 });
 
                 break;
@@ -102,7 +127,13 @@ function recommendationAgent(reasoning) {
                     priority: "MEDIUM",
 
                     action:
-                        "Explore Upsell Opportunities"
+                        "Explore Upsell Opportunities",
+
+                    timeline:
+                        "30 days",
+
+                    impact:
+                        "Identify expansion revenue"
                 });
 
                 break;
@@ -115,7 +146,13 @@ function recommendationAgent(reasoning) {
                     priority: "MEDIUM",
 
                     action:
-                        "Offer Renewal Incentive"
+                        "Offer Renewal Incentive",
+
+                    timeline:
+                        "14 days",
+
+                    impact:
+                        "Improve retention likelihood"
                 });
 
                 break;
@@ -139,7 +176,13 @@ function recommendationAgent(reasoning) {
                     priority: "HIGH",
 
                     action:
-                        "Collect Product Usage Analytics"
+                        "Collect Product Usage Analytics",
+
+                    timeline:
+                        "5 days",
+
+                    impact:
+                        "Improve analysis confidence"
                 });
 
                 break;
@@ -152,7 +195,13 @@ function recommendationAgent(reasoning) {
                     priority: "MEDIUM",
 
                     action:
-                        "Conduct Customer Satisfaction Survey"
+                        "Conduct Customer Satisfaction Survey",
+
+                    timeline:
+                        "7 days",
+
+                    impact:
+                        "Measure customer sentiment"
                 });
 
                 break;
@@ -165,7 +214,13 @@ function recommendationAgent(reasoning) {
                     priority: "HIGH",
 
                     action:
-                        "Request Contract Information"
+                        "Request Contract Information",
+
+                    timeline:
+                        "3 days",
+
+                    impact:
+                        "Clarify renewal exposure"
                 });
 
                 break;
@@ -178,7 +233,13 @@ function recommendationAgent(reasoning) {
                     priority: "LOW",
 
                     action:
-                        "Verify Contract Value Information"
+                        "Verify Contract Value Information",
+
+                    timeline:
+                        "5 days",
+
+                    impact:
+                        "Improve revenue forecasting"
                 });
 
                 break;
@@ -191,7 +252,13 @@ function recommendationAgent(reasoning) {
                     priority: "MEDIUM",
 
                     action:
-                        "Identify Executive Sponsor"
+                        "Identify Executive Sponsor",
+
+                    timeline:
+                        "10 days",
+
+                    impact:
+                        "Strengthen executive alignment"
                 });
 
                 break;
@@ -204,7 +271,13 @@ function recommendationAgent(reasoning) {
                     priority: "LOW",
 
                     action:
-                        "Schedule Renewal Planning Meeting"
+                        "Schedule Renewal Planning Meeting",
+
+                    timeline:
+                        "14 days",
+
+                    impact:
+                        "Create renewal action plan"
                 });
 
                 break;
@@ -226,6 +299,81 @@ function recommendationAgent(reasoning) {
             )
     );
 }
+
+function normalizeRecommendations(items, fallback) {
+    if (!Array.isArray(items)) {
+        return fallback;
+    }
+
+    const normalized = items
+        .filter((item) =>
+            item &&
+            typeof item.action === "string" &&
+            item.action.trim()
+        )
+        .map((item) => ({
+            priority:
+                ["HIGH", "MEDIUM", "LOW"].includes(item.priority)
+                    ? item.priority
+                    : "MEDIUM",
+
+            action:
+                item.action.trim(),
+
+            timeline:
+                typeof item.timeline === "string" && item.timeline.trim()
+                    ? item.timeline.trim()
+                    : "14 days",
+
+            impact:
+                typeof item.impact === "string" && item.impact.trim()
+                    ? item.impact.trim()
+                    : "Improve customer outcome"
+        }))
+        .filter(
+            (item, index, self) =>
+                index === self.findIndex((x) => x.action === item.action)
+        );
+
+    return normalized.length ? normalized : fallback;
+}
+
+async function recommendationAgent(reasoning) {
+    const fallback = ruleBasedRecommendations(reasoning);
+
+    const prompt = `
+You are a Senior Customer Success Strategist.
+
+Business Analysis:
+
+${JSON.stringify(reasoning, null, 2)}
+
+Generate recommendations.
+
+Return ONLY valid JSON:
+
+[
+  {
+    "priority": "HIGH",
+    "action": "Schedule Executive Review",
+    "timeline": "7 days",
+    "impact": "Reduce churn probability"
+  }
+]
+`;
+
+    try {
+        const response = await askGemini(prompt);
+        const parsed = parseJsonSafely(response, fallback);
+
+        return normalizeRecommendations(parsed, fallback);
+    }
+    catch (error) {
+        return fallback;
+    }
+}
+
+recommendationAgent.ruleBasedRecommendations = ruleBasedRecommendations;
 
 
 module.exports =

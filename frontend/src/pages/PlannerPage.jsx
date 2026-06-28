@@ -28,6 +28,9 @@ function PlannerPage() {
     const executionPlan =
         analysis?.executionPlan || [];
 
+    const domainDetection =
+        analysis?.domainDetection || {};
+
 
     return (
 
@@ -71,13 +74,34 @@ function PlannerPage() {
                     >
 
                         <h3>
+                            Domain Detection
+                        </h3>
+
+                        <p>
+                            {domainDetection.domain || "Customer Success"}
+                            {" "}
+                            (
+                            {domainDetection.confidence ?? 0}
+                            % confidence)
+                            :
+                            {" "}
+                            {domainDetection.reasoning || "No domain reasoning available."}
+                        </p>
+
+                    </section>
+
+
+                    <section
+                        className="result-panel"
+                    >
+
+                        <h3>
                             Planner Decision
                         </h3>
 
                         <p>
-                            The planner analyzed uploaded
-                            documents and selected the
-                            following agents for execution.
+                            {analysis.executionPlanReasoning ||
+                                "The planner selected agents from uploaded document content."}
                         </p>
 
                     </section>
@@ -102,7 +126,7 @@ function PlannerPage() {
                                     <div>
 
                                         <h3>
-                                            ✓ {agent}
+                                            {agent}
                                         </h3>
 
                                         <p>

@@ -91,6 +91,9 @@ function DashboardPage() {
         analysis.reasoning
             ?.dataCompleteness || {};
 
+    const domainDetection =
+        analysis.domainDetection || {};
+
     const topRecommendations =
         analysis.recommendations
             .slice(0, 5);
@@ -142,6 +145,40 @@ function DashboardPage() {
             <section
                 className="metric-grid dashboard-metrics"
             >
+
+                <article>
+
+                    <span>
+                        Domain
+                    </span>
+
+                    <strong>
+
+                        {
+                            domainDetection.domain || "-"
+                        }
+
+                    </strong>
+
+                </article>
+
+
+                <article>
+
+                    <span>
+                        Domain Confidence
+                    </span>
+
+                    <strong>
+
+                        {
+                            domainDetection.confidence ?? 0
+                        }%
+
+                    </strong>
+
+                </article>
+
 
                 <article>
 

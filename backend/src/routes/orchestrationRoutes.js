@@ -10,10 +10,10 @@ const router = express.Router();
  * Milestone 1 uses POST /api/upload/analyze, but this keeps older local tests
  * from breaking while still using the new document-driven orchestrator.
  */
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
     try {
         const result =
-            orchestrate({
+            await orchestrate({
                 contractText: req.body.contractText || "",
                 meetingText: req.body.meetingText || req.body.interaction || "",
                 emailText: req.body.emailText || ""
