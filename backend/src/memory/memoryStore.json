@@ -1720,5 +1720,156 @@
         ],
         "reviewedAt": "2026-06-28T11:18:51.087Z",
         "timestamp": "2026-06-28T11:18:51.087Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 98,
+            "reasoning": "The documents are centered around customer health, adoption rates (35%), satisfaction metrics (NPS: 3, CSAT: 3.5), and potential churn due to poor onboarding. There is a strong emphasis on renewal concerns, executive escalations, and strategies for improving customer experience and expansion opportunities, all of which are core responsibilities of a Customer Success function. While financial terms like ARR and contract value are present, they are discussed within the context of customer retention and growth, rather than general financial reporting or accounting."
+        },
+        "executionPlan": [
+            "CustomerHealthAgent",
+            "ContractAgent",
+            "KnowledgeAgent",
+            "CRMContextAgent",
+            "DataCompletenessAgent"
+        ],
+        "recommendations": [
+            {
+                "priority": "HIGH",
+                "action": "Schedule Executive Business Review",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Escalate to Senior Customer Success Manager",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Conduct Adoption Workshop",
+                "timeline": "14 days",
+                "impact": "Increase product adoption"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Initiate Renewal Discussion",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Review Historical Support Issues",
+                "timeline": "10 days",
+                "impact": "Reduce recurring escalations"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Offer Renewal Incentive",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood"
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Schedule Executive Business Review",
+                "priority": "HIGH",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability",
+                "reason": "Customer exhibits strong churn indicators.",
+                "businessImpact": "Reduce churn probability",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "NPS: 3",
+                    "Adoption: 35%"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Escalate to Senior Customer Success Manager",
+                "priority": "HIGH",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Improve customer sentiment",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026"
+                ],
+                "confidence": 96
+            },
+            {
+                "recommendation": "Conduct Adoption Workshop",
+                "priority": "HIGH",
+                "timeline": "14 days",
+                "impact": "Increase product adoption",
+                "reason": "Feature adoption is below acceptable levels.",
+                "businessImpact": "Increase product adoption",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Adoption: 35%"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Initiate Renewal Discussion",
+                "priority": "MEDIUM",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue",
+                "reason": "Contract requires proactive renewal management.",
+                "businessImpact": "Protect renewal revenue",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renew: false"
+                ],
+                "confidence": 98
+            },
+            {
+                "recommendation": "Review Historical Support Issues",
+                "priority": "MEDIUM",
+                "timeline": "10 days",
+                "impact": "Reduce recurring escalations",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Reduce recurring escalations",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026"
+                ],
+                "confidence": 96
+            },
+            {
+                "recommendation": "Offer Renewal Incentive",
+                "priority": "MEDIUM",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood",
+                "reason": "Retention incentives are permitted by contract.",
+                "businessImpact": "Improve retention likelihood",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Discount Allowed: true",
+                    "Max Discount: 15%"
+                ],
+                "confidence": 98
+            }
+        ],
+        "timestamp": "2026-06-28T12:28:57.837Z"
     }
 ]
