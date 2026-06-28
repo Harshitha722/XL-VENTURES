@@ -1,4 +1,4 @@
-/**
+﻿/**
  * MEMORY ROUTES
  */
 
@@ -8,7 +8,9 @@ const {
 
     getMemory,
 
-    addHumanFeedback
+    addHumanFeedback,
+
+    addRecommendationApproval
 
 } = require("../memory/memoryAgent");
 
@@ -68,6 +70,33 @@ router.post("/review", (req, res) => {
 
         message:
             "Feedback saved successfully"
+    });
+});
+
+
+/**
+ * Recommendation approval endpoint.
+ */
+router.post("/approve-recommendation", (req, res) => {
+
+    const {
+        analysisTimestamp,
+        recommendation
+    } = req.body;
+
+    if (!analysisTimestamp || !recommendation) {
+
+        return res.status(400).json({
+            error:
+                "analysisTimestamp and recommendation are required."
+        });
+    }
+
+    const memoryEntry = addRecommendationApproval(req.body);
+
+    res.json({
+        message: "Recommendation approved and saved to memory.",
+        memoryEntry
     });
 });
 

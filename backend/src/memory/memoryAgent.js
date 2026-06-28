@@ -1,10 +1,11 @@
-/**
+﻿/**
  * MEMORY AGENT
  *
  * Purpose:
  * Store previous interactions,
  * recommendations,
  * explanations,
+ * approvals,
  * and human feedback.
  */
 
@@ -28,7 +29,22 @@ function getMemory() {
             "utf-8"
         );
 
-    return JSON.parse(data);
+    return JSON.parse(data.replace(/^\uFEFF/, ""));
+}
+
+
+function writeMemory(memory) {
+
+    fs.writeFileSync(
+
+        MEMORY_PATH,
+
+        JSON.stringify(
+            memory,
+            null,
+            4
+        )
+    );
 }
 
 
@@ -47,16 +63,7 @@ function saveMemory(entry) {
             new Date().toISOString()
     });
 
-    fs.writeFileSync(
-
-        MEMORY_PATH,
-
-        JSON.stringify(
-            memory,
-            null,
-            4
-        )
-    );
+    writeMemory(memory);
 }
 
 
@@ -83,18 +90,76 @@ function addHumanFeedback(
     memory[index].reviewedAt =
         new Date().toISOString();
 
-    fs.writeFileSync(
-
-        MEMORY_PATH,
-
-        JSON.stringify(
-            memory,
-            null,
-            4
-        )
-    );
+    writeMemory(memory);
 
     return true;
+}
+
+
+function addRecommendationApproval({
+    analysisTimestamp,
+    recommendation,
+    priority,
+    reason,
+    confidence,
+    evidence = []
+}) {
+
+    const memory = getMemory();
+
+    const approvedAt = new Date().toISOString();
+
+    const approval = {
+        recommendation,
+        priority,
+        reason,
+        confidence,
+        evidence,
+        status: "approved",
+        approvedAt
+    };
+
+    const matchingEntry = memory.find(
+        entry => entry.timestamp === analysisTimestamp
+    );
+
+    if (matchingEntry) {
+
+        const approvals =
+            matchingEntry.approvedRecommendations || [];
+
+        const alreadyApproved = approvals.some(
+            item => item.recommendation === recommendation
+        );
+
+        if (!alreadyApproved) {
+            approvals.push(approval);
+        }
+
+        matchingEntry.approvedRecommendations = approvals;
+        matchingEntry.humanFeedback = "approved";
+        matchingEntry.reviewedAt = approvedAt;
+
+        writeMemory(memory);
+
+        return matchingEntry;
+    }
+
+    const approvalEntry = {
+        type: "recommendationApproval",
+        source: "latestAnalysis",
+        analysisTimestamp,
+        humanFeedback: "approved",
+        approvedRecommendations: [approval],
+        reviewedAt: approvedAt,
+        timestamp: approvedAt
+    };
+
+    memory.push(approvalEntry);
+
+    writeMemory(memory);
+
+    return approvalEntry;
 }
 
 
@@ -104,5 +169,8 @@ module.exports = {
 
     saveMemory,
 
-    addHumanFeedback
+    addHumanFeedback,
+
+    addRecommendationApproval
 };
+
