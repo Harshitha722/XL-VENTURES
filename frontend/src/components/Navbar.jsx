@@ -4,11 +4,11 @@ function Navbar() {
 
     return (
 
-        <nav className="navbar">
+        <aside className="sidebar">
 
             <h2>RenewAI</h2>
 
-            <div>
+            <div className="sidebar-links">
 
                 <Link to="/">Dashboard</Link>
 
@@ -18,34 +18,20 @@ function Navbar() {
 
                 <Link to="/analysis">Analysis</Link>
 
-                <Link to="/recommendations">
-                    Recommendations
-                </Link>
+                <Link to="/recommendations">Recommendations</Link>
 
-                <Link to="/memory">
-                    Memory
-                </Link>
+                <Link to="/memory">Memory</Link>
 
-                <Link to="/architecture">
-                    Architecture
-                </Link>
+                <Link to="/architecture">Architecture</Link>
 
-                <Link to="/metrics">
-                    Metrics
-                </Link>
+                <Link to="/metrics">Metrics</Link>
 
-                <Link to="/knowledge">
-                    Knowledge
-                </Link>
+                <Link to="/knowledge">Knowledge</Link>
 
             </div>
 
-
-            
-
-        </nav>
+        </aside>
     );
 }
-
 
 export default Navbar;

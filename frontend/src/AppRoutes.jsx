@@ -19,56 +19,59 @@ function AppRoutes() {
 
         <BrowserRouter>
 
-            <Navbar />
+            <div className="app-shell">
+                <Navbar />
+                <main className="app-main">
+                    <Routes>
 
-            <Routes>
+                        <Route
+                            path="/"
+                            element={<DashboardPage />}
+                        />
 
-                <Route
-                    path="/"
-                    element={<DashboardPage />}
-                />
+                        <Route
+                            path="/upload"
+                            element={<UploadPage />}
+                        />
 
-                <Route
-                    path="/upload"
-                    element={<UploadPage />}
-                />
+                        <Route
+                            path="/planner"
+                            element={<PlannerPage />}
+                        />
 
-                <Route
-                    path="/planner"
-                    element={<PlannerPage />}
-                />
+                        <Route
+                            path="/analysis"
+                            element={<AnalysisPage />}
+                        />
 
-                <Route
-                    path="/analysis"
-                    element={<AnalysisPage />}
-                />
+                        <Route
+                            path="/recommendations"
+                            element={<RecommendationsPage />}
+                        />
 
-                <Route
-                    path="/recommendations"
-                    element={<RecommendationsPage />}
-                />
+                        <Route
+                            path="/memory"
+                            element={<MemoryPage />}
+                        />
 
-                <Route
-                    path="/memory"
-                    element={<MemoryPage />}
-                />
+                        <Route
+                            path="/architecture"
+                            element={<ArchitecturePage />}
+                        />
 
-                <Route
-                    path="/architecture"
-                    element={<ArchitecturePage />}
-                />
+                        <Route
+                            path="/metrics"
+                            element={<MetricsPage />}
+                        />
 
-                <Route
-                    path="/metrics"
-                    element={<MetricsPage />}
-                />
+                        <Route
+                            path="/knowledge"
+                            element={<KnowledgeBasePage />}
+                        />
 
-                <Route
-                    path="/knowledge"
-                    element={<KnowledgeBasePage />}
-                />
-
-            </Routes>
+                    </Routes>
+                </main>
+            </div>
 
         </BrowserRouter>
     );

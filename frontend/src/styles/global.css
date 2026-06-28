@@ -23,48 +23,58 @@ textarea {
     font: inherit;
 }
 
-.navbar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
+.app-shell {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    min-height: 72px;
-    padding: 0 32px;
-    color: #ffffff;
-    background: #14213d;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    height: 100vh;
+    width: 100%;
+    align-items: stretch;
 }
 
-.navbar h2 {
-    margin: 0;
+.sidebar {
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    flex: 0 0 240px;
+    min-height: 100vh;
+    padding: 32px 24px;
+    background: #14213d;
     color: #ffffff;
-    font-size: 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar h2 {
+    margin: 0 0 24px;
+    color: #ffffff;
+    font-size: 22px;
     font-weight: 700;
 }
 
-.navbar div {
+.sidebar-links {
     display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.navbar a {
+.sidebar a {
     color: rgba(255, 255, 255, 0.82);
     text-decoration: none;
-    padding: 8px 10px;
-    border-radius: 6px;
-    font-size: 14px;
-    line-height: 1;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    line-height: 1.2;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
-.navbar a:hover {
+.sidebar a:hover {
     color: #ffffff;
     background: rgba(255, 255, 255, 0.1);
+}
+
+.app-main {
+    flex: 1;
+    padding: 32px;
+    min-height: 100vh;
+    overflow-y: auto;
 }
 
 .page {
@@ -744,13 +754,24 @@ textarea {
 }
 
 @media (max-width: 980px) {
-    .navbar {
-        align-items: flex-start;
+    .app-shell {
         flex-direction: column;
-        padding: 18px;
     }
 
-    .navbar div {
+    .sidebar {
+        position: relative;
+        top: auto;
+        width: 100%;
+        min-height: auto;
+        padding: 18px 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .sidebar-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
         justify-content: flex-start;
     }
 
