@@ -1,4 +1,4 @@
-﻿const { askGemini } = require("../../services/geminiService");
+const { askGemini } = require("../../services/geminiService");
 const { parseJsonSafely } = require("../../utils/jsonUtils");
 
 const AVAILABLE_AGENTS = [
@@ -95,10 +95,16 @@ function ruleBasedPlanner(uploadedText) {
 
         text.includes("enterprise") ||
         text.includes("stakeholder") ||
+        text.includes("stakeholders") ||
         text.includes("budget") ||
         text.includes("expansion") ||
+        text.includes("upsell") ||
         text.includes("analytics") ||
-        text.includes("executive sponsor")
+        text.includes("module") ||
+        text.includes("executive") ||
+        text.includes("executive sponsor") ||
+        text.includes("economic buyer") ||
+        text.includes("decision maker")
 
     ) {
 
@@ -146,9 +152,10 @@ function normalizePlan(parsed, fallbackAgents) {
         ? parsed.agents.filter((agent) => AVAILABLE_AGENTS.includes(agent))
         : [];
 
-    const selectedAgents = agents.length
-        ? agents
-        : fallbackAgents;
+    const selectedAgents = [
+        ...(agents.length ? agents : []),
+        ...fallbackAgents
+    ];
 
     if (!selectedAgents.includes("KnowledgeAgent")) {
         selectedAgents.push("KnowledgeAgent");

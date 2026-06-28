@@ -4,7 +4,7 @@ require("dotenv").config({ path: path.resolve(__dirname, "..", "..", ".env") });
 const { GoogleGenAI } = require("@google/genai");
 const PLAYBOOK_CORPUS = require("./playbookCorpus");
 
-const EMBEDDING_MODEL = "text-embedding-004";
+const EMBEDDING_MODEL = process.env.GEMINI_EMBEDDING_MODEL || "gemini-embedding-001";
 let embeddingCache = null;
 let client = null;
 
@@ -37,7 +37,13 @@ async function embedText(text) {
     });
 
     const embedding = response.embeddings?.[0] || response.embedding;
-    return embedding?.values || embedding?.valuesFloat || [];
+    const values = embedding?.values || embedding?.valuesFloat || [];
+
+    if (!values.length) {
+        throw new Error("Gemini embedding response did not include vector values.");
+    }
+
+    return values;
 }
 
 function cosineSimilarity(a, b) {
@@ -112,6 +118,9 @@ async function retrievePlaybooks(query, topK = 3) {
             .sort((a, b) => b.similarity - a.similarity)
             .slice(0, topK);
     } catch (error) {
+        console.warn(
+            `Gemini embedding retrieval failed; using keyword fallback. ${error.message}`
+        );
         return keywordRetrieve(query, topK);
     }
 }

@@ -2,6 +2,19 @@ const { askGemini } = require("../../services/geminiService");
 const { parseJsonSafely } = require("../../utils/jsonUtils");
 const BUSINESS_RULES = require("../../config/businessRules");
 
+function buildKnowledgeGuidance(knowledge) {
+    const retrievedKnowledge = knowledge?.retrievedKnowledge || [];
+
+    return retrievedKnowledge
+        .filter((item) => item && item.title && item.content)
+        .map((item) => ({
+            title: item.title,
+            category: "playbooks",
+            action: item.content,
+            retrievalMethod: item.retrievalMethod,
+            similarity: item.similarity
+        }));
+}
 function deterministicReasoning(agentOutputs) {
     const rules = BUSINESS_RULES.customerHealth;
     const risks = [];
@@ -12,6 +25,7 @@ function deterministicReasoning(agentOutputs) {
     const contract = agentOutputs.ContractAgent;
     const crm = agentOutputs.CRMContextAgent;
     const completeness = agentOutputs.DataCompletenessAgent;
+    const knowledgeGuidance = buildKnowledgeGuidance(agentOutputs.KnowledgeAgent);
 
     if (health) {
         if (health.risk === "high") risks.push("churn risk");
@@ -52,6 +66,7 @@ function deterministicReasoning(agentOutputs) {
         opportunities: [...new Set(opportunities)],
         missingInformation: [...new Set(missingInformation)],
         dataCompleteness: completeness,
+        knowledgeGuidance,
         riskSummary: "",
         opportunitySummary: "",
         urgency: "soon",

@@ -1,18 +1,17 @@
 {
-    "timestamp": "2026-06-28T12:28:57.832Z",
+    "timestamp": "2026-06-28T14:22:46.573Z",
     "domainDetection": {
         "domain": "Customer Success",
-        "confidence": 98,
-        "reasoning": "The documents are centered around customer health, adoption rates (35%), satisfaction metrics (NPS: 3, CSAT: 3.5), and potential churn due to poor onboarding. There is a strong emphasis on renewal concerns, executive escalations, and strategies for improving customer experience and expansion opportunities, all of which are core responsibilities of a Customer Success function. While financial terms like ARR and contract value are present, they are discussed within the context of customer retention and growth, rather than general financial reporting or accounting."
+        "confidence": 99,
+        "reasoning": "The documents consistently refer to customer contracts, renewal dates, adoption metrics (NPS, CSAT), customer dissatisfaction, potential non-renewal, expansion opportunities, and the involvement of executive stakeholders in customer reviews and escalations. These are all critical aspects of managing customer relationships and ensuring their success and retention."
     },
     "executionPlan": [
         "CustomerHealthAgent",
         "ContractAgent",
         "KnowledgeAgent",
-        "CRMContextAgent",
         "DataCompletenessAgent"
     ],
-    "executionPlanReasoning": "Fallback planner selected agents using deterministic rules.",
+    "executionPlanReasoning": "The documents clearly indicate significant adoption issues and low NPS, posing a direct threat to the upcoming contract renewal.",
     "agentOutputs": {
         "CustomerHealthAgent": {
             "adoption": 35,
@@ -59,38 +58,38 @@
                         "renewal",
                         "high-risk"
                     ],
-                    "similarity": 49,
-                    "retrievalMethod": "keyword"
+                    "similarity": 0.7399,
+                    "retrievalMethod": "embedding"
                 },
                 {
-                    "id": "pb-005",
-                    "category": "upsell",
-                    "title": "Expansion and Upsell Opportunity Playbook",
-                    "content": "Identify expansion opportunities when: (1) customer adoption is above 70%, (2) they have expressed interest in additional modules, (3) their team has grown. Steps: (1) Prepare a usage report showing value delivered, (2) Present product roadmap with upcoming features, (3) Propose expansion SKUs aligned with their pain points, (4) Involve your AE for commercial negotiation. Target: expand ARR by 20%+ on renewal.",
-                    "tags": [
-                        "upsell",
-                        "expansion",
-                        "ARR",
-                        "growth",
-                        "modules"
-                    ],
-                    "similarity": 47,
-                    "retrievalMethod": "keyword"
-                },
-                {
-                    "id": "pb-003",
+                    "id": "pb-008",
                     "category": "renewal",
-                    "title": "Proactive Renewal Management Playbook",
-                    "content": "Initiate renewal conversations 90 days before the renewal date. If auto-renewal is disabled, treat this as a high-priority renewal risk. Steps: (1) Review contract value and discount eligibility, (2) Schedule renewal discovery call with economic buyer, (3) Prepare a Business Value Assessment showing ROI over the contract period, (4) Present renewal proposal with multi-year incentive if applicable.",
+                    "title": "Discount and Retention Incentive Playbook",
+                    "content": "If a customer is at renewal risk and discount is permitted by contract, offer a tiered retention incentive: (1) 5% for 1-year renewal, (2) 10% for 2-year renewal, (3) 15% for 3-year renewal plus white-glove onboarding. Never lead with discounts - first establish value, then use discount as a closing lever. Get VP approval before offering >10%.",
                     "tags": [
+                        "discount",
+                        "retention",
                         "renewal",
-                        "contract",
-                        "auto-renew",
-                        "ARR",
-                        "retention"
+                        "incentive",
+                        "ARR"
                     ],
-                    "similarity": 43,
-                    "retrievalMethod": "keyword"
+                    "similarity": 0.7092,
+                    "retrievalMethod": "embedding"
+                },
+                {
+                    "id": "pb-002",
+                    "category": "adoption",
+                    "title": "Low Adoption Intervention Playbook",
+                    "content": "If product adoption falls below 50%, schedule an Adoption Workshop within 14 days. Identify the top 3 unused features relevant to the customer's use case. Assign a Solutions Engineer to run a hands-on training session. Follow up with a 30-day adoption improvement plan and weekly check-ins. Measure adoption weekly post-workshop.",
+                    "tags": [
+                        "adoption",
+                        "training",
+                        "workshop",
+                        "onboarding",
+                        "usage"
+                    ],
+                    "similarity": 0.709,
+                    "retrievalMethod": "embedding"
                 }
             ],
             "playbooks": [
@@ -99,48 +98,31 @@
                     "action": "When a customer exhibits high churn risk signals (NPS < 5, adoption < 40%, or explicit renewal concerns), initiate an Executive Business Review within 7 days. The EBR should include the customer's executive sponsor and your internal VP of Customer Success. Agenda: review ROI achieved, address top concerns, present renewal roadmap. Prepare a slide deck with usage metrics, outcomes delivered, and a 12-month value roadmap."
                 },
                 {
-                    "trigger": "Expansion and Upsell Opportunity Playbook",
-                    "action": "Identify expansion opportunities when: (1) customer adoption is above 70%, (2) they have expressed interest in additional modules, (3) their team has grown. Steps: (1) Prepare a usage report showing value delivered, (2) Present product roadmap with upcoming features, (3) Propose expansion SKUs aligned with their pain points, (4) Involve your AE for commercial negotiation. Target: expand ARR by 20%+ on renewal."
+                    "trigger": "Discount and Retention Incentive Playbook",
+                    "action": "If a customer is at renewal risk and discount is permitted by contract, offer a tiered retention incentive: (1) 5% for 1-year renewal, (2) 10% for 2-year renewal, (3) 15% for 3-year renewal plus white-glove onboarding. Never lead with discounts - first establish value, then use discount as a closing lever. Get VP approval before offering >10%."
                 },
                 {
-                    "trigger": "Proactive Renewal Management Playbook",
-                    "action": "Initiate renewal conversations 90 days before the renewal date. If auto-renewal is disabled, treat this as a high-priority renewal risk. Steps: (1) Review contract value and discount eligibility, (2) Schedule renewal discovery call with economic buyer, (3) Prepare a Business Value Assessment showing ROI over the contract period, (4) Present renewal proposal with multi-year incentive if applicable."
+                    "trigger": "Low Adoption Intervention Playbook",
+                    "action": "If product adoption falls below 50%, schedule an Adoption Workshop within 14 days. Identify the top 3 unused features relevant to the customer's use case. Assign a Solutions Engineer to run a hands-on training session. Follow up with a 30-day adoption improvement plan and weekly check-ins. Measure adoption weekly post-workshop."
                 }
             ],
             "evidence": [
-                "Executive Business Review (EBR) Playbook retrieved via keyword.",
-                "Expansion and Upsell Opportunity Playbook retrieved via keyword.",
-                "Proactive Renewal Management Playbook retrieved via keyword."
+                "Executive Business Review (EBR) Playbook retrieved via embedding.",
+                "Discount and Retention Incentive Playbook retrieved via embedding.",
+                "Low Adoption Intervention Playbook retrieved via embedding."
             ]
-        },
-        "CRMContextAgent": {
-            "tier": "Enterprise",
-            "opportunities": [
-                "Analytics Module",
-                "AI Assistant",
-                "Expansion Discussion"
-            ],
-            "stakeholders": [
-                "Executive Sponsor",
-                "Finance Stakeholder"
-            ],
-            "escalations": 2,
-            "executiveSponsor": null,
-            "openSupportTickets": null,
-            "lastEngagementSentiment": "neutral",
-            "expansionPotential": "medium",
-            "evidence": []
         },
         "DataCompletenessAgent": {
             "available": [
                 "adoption metrics",
                 "NPS score",
                 "renewal date",
-                "contract value",
+                "contract value"
+            ],
+            "missing": [
                 "executive sponsor"
             ],
-            "missing": [],
-            "confidence": 100
+            "confidence": 80
         }
     },
     "reasoning": {
@@ -148,14 +130,13 @@
             "churn risk",
             "customer dissatisfaction",
             "low product adoption",
-            "renewal risk",
-            "frequent escalations"
+            "renewal risk"
         ],
         "opportunities": [
-            "retention discount strategy",
-            "upsell opportunity"
+            "retention discount strategy"
         ],
         "missingInformation": [
+            "executive sponsor",
             "renewal meeting confirmation"
         ],
         "dataCompleteness": {
@@ -163,12 +144,36 @@
                 "adoption metrics",
                 "NPS score",
                 "renewal date",
-                "contract value",
+                "contract value"
+            ],
+            "missing": [
                 "executive sponsor"
             ],
-            "missing": [],
-            "confidence": 100
+            "confidence": 80
         },
+        "knowledgeGuidance": [
+            {
+                "title": "Executive Business Review (EBR) Playbook",
+                "category": "playbooks",
+                "action": "When a customer exhibits high churn risk signals (NPS < 5, adoption < 40%, or explicit renewal concerns), initiate an Executive Business Review within 7 days. The EBR should include the customer's executive sponsor and your internal VP of Customer Success. Agenda: review ROI achieved, address top concerns, present renewal roadmap. Prepare a slide deck with usage metrics, outcomes delivered, and a 12-month value roadmap.",
+                "retrievalMethod": "embedding",
+                "similarity": 0.7399
+            },
+            {
+                "title": "Discount and Retention Incentive Playbook",
+                "category": "playbooks",
+                "action": "If a customer is at renewal risk and discount is permitted by contract, offer a tiered retention incentive: (1) 5% for 1-year renewal, (2) 10% for 2-year renewal, (3) 15% for 3-year renewal plus white-glove onboarding. Never lead with discounts - first establish value, then use discount as a closing lever. Get VP approval before offering >10%.",
+                "retrievalMethod": "embedding",
+                "similarity": 0.7092
+            },
+            {
+                "title": "Low Adoption Intervention Playbook",
+                "category": "playbooks",
+                "action": "If product adoption falls below 50%, schedule an Adoption Workshop within 14 days. Identify the top 3 unused features relevant to the customer's use case. Assign a Solutions Engineer to run a hands-on training session. Follow up with a 30-day adoption improvement plan and weekly check-ins. Measure adoption weekly post-workshop.",
+                "retrievalMethod": "embedding",
+                "similarity": 0.709
+            }
+        ],
         "riskSummary": "",
         "opportunitySummary": "",
         "urgency": "soon",
@@ -202,15 +207,15 @@
         },
         {
             "priority": "MEDIUM",
-            "action": "Review Historical Support Issues",
-            "timeline": "10 days",
-            "impact": "Reduce recurring escalations"
-        },
-        {
-            "priority": "MEDIUM",
             "action": "Offer Renewal Incentive",
             "timeline": "14 days",
             "impact": "Improve retention likelihood"
+        },
+        {
+            "priority": "MEDIUM",
+            "action": "Identify Executive Sponsor",
+            "timeline": "10 days",
+            "impact": "Strengthen executive alignment"
         }
     ],
     "explanations": [
@@ -228,7 +233,7 @@
                 "NPS: 3",
                 "Adoption: 35%"
             ],
-            "confidence": 98
+            "confidence": 96
         },
         {
             "recommendation": "Escalate to Senior Customer Success Manager",
@@ -244,7 +249,7 @@
                 "Contract Value: $300,000",
                 "Renewal Date: August 15, 2026"
             ],
-            "confidence": 96
+            "confidence": 89
         },
         {
             "recommendation": "Conduct Adoption Workshop",
@@ -259,7 +264,7 @@
                 "Auto Renewal: No",
                 "Adoption: 35%"
             ],
-            "confidence": 98
+            "confidence": 95
         },
         {
             "recommendation": "Initiate Renewal Discussion",
@@ -275,23 +280,7 @@
                 "Renewal Date: August 15, 2026",
                 "Auto Renew: false"
             ],
-            "confidence": 98
-        },
-        {
-            "recommendation": "Review Historical Support Issues",
-            "priority": "MEDIUM",
-            "timeline": "10 days",
-            "impact": "Reduce recurring escalations",
-            "reason": "Generated from business reasoning rules.",
-            "businessImpact": "Reduce recurring escalations",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026"
-            ],
-            "confidence": 96
+            "confidence": 93
         },
         {
             "recommendation": "Offer Renewal Incentive",
@@ -307,7 +296,21 @@
                 "Discount Allowed: true",
                 "Max Discount: 15%"
             ],
-            "confidence": 98
+            "confidence": 92
+        },
+        {
+            "recommendation": "Identify Executive Sponsor",
+            "priority": "MEDIUM",
+            "timeline": "10 days",
+            "impact": "Strengthen executive alignment",
+            "reason": "No executive sponsor or stakeholder was identified.",
+            "businessImpact": "Strengthen executive alignment",
+            "evidence": [
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No"
+            ],
+            "confidence": 78
         }
     ]
 }
