@@ -2,38 +2,39 @@
  * PLANNER AGENT
  *
  * Purpose:
- * Analyze incoming customer interaction
- * and determine which agents should run.
- *
- * This is the heart of our agentic system.
+ * Analyze uploaded documents
+ * and determine which agents
+ * should execute.
  */
-
 
 function plannerAgent(uploadedText) {
 
-    /**
-     * The planner analyzes all uploaded content together.
-     * For now this is keyword-based so it is easy to understand and extend.
-     */
-    const text =
-        [
-            uploadedText.contractText,
-            uploadedText.meetingText,
-            uploadedText.emailText
-        ]
-            .join("\n")
-            .toLowerCase();
+    const text = [
+
+        uploadedText.contractText,
+        uploadedText.meetingText,
+        uploadedText.emailText
+
+    ]
+        .join("\n")
+        .toLowerCase();
+
 
     const executionPlan = [];
 
+
     /**
-     * Detect adoption concerns.
+     * Customer Health Signals
      */
     if (
+
         text.includes("adoption") ||
         text.includes("usage") ||
         text.includes("login") ||
-        text.includes("frustrated")
+        text.includes("frustrated") ||
+        text.includes("nps") ||
+        text.includes("csat")
+
     ) {
 
         executionPlan.push(
@@ -41,14 +42,19 @@ function plannerAgent(uploadedText) {
         );
     }
 
+
     /**
-     * Detect renewal discussions.
+     * Contract Signals
      */
     if (
+
         text.includes("renew") ||
         text.includes("contract") ||
         text.includes("sla") ||
-        text.includes("discount")
+        text.includes("discount") ||
+        text.includes("auto renewal") ||
+        text.includes("arr")
+
     ) {
 
         executionPlan.push(
@@ -56,14 +62,18 @@ function plannerAgent(uploadedText) {
         );
     }
 
+
     /**
-     * Detect dissatisfaction.
+     * Knowledge Signals
      */
     if (
+
         text.includes("unhappy") ||
         text.includes("issue") ||
         text.includes("support") ||
-        text.includes("escalate")
+        text.includes("escalate") ||
+        text.includes("playbook")
+
     ) {
 
         executionPlan.push(
@@ -71,12 +81,19 @@ function plannerAgent(uploadedText) {
         );
     }
 
+
+    /**
+     * CRM Signals
+     */
     if (
+
         text.includes("enterprise") ||
         text.includes("stakeholder") ||
         text.includes("budget") ||
         text.includes("expansion") ||
-        text.includes("analytics")
+        text.includes("analytics") ||
+        text.includes("executive sponsor")
+
     ) {
 
         executionPlan.push(
@@ -84,14 +101,26 @@ function plannerAgent(uploadedText) {
         );
     }
 
-    if (!executionPlan.length) {
-        executionPlan.push(
+
+    /**
+     * IMPORTANT:
+     * If fewer than 2 agents were selected,
+     * run all agents.
+     *
+     * This helps with incomplete
+     * real-world documents.
+     */
+    if (executionPlan.length < 2) {
+
+        return [
+
             "CustomerHealthAgent",
             "ContractAgent",
             "KnowledgeAgent",
             "CRMContextAgent"
-        );
+        ];
     }
+
 
     /**
      * Remove duplicates.
@@ -100,4 +129,5 @@ function plannerAgent(uploadedText) {
 }
 
 
-module.exports = plannerAgent;
+module.exports =
+    plannerAgent;

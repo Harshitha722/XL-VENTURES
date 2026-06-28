@@ -463,5 +463,54 @@
         ],
         "reviewedAt": "2026-06-27T18:36:27.920Z",
         "timestamp": "2026-06-27T18:36:27.920Z"
+    },
+    {
+        "type": "recommendationApproval",
+        "source": "latestAnalysis",
+        "analysisTimestamp": "2026-06-28T06:23:11.026Z",
+        "humanFeedback": "approved",
+        "approvedRecommendations": [
+            {
+                "recommendation": "Explore Upsell Opportunities",
+                "priority": "MEDIUM",
+                "reason": "Existing expansion opportunities are available.",
+                "confidence": 80,
+                "evidence": [
+                    "The Analytics Module is being considered for next quarter.",
+                    "No formal adoption metrics are available yet.",
+                    "No executive sponsor has been assigned.",
+                    "Analytics Module"
+                ],
+                "status": "approved",
+                "approvedAt": "2026-06-28T06:24:25.341Z"
+            }
+        ],
+        "reviewedAt": "2026-06-28T06:24:25.341Z",
+        "timestamp": "2026-06-28T06:24:25.341Z"
+    },
+    {
+        "type": "recommendationApproval",
+        "source": "latestAnalysis",
+        "analysisTimestamp": "2026-06-28T06:25:34.883Z",
+        "humanFeedback": "approved",
+        "approvedRecommendations": [
+            {
+                "recommendation": "Schedule Executive Business Review",
+                "priority": "HIGH",
+                "reason": "Customer exhibits strong churn indicators.",
+                "confidence": 92,
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "NPS: 3",
+                    "Adoption: 35%"
+                ],
+                "status": "approved",
+                "approvedAt": "2026-06-28T06:26:31.283Z"
+            }
+        ],
+        "reviewedAt": "2026-06-28T06:26:31.283Z",
+        "timestamp": "2026-06-28T06:26:31.283Z"
     }
 ]

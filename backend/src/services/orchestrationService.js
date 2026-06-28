@@ -16,17 +16,21 @@ const recommendationAgent =
 const explanationAgent =
     require("../agents/explanation/explanationAgent");
 
+const dataCompletenessAgent =
+    require("../agents/dataCompleteness/dataCompletenessAgent");
+
+
 const LATEST_ANALYSIS_PATH = path.join(
     __dirname,
     "../data/latestAnalysis.json"
 );
 
+
 /**
  * Collect readable evidence lines from the uploaded documents.
- * ExplanationAgent uses these snippets so the final output can point back to
- * the real source content instead of mock data.
  */
 function buildEvidence(uploadedText) {
+
     const combinedText = [
         uploadedText.contractText,
         uploadedText.meetingText,
@@ -53,42 +57,68 @@ function buildEvidence(uploadedText) {
         .map((line) => line.trim())
         .filter(Boolean)
         .filter((line) => {
-            const lowerLine = line.toLowerCase();
-            return keywords.some((keyword) => lowerLine.includes(keyword));
+
+            const lowerLine =
+                line.toLowerCase();
+
+            return keywords.some((keyword) =>
+                lowerLine.includes(keyword)
+            );
         })
         .slice(0, 10);
 }
 
+
 /**
- * Persist the latest analysis in single-user hackathon mode.
- * Every dashboard-style frontend page reads from this file.
+ * Save latest analysis.
  */
 function saveLatestAnalysis(result) {
+
     fs.writeFileSync(
         LATEST_ANALYSIS_PATH,
         JSON.stringify(result, null, 4)
     );
 }
 
+
 /**
- * Run the full RenewAI agent pipeline from uploaded document text.
+ * Main orchestration pipeline.
  */
 function orchestrate(uploadedText) {
-    const evidence = buildEvidence(uploadedText);
+
+    const evidence =
+        buildEvidence(uploadedText);
 
     const orchestrationInput = {
-        contractText: uploadedText.contractText || "",
-        meetingText: uploadedText.meetingText || "",
-        emailText: uploadedText.emailText || "",
+
+        contractText:
+            uploadedText.contractText || "",
+
+        meetingText:
+            uploadedText.meetingText || "",
+
+        emailText:
+            uploadedText.emailText || "",
+
         evidence
     };
 
+
+    /**
+     * Planner decides which agents to run.
+     */
     const executionPlan =
         plannerAgent(orchestrationInput);
 
+
     const agentOutputs = {};
 
+
+    /**
+     * Run selected domain agents.
+     */
     executionPlan.forEach((agentName) => {
+
         const agent =
             AgentRegistry[agentName];
 
@@ -100,12 +130,38 @@ function orchestrate(uploadedText) {
             agent(orchestrationInput);
     });
 
+
+    /**
+     * Run Data Completeness Agent
+     * AFTER all business agents.
+     */
+    agentOutputs.DataCompletenessAgent =
+        dataCompletenessAgent(
+            agentOutputs
+        );
+
+
+    /**
+     * Business reasoning layer.
+     */
     const reasoning =
-        businessReasoningAgent(agentOutputs);
+        businessReasoningAgent(
+            agentOutputs
+        );
 
+
+    /**
+     * Generate recommendations.
+     */
     const recommendations =
-        recommendationAgent(reasoning);
+        recommendationAgent(
+            reasoning
+        );
 
+
+    /**
+     * Explain recommendations.
+     */
     const explanations =
         explanationAgent(
             recommendations,
@@ -114,18 +170,32 @@ function orchestrate(uploadedText) {
             orchestrationInput
         );
 
+
     const result = {
-        timestamp: new Date().toISOString(),
-        executionPlan,
+
+        timestamp:
+            new Date().toISOString(),
+
+        executionPlan: [
+            ...executionPlan,
+            "DataCompletenessAgent"
+        ],
+
         agentOutputs,
+
         reasoning,
+
         recommendations,
+
         explanations
     };
+
 
     saveLatestAnalysis(result);
 
     return result;
 }
 
-module.exports = orchestrate;
+
+module.exports =
+    orchestrate;

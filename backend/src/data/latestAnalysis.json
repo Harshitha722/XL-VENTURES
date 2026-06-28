@@ -1,10 +1,11 @@
 {
-    "timestamp": "2026-06-27T15:30:20.855Z",
+    "timestamp": "2026-06-28T06:25:34.883Z",
     "executionPlan": [
         "CustomerHealthAgent",
         "ContractAgent",
         "KnowledgeAgent",
-        "CRMContextAgent"
+        "CRMContextAgent",
+        "DataCompletenessAgent"
     ],
     "agentOutputs": {
         "CustomerHealthAgent": {
@@ -71,6 +72,17 @@
                 "Expansion or product opportunity detected.",
                 "Escalation language detected in uploaded documents."
             ]
+        },
+        "DataCompletenessAgent": {
+            "available": [
+                "adoption metrics",
+                "NPS score",
+                "renewal date",
+                "contract value",
+                "executive sponsor"
+            ],
+            "missing": [],
+            "confidence": 100
         }
     },
     "reasoning": {
@@ -86,9 +98,19 @@
             "upsell opportunity"
         ],
         "missingInformation": [
-            "executive sponsor status",
             "renewal meeting confirmation"
-        ]
+        ],
+        "dataCompleteness": {
+            "available": [
+                "adoption metrics",
+                "NPS score",
+                "renewal date",
+                "contract value",
+                "executive sponsor"
+            ],
+            "missing": [],
+            "confidence": 100
+        }
     },
     "recommendations": [
         {
@@ -118,6 +140,10 @@
         {
             "priority": "MEDIUM",
             "action": "Explore Upsell Opportunities"
+        },
+        {
+            "priority": "LOW",
+            "action": "Schedule Renewal Planning Meeting"
         }
     ],
     "explanations": [
@@ -210,6 +236,17 @@
                 "AI Assistant"
             ],
             "confidence": 80
+        },
+        {
+            "recommendation": "Schedule Renewal Planning Meeting",
+            "priority": "LOW",
+            "reason": "Renewal planning activities have not been confirmed.",
+            "evidence": [
+                "Contract Value: $300,000",
+                "Renewal Date: August 15, 2026",
+                "Auto Renewal: No"
+            ],
+            "confidence": 55
         }
     ]
 }

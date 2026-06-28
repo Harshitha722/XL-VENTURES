@@ -41,7 +41,12 @@ function explanationAgent(
                 `Adoption: ${agentOutputs.CustomerHealthAgent?.adoption}%`,
 
                 `Escalations: ${agentOutputs.CRMContextAgent?.escalations}`
-            ].filter((item) => !item.includes("undefined") && !item.includes("null"));
+
+            ].filter(
+                (x) =>
+                    !x.includes("undefined") &&
+                    !x.includes("null")
+            );
 
             confidence = 92;
         }
@@ -61,7 +66,12 @@ function explanationAgent(
             evidence = [
 
                 `Adoption: ${agentOutputs.CustomerHealthAgent?.adoption}%`
-            ].filter((item) => !item.includes("undefined") && !item.includes("null"));
+
+            ].filter(
+                (x) =>
+                    !x.includes("undefined") &&
+                    !x.includes("null")
+            );
 
             confidence = 88;
         }
@@ -83,7 +93,12 @@ function explanationAgent(
                 `Renewal Date: ${agentOutputs.ContractAgent?.renewalDate}`,
 
                 `Auto Renew: ${agentOutputs.ContractAgent?.autoRenew}`
-            ].filter((item) => !item.includes("undefined") && !item.includes("null"));
+
+            ].filter(
+                (x) =>
+                    !x.includes("undefined") &&
+                    !x.includes("null")
+            );
 
             confidence = 85;
         }
@@ -105,7 +120,12 @@ function explanationAgent(
                 `Discount Allowed: ${agentOutputs.ContractAgent?.discountAllowed}`,
 
                 `Max Discount: ${agentOutputs.ContractAgent?.maxDiscountPercent}%`
-            ].filter((item) => !item.includes("undefined") && !item.includes("null"));
+
+            ].filter(
+                (x) =>
+                    !x.includes("undefined") &&
+                    !x.includes("null")
+            );
 
             confidence = 82;
         }
@@ -130,7 +150,96 @@ function explanationAgent(
 
 
         /**
-         * Default Explanation
+         * NEW:
+         * Missing Information Recommendations
+         */
+        else if (
+            item.action ===
+            "Collect Product Usage Analytics"
+        ) {
+
+            reason =
+                "Product adoption metrics are missing from uploaded documents.";
+
+            evidence = [];
+
+            confidence = 65;
+        }
+
+
+        else if (
+            item.action ===
+            "Conduct Customer Satisfaction Survey"
+        ) {
+
+            reason =
+                "No NPS or customer satisfaction metrics were detected.";
+
+            evidence = [];
+
+            confidence = 60;
+        }
+
+
+        else if (
+            item.action ===
+            "Request Contract Information"
+        ) {
+
+            reason =
+                "Contract renewal details are unavailable.";
+
+            evidence = [];
+
+            confidence = 70;
+        }
+
+
+        else if (
+            item.action ===
+            "Verify Contract Value Information"
+        ) {
+
+            reason =
+                "Contract value information is missing.";
+
+            evidence = [];
+
+            confidence = 55;
+        }
+
+
+        else if (
+            item.action ===
+            "Identify Executive Sponsor"
+        ) {
+
+            reason =
+                "No executive sponsor or stakeholder was identified.";
+
+            evidence =
+                agentOutputs.CRMContextAgent?.stakeholders || [];
+
+            confidence = 60;
+        }
+
+
+        else if (
+            item.action ===
+            "Schedule Renewal Planning Meeting"
+        ) {
+
+            reason =
+                "Renewal planning activities have not been confirmed.";
+
+            evidence = [];
+
+            confidence = 55;
+        }
+
+
+        /**
+         * Default
          */
         else {
 
@@ -138,18 +247,24 @@ function explanationAgent(
                 "Generated from business reasoning rules.";
 
             evidence =
-                orchestrationInput.evidence || reasoning.risks;
+                orchestrationInput.evidence ||
+                reasoning.risks;
 
             confidence = 75;
         }
 
+
         /**
-         * Prefer real uploaded-document snippets whenever available.
+         * Prefer actual document snippets.
          */
         if (orchestrationInput.evidence?.length) {
+
             evidence = [
+
                 ...orchestrationInput.evidence.slice(0, 3),
+
                 ...evidence
+
             ].slice(0, 5);
         }
 
@@ -174,3 +289,5 @@ function explanationAgent(
 
 module.exports =
     explanationAgent;
+
+    

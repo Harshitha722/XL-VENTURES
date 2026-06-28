@@ -24,6 +24,9 @@ function businessReasoningAgent(agentOutputs) {
     const crm =
         agentOutputs.CRMContextAgent;
 
+    const completeness =
+        agentOutputs.DataCompletenessAgent;
+
 
     /**
      * CUSTOMER HEALTH ANALYSIS
@@ -38,9 +41,11 @@ function businessReasoningAgent(agentOutputs) {
         }
 
         if (
+
             health.nps !== null &&
             health.nps !== undefined &&
             health.nps < 5
+
         ) {
 
             risks.push(
@@ -49,9 +54,11 @@ function businessReasoningAgent(agentOutputs) {
         }
 
         if (
+
             health.adoption !== null &&
             health.adoption !== undefined &&
             health.adoption < 50
+
         ) {
 
             risks.push(
@@ -88,8 +95,10 @@ function businessReasoningAgent(agentOutputs) {
     if (crm) {
 
         if (
+
             crm.opportunities &&
             crm.opportunities.length > 0
+
         ) {
 
             opportunities.push(
@@ -107,13 +116,19 @@ function businessReasoningAgent(agentOutputs) {
 
 
     /**
-     * Future enhancement:
-     * stakeholder detection.
+     * DATA COMPLETENESS
      */
-    missingInformation.push(
-        "executive sponsor status"
-    );
+    if (completeness) {
 
+        missingInformation.push(
+            ...completeness.missing
+        );
+    }
+
+
+    /**
+     * Additional future checks.
+     */
     missingInformation.push(
         "renewal meeting confirmation"
     );
@@ -127,10 +142,15 @@ function businessReasoningAgent(agentOutputs) {
         opportunities:
             [...new Set(opportunities)],
 
-        missingInformation
+        missingInformation:
+            [...new Set(missingInformation)],
+
+        dataCompleteness:
+            completeness
     };
 }
 
 
 module.exports =
     businessReasoningAgent;
+    

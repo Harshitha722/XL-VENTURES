@@ -11,7 +11,9 @@ function recommendationAgent(reasoning) {
     const recommendations = [];
 
     /**
-     * Handle risks
+     * =========================
+     * Handle Risks
+     * =========================
      */
     reasoning.risks.forEach((risk) => {
 
@@ -85,7 +87,9 @@ function recommendationAgent(reasoning) {
 
 
     /**
-     * Handle opportunities
+     * =========================
+     * Handle Opportunities
+     * =========================
      */
     reasoning.opportunities.forEach((opportunity) => {
 
@@ -119,7 +123,108 @@ function recommendationAgent(reasoning) {
     });
 
 
-    return recommendations;
+    /**
+     * =========================
+     * Handle Missing Information
+     * =========================
+     */
+    reasoning.missingInformation.forEach((item) => {
+
+        switch (item) {
+
+            case "adoption metrics":
+
+                recommendations.push({
+
+                    priority: "HIGH",
+
+                    action:
+                        "Collect Product Usage Analytics"
+                });
+
+                break;
+
+
+            case "NPS score":
+
+                recommendations.push({
+
+                    priority: "MEDIUM",
+
+                    action:
+                        "Conduct Customer Satisfaction Survey"
+                });
+
+                break;
+
+
+            case "renewal date":
+
+                recommendations.push({
+
+                    priority: "HIGH",
+
+                    action:
+                        "Request Contract Information"
+                });
+
+                break;
+
+
+            case "contract value":
+
+                recommendations.push({
+
+                    priority: "LOW",
+
+                    action:
+                        "Verify Contract Value Information"
+                });
+
+                break;
+
+
+            case "executive sponsor":
+
+                recommendations.push({
+
+                    priority: "MEDIUM",
+
+                    action:
+                        "Identify Executive Sponsor"
+                });
+
+                break;
+
+
+            case "renewal meeting confirmation":
+
+                recommendations.push({
+
+                    priority: "LOW",
+
+                    action:
+                        "Schedule Renewal Planning Meeting"
+                });
+
+                break;
+        }
+    });
+
+
+    /**
+     * Remove duplicate actions.
+     */
+    return recommendations.filter(
+
+        (item, index, self) =>
+
+            index === self.findIndex(
+
+                (x) =>
+                    x.action === item.action
+            )
+    );
 }
 
 
