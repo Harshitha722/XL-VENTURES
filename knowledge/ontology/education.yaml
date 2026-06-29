@@ -1,0 +1,46 @@
+domain: education
+description: Education decisions for student success, curriculum, operations, compliance, and institutional outcomes.
+business_goals:
+  - Improve learner outcomes
+  - Increase retention
+  - Support equitable access
+kpis:
+  - Retention rate
+  - Completion rate
+  - Intervention response time
+risks:
+  - Student disengagement
+  - Compliance breach
+  - Resource mismatch
+opportunities:
+  - Targeted intervention
+  - Curriculum improvement
+  - Advisor workflow automation
+success_metrics:
+  - Improved completion
+  - Better intervention uptake
+  - Transparent support history
+agent_capabilities:
+  - learner_risk_analysis
+  - curriculum_review
+  - compliance_review
+  - intervention_planning
+tools:
+  - hybrid_retrieval
+  - policy_lookup
+  - memory_lookup
+  - scenario_simulation
+scenario_templates:
+  - title: Advisor intervention
+    actions:
+      - Assign advisor outreach
+      - Request missing learner context
+  - title: Curriculum adjustment
+    actions:
+      - Identify content friction
+      - Recommend targeted support
+  - title: Compliance review
+    actions:
+      - Validate accommodation and privacy rules
+      - Document human decision authority
+

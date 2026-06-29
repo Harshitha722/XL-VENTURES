@@ -1,0 +1,46 @@
+domain: manufacturing
+description: Manufacturing decisions for production, maintenance, quality, procurement, and operational resilience.
+business_goals:
+  - Increase throughput
+  - Reduce downtime
+  - Improve quality
+kpis:
+  - Overall equipment effectiveness
+  - Defect rate
+  - Cycle time
+risks:
+  - Equipment failure
+  - Quality escape
+  - Procurement delay
+opportunities:
+  - Preventive maintenance
+  - Process optimization
+  - Supplier diversification
+success_metrics:
+  - Lower downtime
+  - Reduced scrap
+  - Stable production plan
+agent_capabilities:
+  - production_analysis
+  - maintenance_review
+  - quality_analysis
+  - procurement_review
+tools:
+  - hybrid_retrieval
+  - maintenance_history_lookup
+  - policy_lookup
+  - memory_lookup
+scenario_templates:
+  - title: Maintenance intervention
+    actions:
+      - Schedule preventive maintenance
+      - Protect critical production windows
+  - title: Quality containment
+    actions:
+      - Isolate suspect batch
+      - Expand inspection criteria
+  - title: Procurement resilience
+    actions:
+      - Qualify alternate supplier
+      - Adjust production plan
+

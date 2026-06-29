@@ -1,0 +1,59 @@
+domain: revenue_operations
+description: Customer conversion decisions across pipeline, buying blockers, deal risk, pricing, proof, and closed-won outcomes.
+business_goals:
+  - Convert qualified customers into completed deals
+  - Reduce lost-deal and no-decision rates
+  - Improve sales and customer success playbooks from feedback
+kpis:
+  - Deal conversion rate
+  - Closed-won revenue
+  - No-decision rate
+risks:
+  - Price objection
+  - Delayed buyer commitment
+  - Missing economic buyer alignment
+  - Weak value proof
+opportunities:
+  - Next best action
+  - Objection handling
+  - Executive alignment
+  - Follow-up automation
+success_metrics:
+  - Higher closed-won rate
+  - Lower no-decision rate
+  - Faster deal cycle
+  - Better reason capture from lost deals
+agent_capabilities:
+  - deal_conversion_analysis
+  - objection_analysis
+  - buyer_intent_review
+  - follow_up_planning
+  - lost_deal_learning
+  - value_proof_review
+tools:
+  - hybrid_retrieval
+  - crm_lookup
+  - memory_lookup
+  - scenario_simulation
+  - outcome_feedback_store
+scenario_templates:
+  - title: Close-ready conversion
+    actions:
+      - Confirm buying criteria and decision owner
+      - Send value proof tied to the customer's stated blocker
+      - Ask for signature, payment, or final approval date
+  - title: Objection recovery
+    actions:
+      - Identify the strongest price, timing, trust, or feature objection
+      - Match the objection with evidence, ROI, or implementation support
+      - Schedule a decision call with the economic buyer
+  - title: No-decision prevention
+    actions:
+      - Convert vague interest into a dated next step
+      - Assign internal owner for follow-up
+      - Record the no-buy reason if the customer does not commit
+  - title: Lost-deal learning
+    actions:
+      - Capture why the customer did not buy
+      - Group blockers into product, pricing, timing, trust, or fit themes
+      - Feed the pattern into future recommendations

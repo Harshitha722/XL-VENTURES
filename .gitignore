@@ -19,3 +19,13 @@ backend/uploads/*.docx
 .DS_Store
 Thumbs.db
 dist/
+# Build and test output
+.next/
+frontend/.next/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.tsbuildinfo
+frontend/test-results/
+frontend/playwright-report/

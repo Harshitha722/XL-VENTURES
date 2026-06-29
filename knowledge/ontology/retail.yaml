@@ -1,0 +1,46 @@
+domain: retail
+description: Retail decisions across demand, inventory, promotions, customer behavior, and supply chain execution.
+business_goals:
+  - Increase profitable revenue
+  - Improve inventory turns
+  - Strengthen customer experience
+kpis:
+  - Sell-through rate
+  - Gross margin
+  - Stockout rate
+risks:
+  - Demand forecast error
+  - Overstock
+  - Supplier delay
+opportunities:
+  - Targeted promotion
+  - Inventory reallocation
+  - Supplier negotiation
+success_metrics:
+  - Improved margin
+  - Lower stockouts
+  - Faster replenishment
+agent_capabilities:
+  - demand_analysis
+  - inventory_review
+  - promotion_analysis
+  - supply_chain_review
+tools:
+  - hybrid_retrieval
+  - sales_history_lookup
+  - memory_lookup
+  - scenario_simulation
+scenario_templates:
+  - title: Promotion lift
+    actions:
+      - Launch targeted promotion
+      - Monitor margin impact
+  - title: Inventory shift
+    actions:
+      - Reallocate inventory to high-demand locations
+      - Adjust replenishment thresholds
+  - title: Supplier negotiation
+    actions:
+      - Renegotiate delivery commitments
+      - Add backup supply option
+

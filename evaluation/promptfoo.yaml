@@ -1,0 +1,12 @@
+﻿description: DECISIONMESH AI recommendation quality checks
+providers:
+  - id: echo
+prompts:
+  - "Assess {{domain}} decision context: {{context}}"
+tests:
+  - vars:
+      domain: finance
+      context: compliance risk and portfolio exposure
+    assert:
+      - type: contains-any
+        value: [risk, compliance, evidence]

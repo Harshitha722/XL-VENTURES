@@ -1,0 +1,46 @@
+domain: finance
+description: Financial services decisions across risk, investment, fraud, portfolio, and compliance workflows.
+business_goals:
+  - Protect assets
+  - Improve risk-adjusted returns
+  - Maintain regulatory compliance
+kpis:
+  - Risk-adjusted return
+  - Fraud loss rate
+  - Compliance exception rate
+risks:
+  - Market volatility
+  - Fraud exposure
+  - Regulatory breach
+opportunities:
+  - Portfolio optimization
+  - Risk mitigation
+  - Process automation
+success_metrics:
+  - Reduced losses
+  - Improved return profile
+  - Audit-ready evidence trail
+agent_capabilities:
+  - fraud_analysis
+  - investment_analysis
+  - portfolio_review
+  - compliance_review
+tools:
+  - hybrid_retrieval
+  - market_context
+  - policy_lookup
+  - memory_lookup
+scenario_templates:
+  - title: Risk mitigation path
+    actions:
+      - Tighten controls around high-risk exposure
+      - Escalate compliance review
+  - title: Investment rebalancing path
+    actions:
+      - Rebalance allocation based on evidence
+      - Monitor downside triggers
+  - title: Fraud containment path
+    actions:
+      - Freeze suspicious activity
+      - Request additional verification
+

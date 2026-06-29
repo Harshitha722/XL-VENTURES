@@ -1,0 +1,46 @@
+domain: customer_success
+description: Customer success decisions for renewals, adoption, stakeholder alignment, and account risk.
+business_goals:
+  - Improve retention
+  - Expand account value
+  - Increase product adoption
+kpis:
+  - Renewal probability
+  - Adoption depth
+  - Executive engagement
+risks:
+  - Renewal risk
+  - Low adoption
+  - Stakeholder churn
+opportunities:
+  - Expansion
+  - Training
+  - Executive business review
+success_metrics:
+  - Higher renewal rate
+  - Improved adoption
+  - Documented customer value
+agent_capabilities:
+  - renewal_analysis
+  - adoption_analysis
+  - health_review
+  - stakeholder_analysis
+tools:
+  - hybrid_retrieval
+  - crm_lookup
+  - memory_lookup
+  - scenario_simulation
+scenario_templates:
+  - title: Training intervention
+    actions:
+      - Schedule targeted enablement
+      - Measure usage lift
+  - title: Executive engagement
+    actions:
+      - Prepare value narrative
+      - Align with economic buyer
+  - title: Renewal protection
+    actions:
+      - Confirm success criteria
+      - Resolve blockers before renewal window
+

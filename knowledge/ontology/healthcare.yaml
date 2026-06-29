@@ -1,0 +1,46 @@
+domain: healthcare
+description: Healthcare decisions involving patient risk, care pathways, payer workflows, and compliance.
+business_goals:
+  - Improve patient outcomes
+  - Reduce clinical and operational risk
+  - Maintain privacy and regulatory compliance
+kpis:
+  - Readmission risk
+  - Time to intervention
+  - Care plan adherence
+risks:
+  - Patient safety risk
+  - Missing diagnostics
+  - Privacy exposure
+opportunities:
+  - Earlier intervention
+  - Care coordination
+  - Insurance escalation
+success_metrics:
+  - Outcome improvement
+  - Reduced avoidable escalation
+  - Documented clinical rationale
+agent_capabilities:
+  - patient_risk_analysis
+  - compliance_review
+  - insurance_review
+  - treatment_pathway_analysis
+tools:
+  - hybrid_retrieval
+  - clinical_policy_lookup
+  - memory_lookup
+  - scenario_simulation
+scenario_templates:
+  - title: Additional diagnostics
+    actions:
+      - Request missing diagnostics
+      - Validate symptoms against care criteria
+  - title: Insurance escalation
+    actions:
+      - Prepare payer evidence packet
+      - Escalate authorization blocker
+  - title: Treatment adjustment
+    actions:
+      - Review care pathway alternatives
+      - Align next steps with clinician authority
+

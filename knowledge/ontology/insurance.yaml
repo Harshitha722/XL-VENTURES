@@ -1,0 +1,46 @@
+domain: insurance
+description: Insurance decisions around underwriting, claims, fraud, compliance, and policyholder outcomes.
+business_goals:
+  - Improve loss ratio
+  - Resolve claims fairly
+  - Reduce fraud and compliance risk
+kpis:
+  - Loss ratio
+  - Claims cycle time
+  - Fraud detection precision
+risks:
+  - Adverse selection
+  - Fraudulent claim
+  - Regulatory complaint
+opportunities:
+  - Better underwriting segmentation
+  - Faster claims resolution
+  - Policyholder retention
+success_metrics:
+  - Accurate claim disposition
+  - Reduced leakage
+  - Clear audit trail
+agent_capabilities:
+  - underwriting_analysis
+  - claims_review
+  - fraud_analysis
+  - compliance_review
+tools:
+  - hybrid_retrieval
+  - policy_lookup
+  - claims_history_lookup
+  - memory_lookup
+scenario_templates:
+  - title: Claim evidence escalation
+    actions:
+      - Request missing claim evidence
+      - Validate policy coverage
+  - title: Fraud investigation
+    actions:
+      - Flag anomalous claim pattern
+      - Route to SIU review
+  - title: Retention resolution
+    actions:
+      - Offer fair settlement path
+      - Document policyholder communication
+
