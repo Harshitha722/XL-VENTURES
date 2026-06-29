@@ -1,6 +1,30 @@
+"""
+DecisionMesh Orchestrator — fully LLM-driven intelligence pipeline.
+
+Pipeline order:
+  0. Meaningfulness guard (LLM) — reject garbage input early
+  1. LLM Domain Detection
+  2. RAG evidence retrieval
+  3. LLM Agent Planning
+  4. Parallel LLM Agent execution
+  5. LLM Business Reasoning
+  6. LLM Scenario Simulation
+  7. LLM Devil's Advocate Critique
+  8. Confidence scoring
+  9. LLM Recommendation Synthesis
+  10. Audit + Memory logging
+"""
+
 from uuid import UUID
 
-from app.agents.factory import RuntimeAgentRegistry, generate_agents
+from fastapi import HTTPException
+
+from app.agents.factory import (
+    RuntimeAgentRegistry,
+    _check_meaningfulness,
+    llm_detect_domain,
+    llm_plan_agents,
+)
 from app.audit.store import audit_store
 from app.memory.store import memory_store
 from app.models.schemas import (
@@ -16,7 +40,6 @@ from app.models.schemas import (
     ReviewRequest,
     ReviewStatus,
 )
-from app.ontology.engine import OntologyEngine
 from app.rag.hybrid import HybridRAG
 from app.reasoning.confidence import ConfidenceEngine
 from app.reasoning.devils_advocate import DevilsAdvocateAgent
@@ -90,7 +113,6 @@ def _summarize_outcome(
 
 class DecisionMeshOrchestrator:
     def __init__(self) -> None:
-        self.ontology_engine = OntologyEngine()
         self.rag = HybridRAG()
         self.registry = RuntimeAgentRegistry()
         self.reasoner = BusinessReasoningEngine()
@@ -102,19 +124,61 @@ class DecisionMeshOrchestrator:
         self.customer_outcomes: list[CustomerOutcomeRecord] = []
 
     async def analyze(self, request: AnalysisRequest) -> DecisionReport:
-        corpus = "\n".join([request.task, *[document.text for document in request.documents]])
-        ontology, domain = self.ontology_engine.detect(corpus)
+        corpus = "\n".join([request.task, *[doc.text for doc in request.documents]])
+
+        # ── Step 0: Meaningfulness guard ──────────────────────────────────────
+        guard = await _check_meaningfulness(request.task, corpus)
+        if not guard.is_meaningful:
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "error": "meaningless_input",
+                    "message": (
+                        "The provided input does not contain meaningful business, technical, "
+                        "or operational content that can be analysed."
+                    ),
+                    "reason": guard.reason,
+                    "hint": (
+                        "Please provide a real decision task (e.g. 'Assess risk of expanding into "
+                        "the EU market') and upload relevant evidence documents."
+                    ),
+                },
+            )
+
+        # ── Step 1: LLM Domain Detection ──────────────────────────────────────
+        domain = await llm_detect_domain(request.task, corpus)
+
+        # ── Step 2: RAG evidence retrieval ────────────────────────────────────
         self.rag.index(request.documents)
         evidence = self.rag.retrieve(request.task, request.documents)
-        agents = generate_agents(domain.domain, request.task, ontology, domain)
+
+        # ── Step 3: LLM Agent Planning ────────────────────────────────────────
+        agents = await llm_plan_agents(domain, request.task)
         self.registry.register(agents)
+
+        # ── Step 4: Parallel LLM Agent execution ──────────────────────────────
         findings = await self.registry.run(agents, evidence)
+
+        # ── Step 5: LLM Business Reasoning ────────────────────────────────────
         memories = memory_store.retrieve(domain.domain, request.task)
-        reasoning = self.reasoner.reason(findings, ontology, memories)
-        scenarios = self.simulator.simulate(ontology, reasoning, memories)
-        critique = self.critic.critique(reasoning, scenarios)
+        reasoning = await self.reasoner.reason_async(findings, domain.domain, request.task, memories)
+
+        # ── Step 6: LLM Scenario Simulation ───────────────────────────────────
+        scenarios = await self.simulator.simulate_async(domain.domain, request.task, reasoning, memories)
+
+        # ── Step 7: LLM Devil's Advocate Critique ─────────────────────────────
+        critique = await self.critic.critique_async(reasoning, scenarios)
+
+        # ── Step 8: Confidence scoring ────────────────────────────────────────
         confidence = self.confidence.score(evidence, findings, critique, len(memories))
-        recommendations = self.synthesizer.synthesize(reasoning, scenarios, critique, evidence, confidence)
+
+        # ── Step 9: LLM Recommendation Synthesis ──────────────────────────────
+        recommendations = await self.synthesizer.synthesize_async(
+            reasoning, scenarios, critique, evidence, confidence,
+            domain=domain.domain, task=request.task,
+        )
+
+        # ── Step 10: Persist report, audit, memory ────────────────────────────
         report = DecisionReport(
             domain=domain,
             agents=agents,
@@ -138,16 +202,17 @@ class DecisionMeshOrchestrator:
         )
         return report
 
+    # ── Review, outcome, metrics — unchanged ──────────────────────────────────
+
     def review(self, request: ReviewRequest) -> AuditEvent:
         report = self.reports.get(request.report_id)
         payload = request.model_dump(mode="json")
         domain = report.domain.domain if report else "general"
-        task = "human review"
         memory_store.remember_feedback(
             request.decision.value,
             payload,
             domain=domain,
-            task=task,
+            task="human review",
             source_report_id=request.report_id,
         )
         if report:
@@ -226,10 +291,10 @@ class DecisionMeshOrchestrator:
     def metrics(self) -> PlatformMetrics:
         reports = self.list_reports()
         outcomes = self.list_customer_outcomes()
-        won_deals = sum(1 for outcome in outcomes if outcome.outcome == CustomerOutcomeStatus.won)
-        lost_deals = sum(1 for outcome in outcomes if outcome.outcome == CustomerOutcomeStatus.lost)
+        won_deals = sum(1 for o in outcomes if o.outcome == CustomerOutcomeStatus.won)
+        lost_deals = sum(1 for o in outcomes if o.outcome == CustomerOutcomeStatus.lost)
         no_decision_deals = sum(
-            1 for outcome in outcomes if outcome.outcome == CustomerOutcomeStatus.no_decision
+            1 for o in outcomes if o.outcome == CustomerOutcomeStatus.no_decision
         )
         completed_outcomes = won_deals + lost_deals + no_decision_deals
         conversion_rate = round((won_deals / completed_outcomes) * 100) if completed_outcomes else 0
@@ -237,8 +302,9 @@ class DecisionMeshOrchestrator:
             reports=len(reports),
             audit_events=audit_store.count(),
             memory_records=memory_store.count(),
-            domains_available=len(self.ontology_engine.all()),
-            mandatory_reviews=sum(1 for report in reports if report.mandatory_review),
+            # No YAML ontology — report the number of unique domains seen
+            domains_available=len({r.domain.domain for r in reports}) or 0,
+            mandatory_reviews=sum(1 for r in reports if r.mandatory_review),
             customer_outcomes=len(outcomes),
             won_deals=won_deals,
             lost_deals=lost_deals,

@@ -73,19 +73,26 @@ Important backend modules:
 
 ### Frontend
 
-The frontend is built with **Next.js App Router**, **TypeScript**, **TanStack Query**, and **Zustand**.
+The frontend is built with **Next.js App Router**, **TypeScript**, **TanStack Query**, **Zustand**, and a **custom dark glassmorphism design system**.
 
 Important frontend pages:
 
-- `/workspace`: Runtime metrics and current workspace state.
-- `/upload`: Uploads evidence files.
-- `/knowledge`: Shows supported domain ontologies.
-- `/analysis`: Runs the decision analysis pipeline.
-- `/recommendations`: Displays prioritized explainable recommendations.
-- `/review`: Records human review decisions.
-- `/audit`: Displays hash-linked audit events.
-- `/admin`: Shows reports, memory, and platform metrics.
-- `/settings`: Shows runtime configuration information.
+- `/workspace`: Runtime metric cards with icon boxes, badge-tagged report status, skeleton loaders.
+- `/upload`: Animated glow drag-and-drop zone, file type detection badges, per-file size display.
+- `/knowledge`: Domain ontology cards with goal and capability badge grids.
+- `/analysis`: Confidence progress bar, dual-column risk/opportunity layout, animated result cards.
+- `/recommendations`: Animated recommendation cards with priority badges and color-coded outcome buttons.
+- `/review`: Card-style review action buttons with descriptions and confidence bar.
+- `/audit`: Color-coded event timeline with cryptographic hash display and skeleton loaders.
+- `/admin`: Full metric card grid, dual-column reports and outcome learning panels.
+- `/settings`: Grouped configuration panels with icon headers.
+
+New and updated UI components:
+
+- `NavLink` (`components/ui/nav-link.tsx`): Active-route detection via `usePathname`, glowing cyan indicator dot, animated hover effects.
+- `Button` (`components/ui/button.tsx`): 6 variants — primary (gradient glow), ghost, success, danger, warning, purple — with loading spinner and shimmer ripple.
+- `Section` (`components/ui/section.tsx`): Gradient-underline title, optional subtitle prop.
+- `MetricCard` (`components/ui/section.tsx`): Icon box, gradient value text, skeleton loading state.
 
 ## 6. Supported Domains
 
@@ -166,7 +173,8 @@ Frontend:
 - TypeScript
 - TanStack Query
 - Zustand
-- TailwindCSS-ready styling
+- Custom dark glassmorphism design system (Inter + JetBrains Mono via Google Fonts)
+- Tailwind CSS v4 (utility layer)
 - Playwright for E2E tests
 
 Backend:
@@ -235,8 +243,58 @@ Potential use cases include:
 - Education student intervention planning
 - Customer success renewal and adoption decisions
 
-## 14. Conclusion
+## 14. UI/UX Design System
 
-DECISIONMESH AI is a complete hackathon prototype of a universal agentic decision intelligence platform. It demonstrates how enterprise evidence can be transformed into structured reasoning, ranked scenarios, explainable recommendations, confidence scores, human decisions, memory, and audit logs.
+The frontend received a full visual redesign with a **premium dark glassmorphism** theme intended to look production-grade and impressive at first glance.
+
+### Design Tokens
+
+| Token | Value |
+|-------|-------|
+| Base background | `#050b15` deep navy |
+| Panel background | `rgba(15, 30, 55, 0.6)` glass |
+| Primary accent | Electric teal `#00d4ff` |
+| Secondary accent | Indigo `#7c3aed` |
+| Gradient | `135deg, #00d4ff → #7c3aed` |
+| Font | Inter (Google Fonts) |
+| Mono font | JetBrains Mono |
+
+### Animations Implemented
+
+| Animation | Purpose |
+|-----------|---------|
+| `fadeInUp` | Page entry for every card and section (staggered delays) |
+| `shimmer` | Skeleton loaders and progress bar shimmer |
+| `glow-pulse` | Nav icons, upload icon, CTA icon boxes |
+| `float` | Hero background orbs on landing page |
+| `spin` | Button loading spinner |
+| `gradient-shift` | Animated gradient background text |
+
+### Sidebar
+
+- Sticky dark sidebar with glowing right-border gradient
+- Route sections: Core / Intelligence / System
+- Active page: glowing cyan dot + left accent bar
+- Nav icon hover: `translateX(2px)` slide + teal glow filter
+- Status indicator: live green pulse dot at the bottom
+
+### Button System
+
+All buttons have hover lift (`translateY(-2px)`), shimmer ripple on hover, and disabled opacity. Variants: `primary`, `ghost`, `success`, `danger`, `warning`, `purple`.
+
+### Page-Level Highlights
+
+| Page | Key Design Feature |
+|------|--------------------|
+| Landing | Animated gradient headline, stat strip, floating orbs |
+| Upload | Glow drag-and-drop zone, animated file list with badges |
+| Analysis | Confidence progress bar, dual-column reasoning display |
+| Recommendations | Card top-border reveal, color-coded outcome buttons |
+| Human Review | Card action buttons with icon + description |
+| Audit | Color-coded timeline dots by event type |
+
+## 15. Conclusion
+
+DECISIONMESH AI is a complete hackathon prototype of a universal agentic decision intelligence platform. It demonstrates how enterprise evidence can be transformed into structured reasoning, ranked scenarios, explainable recommendations, confidence scores, human decisions, memory, and audit logs — all presented through a **premium dark glassmorphism UI** designed for maximum visual impact.
 
 The project is ready for demo and submission as a functional prototype. Future production work would mainly involve connecting persistent databases, hosted model providers, authentication, and cloud-scale deployment infrastructure.

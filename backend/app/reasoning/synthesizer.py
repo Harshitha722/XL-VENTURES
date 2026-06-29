@@ -1,37 +1,46 @@
-from app.models.schemas import ConfidenceBreakdown, Critique, Evidence, Priority, Recommendation, ReasoningResult, Scenario
+"""
+LLM-driven Recommendation Synthesizer.
+Replaces template-string logic with a real structured LLM call per recommendation.
+"""
+
+from __future__ import annotations
+
+from pydantic import BaseModel, Field
+from pydantic_ai import Agent
+
+from app.agents.factory import _model
+from app.models.schemas import (
+    ConfidenceBreakdown,
+    Critique,
+    Evidence,
+    Priority,
+    Recommendation,
+    ReasoningResult,
+    Scenario,
+)
 
 
-def _conversion_goal(reasoning: ReasoningResult) -> str:
-    goals = " ".join(reasoning.business_goals + reasoning.opportunities).lower()
-    if any(term in goals for term in ["renewal", "retention", "adoption"]):
-        return "Protect the account, prove customer value, and move the buyer toward renewal or expansion."
-    if any(term in goals for term in ["revenue", "customer", "sales", "promotion", "expansion"]):
-        return "Convert customer interest into a committed purchase step and measurable revenue outcome."
-    return "Move the stakeholder from analysis to a committed decision with a clear owner and timeline."
+class _RecommendationOutput(BaseModel):
+    title: str = Field(description="Short, action-oriented recommendation title")
+    action: str = Field(description="Full action description — what to do and how")
+    next_best_action: str = Field(description="Single most important immediate action step")
+    conversion_goal: str = Field(description="The business outcome this action is trying to achieve")
+    deal_stage: str = Field(description="Current stage: e.g. discovery, objection_handling, close_ready, nurture")
+    objection_response: str = Field(description="How to handle the main objection or blocker for this recommendation")
+    success_signal: str = Field(description="How you will know this recommendation worked")
+    rationale: str = Field(description="Why this is the right recommendation given the evidence and reasoning")
+    why: str = Field(description="One-sentence plain-language explanation for a business audience")
+    owner: str = Field(description="Role or team who should own this action")
+    timeline: str = Field(description="Realistic execution timeline, e.g. 'Next 7 days' or 'Within 2 weeks'")
+    impact: str = Field(description="Expected business impact: High, Medium, or Low")
+    priority: str = Field(description="Priority level: HIGH, MEDIUM, or LOW")
+    confidence: int = Field(ge=0, le=100, description="Confidence score 0-100")
 
 
-def _deal_stage(index: int, confidence: ConfidenceBreakdown) -> str:
-    if confidence.overall >= 78 and index == 0:
-        return "close_ready"
-    if index == 0:
-        return "active_opportunity"
-    if index == 1:
-        return "objection_handling"
-    return "nurture_or_recovery"
-
-
-def _objection_response(reasoning: ReasoningResult, critique: Critique) -> str:
-    missing = reasoning.missing_information[:2] or critique.missing_evidence[:2]
-    if missing:
-        return "Resolve buyer hesitation by collecting " + ", ".join(missing) + " and tying the response to business value."
-    if critique.criticisms:
-        return "Address the strongest uncertainty before asking for commitment: " + critique.criticisms[0]
-    return "Confirm the customer's decision criteria, show value evidence, and ask for the next commitment."
-
-
-def _success_signal(scenario: Scenario) -> str:
-    metric = scenario.success_metrics[0] if scenario.success_metrics else "measured customer commitment"
-    return f"Customer accepts the next step and {metric.lower()} improves."
+class _RecommendationListOutput(BaseModel):
+    recommendations: list[_RecommendationOutput] = Field(
+        description="2 to 3 prioritised, actionable recommendations"
+    )
 
 
 class RecommendationSynthesizer:
@@ -42,63 +51,141 @@ class RecommendationSynthesizer:
         critique: Critique,
         evidence: list[Evidence],
         confidence: ConfidenceBreakdown,
+        domain: str = "general",
+        task: str = "",
     ) -> list[Recommendation]:
-        priorities = [Priority.high, Priority.medium, Priority.low]
-        recommendations: list[Recommendation] = []
-        conversion_goal = _conversion_goal(reasoning)
-        objection_response = _objection_response(reasoning, critique)
-        for index, scenario in enumerate(scenarios[:3]):
-            priority = priorities[min(index, len(priorities) - 1)]
-            action = "; ".join(scenario.actions[:3])
-            next_best_action = scenario.actions[0] if scenario.actions else "Confirm buyer commitment and assign follow-up owner"
-            recommendations.append(
-                Recommendation(
-                    title=scenario.title,
-                    action=action,
-                    next_best_action=next_best_action,
-                    conversion_goal=conversion_goal,
-                    deal_stage=_deal_stage(index, confidence),
-                    objection_response=objection_response,
-                    success_signal=_success_signal(scenario),
-                    rationale=(
-                        "Prioritizes the action most likely to convert customer intent into a committed "
-                        "deal outcome while preserving evidence, confidence, critique, and human review."
-                    ),
+        import asyncio
+        return asyncio.get_event_loop().run_until_complete(
+            self._synthesize_async(reasoning, scenarios, critique, evidence, confidence, domain, task)
+        )
+
+    async def synthesize_async(
+        self,
+        reasoning: ReasoningResult,
+        scenarios: list[Scenario],
+        critique: Critique,
+        evidence: list[Evidence],
+        confidence: ConfidenceBreakdown,
+        domain: str = "general",
+        task: str = "",
+    ) -> list[Recommendation]:
+        return await self._synthesize_async(
+            reasoning, scenarios, critique, evidence, confidence, domain, task
+        )
+
+    async def _synthesize_async(
+        self,
+        reasoning: ReasoningResult,
+        scenarios: list[Scenario],
+        critique: Critique,
+        evidence: list[Evidence],
+        confidence: ConfidenceBreakdown,
+        domain: str,
+        task: str,
+    ) -> list[Recommendation]:
+        agent: Agent[None, _RecommendationListOutput] = Agent(
+            _model(),
+            output_type=_RecommendationListOutput,
+            system_prompt=(
+                "You are the Recommendation Synthesizer for an enterprise decision intelligence platform. "
+                "You receive a complete picture: reasoning results, ranked scenarios, critique, "
+                "evidence, and confidence scores. Your job is to produce 2–3 prioritised, "
+                "actionable recommendations that a business team can execute.\n\n"
+                "Requirements:\n"
+                "- Each recommendation must be specific and grounded in the actual evidence provided\n"
+                "- next_best_action must be the single most impactful immediate step\n"
+                "- owner must be a real role (e.g. 'Account Executive', 'Risk Manager', 'CMO')\n"
+                "- timeline must be concrete (e.g. 'Next 48 hours', 'By end of week')\n"
+                "- confidence should reflect the evidence quality and critique uncertainty\n"
+                "- Rank priority HIGH → MEDIUM → LOW across the 2-3 recommendations\n"
+                "- Do NOT use generic corporate filler — be specific to the domain and task"
+            ),
+        )
+
+        scenarios_text = "\n".join(
+            f"[Rank {s.rank}] {s.title} (conf={s.confidence}): {'; '.join(s.actions[:3])}"
+            for s in scenarios[:4]
+        )
+
+        evidence_excerpts = "\n".join(
+            f"- [{e.source_type}] {e.excerpt[:200]}" for e in evidence[:4]
+        )
+
+        prompt = (
+            f"Domain: {domain}\n"
+            f"Task: {task[:300]}\n"
+            f"Overall confidence: {confidence.overall}/100\n\n"
+            f"Business goals: {'; '.join(reasoning.business_goals[:4])}\n"
+            f"Top risks: {'; '.join(reasoning.risks[:4])}\n"
+            f"Top opportunities: {'; '.join(reasoning.opportunities[:4])}\n"
+            f"Missing info: {'; '.join(reasoning.missing_information[:3])}\n\n"
+            f"Ranked scenarios:\n{scenarios_text}\n\n"
+            f"Critique summary: {'; '.join(critique.criticisms[:3])}\n"
+            f"Critique uncertainty: {critique.uncertainty}\n\n"
+            f"Evidence excerpts:\n{evidence_excerpts}"
+        )
+
+        priority_map = {"HIGH": Priority.high, "MEDIUM": Priority.medium, "LOW": Priority.low}
+
+        try:
+            result = await agent.run(prompt)
+            raw = result.output.recommendations
+            recs = []
+            for r in raw:
+                recs.append(Recommendation(
+                    title=r.title,
+                    action=r.action,
+                    next_best_action=r.next_best_action,
+                    conversion_goal=r.conversion_goal,
+                    deal_stage=r.deal_stage,
+                    objection_response=r.objection_response,
+                    success_signal=r.success_signal,
+                    rationale=r.rationale,
+                    why=r.why,
+                    owner=r.owner,
+                    timeline=r.timeline,
+                    impact=r.impact,
+                    priority=priority_map.get(r.priority.upper(), Priority.medium),
+                    confidence=max(0, min(100, r.confidence)),
                     evidence=evidence[:4],
-                    confidence=max(0, min(100, confidence.overall - index * 6)),
-                    impact="High" if priority == Priority.high else "Medium",
-                    priority=priority,
-                    owner="Business decision owner",
-                    timeline="Next 7-14 days" if priority == Priority.high else "Next 30 days",
-                    why=(
-                        "This action has the strongest fit with available evidence, conversion goals, "
-                        "scenario ranking, and known buyer objections."
-                    ),
-                    scenarios_considered=[item.title for item in scenarios],
+                    scenarios_considered=[s.title for s in scenarios],
                     critiques=critique.criticisms,
                     human_modifications=[],
-                )
-            )
-        if not recommendations:
-            recommendations.append(
-                Recommendation(
-                    title="Request more information",
-                    action="Collect missing evidence and rerun analysis",
-                    next_best_action="Ask the customer or account owner for the missing buying criteria",
-                    conversion_goal=conversion_goal,
-                    deal_stage="discovery_gap",
-                    objection_response=objection_response,
-                    success_signal="Missing buying evidence is collected before the next recommendation.",
-                    rationale="The system cannot produce a reliable recommendation without enough evidence.",
-                    evidence=evidence,
-                    confidence=max(20, confidence.overall),
-                    impact="Medium",
-                    priority=Priority.high,
-                    owner="Human reviewer",
-                    timeline="Before decision execution",
-                    why="Missing evidence prevents accountable action and can hide why a customer will not buy.",
-                    scenarios_considered=[],
-                    critiques=critique.criticisms,
-                )
-            )
-        return recommendations
+                ))
+            return recs or [self._fallback_rec(reasoning, scenarios, critique, evidence, confidence)]
+        except Exception:
+            return [self._fallback_rec(reasoning, scenarios, critique, evidence, confidence)]
+
+    @staticmethod
+    def _fallback_rec(
+        reasoning: ReasoningResult,
+        scenarios: list[Scenario],
+        critique: Critique,
+        evidence: list[Evidence],
+        confidence: ConfidenceBreakdown,
+    ) -> Recommendation:
+        top_scenario = scenarios[0] if scenarios else None
+        return Recommendation(
+            title="Request additional evidence and rerun analysis",
+            action="Collect the missing evidence items identified above, then rerun the analysis pipeline",
+            next_best_action=(
+                f"Collect: {reasoning.missing_information[0]}"
+                if reasoning.missing_information
+                else "Upload more evidence documents and rerun analysis"
+            ),
+            conversion_goal="Produce a reliable, evidence-grounded recommendation",
+            deal_stage="evidence_gap",
+            objection_response="The system cannot produce a reliable recommendation without sufficient evidence",
+            success_signal="Missing evidence is collected and analysis confidence rises above 70",
+            rationale="Insufficient evidence or LLM synthesis failure prevented a specific recommendation",
+            why="More evidence is needed before committing to a course of action",
+            owner="Human reviewer",
+            timeline="Before next decision cycle",
+            impact="High",
+            priority=Priority.high,
+            confidence=max(20, confidence.overall),
+            evidence=evidence,
+            scenarios_considered=[s.title for s in scenarios],
+            critiques=critique.criticisms,
+            human_modifications=[],
+        )

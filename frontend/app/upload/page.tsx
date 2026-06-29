@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { FileText, UploadCloud } from "lucide-react";
+import { FileText, UploadCloud, CheckCircle, AlertTriangle, X, Paperclip, Hash } from "lucide-react";
 import { Section } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
 import type { IngestedDocument } from "@/lib/types";
@@ -43,36 +43,57 @@ async function fileToDocument(file: File): Promise<IngestedDocument> {
   };
 }
 
+function formatBytes(bytes: number) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / 1048576).toFixed(1)} MB`;
+}
+
+const sourceColors: Record<string, string> = {
+  pdf: "badge-danger",
+  crm: "badge-primary",
+  email: "badge-purple",
+  transcript: "badge-success",
+  other: "badge-warning"
+};
+
 export default function UploadCenter() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [pastedText, setPastedText] = useState("");
   const [status, setStatus] = useState<string>("");
+  const [isSuccess, setIsSuccess] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const documents = useDecisionStore((state) => state.documents);
   const addDocuments = useDecisionStore((state) => state.addDocuments);
 
   function updateFiles(nextFiles: FileList | File[]) {
     const selected = Array.from(nextFiles);
     setFiles(selected);
+    setIsSuccess(false);
     setStatus(selected.length ? `${selected.length} file(s) selected.` : "No files selected.");
   }
 
   async function handleUpload() {
     if (!files.length) {
       setStatus("Choose files first, drop files into the box, or paste text below.");
+      setIsSuccess(false);
       return;
     }
     setIsUploading(true);
     setStatus("");
+    setIsSuccess(false);
     try {
       const uploaded = await Promise.all(files.map(fileToDocument));
       addDocuments(uploaded);
       setStatus(`${uploaded.length} file(s) loaded. Go to Analysis and click Run analysis.`);
+      setIsSuccess(true);
       setFiles([]);
       if (inputRef.current) inputRef.current.value = "";
     } catch {
       setStatus("Could not read one of the selected files. Try a .txt, .md, .csv, or simple text file.");
+      setIsSuccess(false);
     } finally {
       setIsUploading(false);
     }
@@ -82,6 +103,7 @@ export default function UploadCenter() {
     const text = pastedText.trim();
     if (!text) {
       setStatus("Paste some text first.");
+      setIsSuccess(false);
       return;
     }
     addDocuments([
@@ -96,68 +118,181 @@ export default function UploadCenter() {
     ]);
     setPastedText("");
     setStatus("Pasted evidence loaded. Go to Analysis and click Run analysis.");
+    setIsSuccess(true);
   }
 
-  return (
-    <Section title="Upload Center">
-      <div className="panel" style={{ padding: 24, display: "grid", gap: 16 }}>
-        <UploadCloud size={28} />
-        <strong>Enterprise evidence intake</strong>
-        <p style={{ color: "var(--muted)", margin: 0 }}>
-          Upload text-based evidence such as transcripts, emails, CRM notes, contracts, markdown, or CSV files. For demo quality, .txt, .md, and .csv files work best.
-        </p>
+  const isError = !isSuccess && status && (status.includes("Could not") || status.includes("first") || status.includes("Paste"));
 
-        <div
-          onDragOver={(event) => event.preventDefault()}
-          onDrop={(event) => {
-            event.preventDefault();
-            updateFiles(event.dataTransfer.files);
-          }}
-          style={{ border: "1px dashed var(--line)", borderRadius: 8, padding: 18, display: "grid", gap: 12, background: "#fff" }}
-        >
-          <FileText size={22} />
-          <strong>Choose or drop files</strong>
-          <span style={{ color: "var(--muted)" }}>Click Choose files, or drag files into this box.</span>
-          <input ref={inputRef} id="evidence-files" type="file" multiple style={{ display: "none" }} onChange={(event) => updateFiles(event.target.files ?? [])} />
-          <label htmlFor="evidence-files" style={{ display: "inline-flex", width: "fit-content", alignItems: "center", gap: 8, borderRadius: 8, padding: "10px 14px", background: "var(--accent)", color: "white", cursor: "pointer", fontWeight: 700 }}>
-            Choose files
-          </label>
+  return (
+    <Section
+      title="Upload Center"
+      subtitle="Ingest enterprise evidence for agentic analysis"
+    >
+      <div style={{ display: "grid", gap: 16 }}>
+        {/* Drop zone panel */}
+        <div className="panel" style={{ padding: 24, display: "grid", gap: 20 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <div className="icon-box icon-box-primary animate-glow" style={{ width: 44, height: 44 }}>
+              <UploadCloud size={20} />
+            </div>
+            <div>
+              <strong style={{ fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }}>
+                Enterprise evidence intake
+              </strong>
+              <p style={{ margin: "2px 0 0", fontSize: 13, color: "var(--text-muted)" }}>
+                Upload transcripts, emails, CRM notes, contracts, markdown, or CSV files
+              </p>
+            </div>
+          </div>
+
+          {/* Dropzone */}
+          <div
+            className={`dropzone${isDragging ? " drag-over" : ""}`}
+            onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+            onDragLeave={() => setIsDragging(false)}
+            onDrop={(e) => {
+              e.preventDefault();
+              setIsDragging(false);
+              updateFiles(e.dataTransfer.files);
+            }}
+            onClick={() => inputRef.current?.click()}
+          >
+            <div className="dropzone-icon">
+              <FileText size={36} />
+            </div>
+            <div className="dropzone-title">
+              {isDragging ? "Release to drop files" : "Choose or drop files here"}
+            </div>
+            <span className="dropzone-sub">
+              Supports .txt, .md, .csv, .pdf, .eml — drag & drop or click to browse
+            </span>
+            <input
+              ref={inputRef}
+              id="evidence-files"
+              type="file"
+              multiple
+              style={{ display: "none" }}
+              onChange={(e) => updateFiles(e.target.files ?? [])}
+            />
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}
+            >
+              <Paperclip size={14} />
+              Browse files
+            </Button>
+          </div>
+
+          {/* Selected files list */}
+          {files.length > 0 && (
+            <div style={{ display: "grid", gap: 8 }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                  Selected files ({files.length})
+                </span>
+                <button
+                  onClick={() => setFiles([])}
+                  style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-muted)", display: "flex", alignItems: "center", gap: 4, fontSize: 12 }}
+                >
+                  <X size={13} /> Clear all
+                </button>
+              </div>
+              {files.map((file, i) => (
+                <div
+                  className="file-item"
+                  key={`${file.name}-${file.size}`}
+                  style={{ animationDelay: `${i * 50}ms` }}
+                >
+                  <FileText size={14} style={{ color: "var(--accent-primary)", flexShrink: 0 }} />
+                  <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {file.name}
+                  </span>
+                  <span className={`badge ${sourceColors[sourceTypeFromName(file.name)] ?? "badge-warning"}`}>
+                    {sourceTypeFromName(file.name)}
+                  </span>
+                  <span style={{ fontSize: 11, color: "var(--text-muted)", flexShrink: 0 }}>
+                    {formatBytes(file.size)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <Button
+            variant="primary"
+            loading={isUploading}
+            disabled={isUploading}
+            onClick={handleUpload}
+            style={{ width: "fit-content" }}
+          >
+            <UploadCloud size={16} />
+            {isUploading ? "Processing files..." : `Upload ${files.length > 0 ? files.length + " " : ""}file(s)`}
+          </Button>
+
+          {status && (
+            <div className={`alert ${isSuccess ? "alert-success" : isError ? "alert-error" : "alert-info"} animate-fade-in`}>
+              {isSuccess ? <CheckCircle size={15} /> : <AlertTriangle size={15} />}
+              <span>{status}</span>
+            </div>
+          )}
         </div>
 
-        {files.length ? (
-          <div style={{ display: "grid", gap: 6 }}>
-            <strong>Selected files</strong>
-            {files.map((file) => (
-              <span key={`${file.name}-${file.size}`}>{file.name}</span>
-            ))}
+        {/* Paste fallback */}
+        <div className="panel" style={{ padding: 24, display: "grid", gap: 14 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div className="icon-box icon-box-purple" style={{ width: 36, height: 36 }}>
+              <Hash size={16} />
+            </div>
+            <strong style={{ fontSize: 14, fontWeight: 700, color: "var(--text-primary)" }}>
+              Fallback: paste evidence text
+            </strong>
           </div>
-        ) : null}
-
-        <Button type="button" disabled={isUploading} onClick={handleUpload} style={{ opacity: isUploading ? 0.7 : 1, width: "fit-content" }}>
-          {isUploading ? "Loading files..." : `Upload ${files.length || ""} file(s)`}
-        </Button>
-
-        <div style={{ display: "grid", gap: 8 }}>
-          <strong>Fallback: paste evidence text</strong>
           <textarea
+            className="form-input"
             value={pastedText}
-            onChange={(event) => setPastedText(event.target.value)}
+            onChange={(e) => setPastedText(e.target.value)}
             placeholder="Paste meeting notes, CRM update, email text, or contract excerpt here..."
             rows={5}
-            style={{ width: "100%", padding: 12, border: "1px solid var(--line)", borderRadius: 8 }}
           />
-          <Button type="button" onClick={usePastedText} style={{ width: "fit-content" }}>Use pasted text</Button>
+          <Button
+            variant="ghost"
+            onClick={usePastedText}
+            style={{ width: "fit-content" }}
+          >
+            Use pasted text
+          </Button>
         </div>
 
-        {status ? <span style={{ color: status.includes("Could not") || status.includes("first") ? "var(--critical)" : "var(--accent)" }}>{status}</span> : null}
-        {documents.length ? (
-          <div style={{ display: "grid", gap: 8 }}>
-            <strong>Loaded documents</strong>
-            {documents.map((document) => (
-              <span key={document.id}>{document.title} - {document.source_type}</span>
-            ))}
+        {/* Loaded documents list */}
+        {documents.length > 0 && (
+          <div className="panel" style={{ padding: 24, display: "grid", gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div className="icon-box icon-box-green" style={{ width: 36, height: 36 }}>
+                <CheckCircle size={16} />
+              </div>
+              <div>
+                <strong style={{ fontSize: 14, fontWeight: 700, color: "var(--text-primary)" }}>
+                  Loaded documents
+                </strong>
+                <p style={{ margin: "2px 0 0", fontSize: 12, color: "var(--text-muted)" }}>
+                  {documents.length} document{documents.length !== 1 ? "s" : ""} ready for analysis
+                </p>
+              </div>
+            </div>
+            <div style={{ display: "grid", gap: 6 }}>
+              {documents.map((doc) => (
+                <div className="file-item" key={doc.id}>
+                  <FileText size={14} style={{ color: "var(--accent-tertiary)", flexShrink: 0 }} />
+                  <span style={{ flex: 1 }}>{doc.title}</span>
+                  <span className={`badge ${sourceColors[doc.source_type] ?? "badge-warning"}`}>
+                    {doc.source_type}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-        ) : null}
+        )}
       </div>
     </Section>
   );

@@ -110,7 +110,29 @@ async def reports() -> list[DecisionReport]:
 
 @router.get("/domains", response_model=list[DomainCatalogItem])
 async def domains() -> list[DomainCatalogItem]:
-    return orchestrator.ontology_engine.catalog()
+    """
+    Returns domains dynamically detected by the LLM across all completed analyses.
+    No static YAML ontology catalog — every domain was identified from real evidence.
+    """
+    reports = orchestrator.list_reports()
+    seen: dict[str, DomainCatalogItem] = {}
+    for report in reports:
+        d = report.domain
+        key = d.domain.lower()
+        if key not in seen:
+            seen[key] = DomainCatalogItem(
+                domain=d.domain,
+                description=d.description,
+                business_goals=d.business_goals,
+                kpis=[],
+                risks=report.reasoning.risks[:5],
+                opportunities=report.reasoning.opportunities[:5],
+                success_metrics=[s.success_metrics[0] for s in report.scenarios if s.success_metrics][:5],
+                agent_capabilities=d.recommended_capabilities,
+                tools=list({tool for agent in report.agents for tool in agent.tools})[:6],
+                scenario_count=len(report.scenarios),
+            )
+    return list(seen.values())
 
 
 @router.get("/memory", response_model=list[MemoryRecord])
