@@ -1,452 +1,386 @@
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
-  GitBranch,
-  Sparkles,
-  Layers,
   Activity,
+  BarChart3,
+  BookOpen,
   ClipboardList,
+  Database,
   FileText,
+  Layers,
+  LockKeyhole,
   Mail,
   MessageCircle,
-  Database,
   ShieldCheck,
-  Terminal,
-  BookOpen,
-  Shield,
-  CheckCircle,
+  Sparkles,
+  TrendingUp,
+  Users,
 } from "lucide-react";
+import heroArt from "../assets/hero.png";
+
+const signalSources = [
+  { icon: Mail, label: "Email threads" },
+  { icon: MessageCircle, label: "Meeting transcripts" },
+  { icon: ClipboardList, label: "CRM history" },
+  { icon: FileText, label: "Contracts" },
+  { icon: ShieldCheck, label: "SLA policies" },
+  { icon: BookOpen, label: "Playbooks" },
+  { icon: Database, label: "Support tickets" },
+  { icon: Layers, label: "Product docs" },
+];
+
+const features = [
+  {
+    icon: Sparkles,
+    title: "Agentic account intelligence",
+    text: "RenewAI turns scattered customer signals into prioritized renewal, expansion, and risk decisions.",
+  },
+  {
+    icon: Database,
+    title: "Enterprise memory layer",
+    text: "Every interaction, policy, contract term, and playbook becomes a governed decision asset.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Explainable recommendations",
+    text: "Teams see the evidence, confidence, and business reasoning behind each next best action.",
+  },
+  {
+    icon: Activity,
+    title: "Health and risk detection",
+    text: "Surface churn signals, adoption gaps, escalation patterns, and expansion opportunities earlier.",
+  },
+  {
+    icon: Users,
+    title: "Human-in-the-loop control",
+    text: "Customer-facing teams keep approval authority while the platform accelerates preparation and follow-up.",
+  },
+  {
+    icon: LockKeyhole,
+    title: "Enterprise-ready operating model",
+    text: "Designed around traceability, repeatable workflows, and consistent customer success standards.",
+  },
+];
+
+const impactMetrics = [
+  { value: "30%", label: "lower churn exposure", detail: "Risk signals detected before renewal windows close." },
+  { value: "25%", label: "higher renewal conversion", detail: "Account plans align to contracts, sentiment, and usage." },
+  { value: "40%", label: "faster decision cycles", detail: "CSMs move from investigation to next action faster." },
+  { value: "35%", label: "productivity lift", detail: "Manual research becomes structured account intelligence." },
+];
+
+const trustSignals = ["SOC-ready controls", "Human approval", "Evidence-linked actions", "Revenue team workflows"];
+
+const audiences = [
+  { title: "CS Leaders", text: "Standardize renewal strategy and account risk reviews." },
+  { title: "Account Managers", text: "Prepare customer conversations with complete context." },
+  { title: "RevOps Teams", text: "Turn qualitative signals into measurable operating rhythm." },
+  { title: "Support Leaders", text: "Connect escalations with customer health and retention." },
+];
+
+const outcomeSteps = [
+  "Detect renewal risk",
+  "Retrieve account context",
+  "Recommend next action",
+  "Explain the evidence",
+  "Capture feedback",
+];
 
 function Home() {
   return (
     <div className="landing-page">
       <header className="landing-header">
-        <div className="landing-brand">
+        <Link className="landing-brand" to="/">
           <div className="brand-mark">RA</div>
           <div>
             <p>RenewAI</p>
-            <span>Agentic Decision Intelligence</span>
+            <span>Agentic Customer Success Platform</span>
           </div>
-        </div>
-        <nav className="landing-nav">
-          <a href="#home">Home</a>
+        </Link>
+        <nav className="landing-nav" aria-label="Primary navigation">
+          <a href="#platform">Platform</a>
+          <a href="#knowledge">Knowledge</a>
           <a href="#features">Features</a>
-          <a href="#solution">Architecture</a>
-          <a href="/dashboard">Dashboard</a>
+          <a href="#outcomes">Outcomes</a>
           <Link to="/login">Login</Link>
-          <a href="https://github.com" target="_blank" rel="noreferrer">
-            <GitBranch size={16} /> GitHub
-          </a>
           <Link className="btn btn-primary" to="/dashboard">
             Launch Dashboard
           </Link>
         </nav>
       </header>
 
-      <section className="hero-section" id="home">
-        <div className="hero-copy">
-          <div className="eyebrow">Agentic Customer Success Intelligence</div>
-          <h1>RenewAI</h1>
-          <p className="hero-subtitle">
-            Agentic Customer Success & Contract Intelligence Platform
-          </p>
-          <p className="hero-text">
-            RenewAI is an Agentic Decision Intelligence Platform that analyzes customer interactions,
-            retrieves enterprise knowledge, reasons across multiple business signals, and recommends
-            explainable Next Best Actions to Customer Success Managers.
-          </p>
-          <div className="hero-actions">
-            <Link className="btn btn-primary" to="/dashboard">
-              Launch Dashboard
-            </Link>
-            <a className="btn btn-secondary" href="#solution">
-              View Architecture
-            </a>
-          </div>
-          <div className="hero-chips">
-            <span>Multi-Agent reasoning</span>
-            <span>Explainable recommendations</span>
-            <span>Enterprise RAG knowledge</span>
-          </div>
-        </div>
-        <div className="hero-visual">
-          <div className="visual-card">
-            <div className="visual-header">
-              <span>AI Workflow Preview</span>
-              <div className="status-pill">Live</div>
+      <main>
+        <section className="hero-section" id="home">
+          <img className="hero-platform-art" src={heroArt} alt="" aria-hidden="true" />
+          <div className="hero-layout">
+            <div className="hero-copy">
+              <p className="eyebrow">B2B Agentic AI for Customer Success</p>
+              <h1>RenewAI</h1>
+              <p className="hero-subtitle">
+                Agentic intelligence for retention, renewals, and expansion.
+              </p>
+              <p className="hero-text">
+                RenewAI unifies customer conversations, CRM context, contracts, policies, and playbooks into one
+                explainable revenue workspace, helping teams move from scattered signals to confident next best actions.
+              </p>
+              <div className="hero-actions">
+                <Link className="btn btn-primary btn-lg" to="/dashboard">
+                  Launch Dashboard <ArrowRight size={18} />
+                </Link>
+                <a className="btn btn-secondary btn-lg" href="#outcomes">
+                  View Business Impact
+                </a>
+              </div>
+              <div className="trust-row" aria-label="Enterprise trust signals">
+                {trustSignals.map((signal) => (
+                  <span key={signal}>
+                    <ShieldCheck size={15} />
+                    {signal}
+                  </span>
+                ))}
+              </div>
             </div>
-            <div className="visual-body">
-              <div className="workflow-step">
-                <Sparkles size={20} />
-                <div>
-                  <strong>Customer Interaction</strong>
-                  <p>Captured from email, transcripts, CRM & contracts.</p>
+
+            <aside className="product-preview" aria-label="RenewAI product preview">
+              <div className="preview-toolbar">
+                <span />
+                <span />
+                <span />
+                <strong>Revenue Command Center</strong>
+              </div>
+              <div className="preview-body">
+                <div className="preview-main">
+                  <div className="preview-alert">
+                    <span>Priority account</span>
+                    <strong>Northstar Health</strong>
+                    <p>Renewal risk elevated by adoption drop, open escalation, and unresolved SLA concern.</p>
+                  </div>
+                  <div className="preview-recommendation">
+                    <span>Recommended action</span>
+                    <strong>Schedule executive success review</strong>
+                    <p>Attach product adoption plan and confirm service remediation owner.</p>
+                  </div>
+                </div>
+                <div className="preview-side">
+                  <div>
+                    <span>Confidence</span>
+                    <strong>91%</strong>
+                  </div>
+                  <div>
+                    <span>Evidence</span>
+                    <strong>8 sources</strong>
+                  </div>
+                  <div>
+                    <span>Impact</span>
+                    <strong>$420K ARR</strong>
+                  </div>
                 </div>
               </div>
-              <div className="workflow-branch">
-                <div />
+              <div className="preview-footer">
+                <span>Contract</span>
+                <span>CRM</span>
+                <span>Support</span>
+                <span>Playbooks</span>
               </div>
-              <div className="workflow-grid">
-                <article>
-                  <h4>Planner Agent</h4>
-                  <p>Orchestrates specialized reasoning agents.</p>
-                </article>
-                <article>
-                  <h4>Knowledge Agent</h4>
-                  <p>Retrieves enterprise playbooks and policies via RAG.</p>
-                </article>
-                <article>
-                  <h4>Contract Agent</h4>
-                  <p>Extracts SLA, renewal dates and risk triggers.</p>
-                </article>
+            </aside>
+          </div>
+
+          <div className="hero-proof-grid" aria-label="Platform capabilities">
+            <article>
+              <BarChart3 size={22} />
+              <span>Signal Intelligence</span>
+              <strong>360 degree customer context</strong>
+            </article>
+            <article>
+              <ShieldCheck size={22} />
+              <span>Explainability</span>
+              <strong>Evidence-backed actions</strong>
+            </article>
+            <article>
+              <TrendingUp size={22} />
+              <span>Revenue Outcomes</span>
+              <strong>Retention and expansion focus</strong>
+            </article>
+          </div>
+        </section>
+
+        <section className="section section-grid" id="platform">
+          <div className="section-intro">
+            <p className="eyebrow">The Operating Challenge</p>
+            <h2>Customer success teams are making revenue decisions with fragmented context.</h2>
+            <p>
+              Critical renewal signals live across conversations, systems, documents, policies, and account history.
+              RenewAI brings those signals into a trusted operating layer for the entire post-sales organization.
+            </p>
+          </div>
+          <div className="problem-grid">
+            {signalSources.map(({ icon: Icon, label }) => (
+              <div className="info-card" key={label}>
+                <Icon size={20} />
+                <h3>{label}</h3>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="section audience-section" aria-label="Teams RenewAI supports">
+          <div className="section-intro">
+            <p className="eyebrow">Built For Revenue Teams</p>
+            <h2>One operating surface for the teams responsible for customer outcomes.</h2>
+          </div>
+          <div className="audience-grid">
+            {audiences.map((audience) => (
+              <article className="audience-card" key={audience.title}>
+                <h3>{audience.title}</h3>
+                <p>{audience.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section knowledge-section" id="knowledge">
+          <div className="section-intro">
+            <p className="eyebrow">Enterprise Knowledge</p>
+            <h2>One enterprise memory for every customer decision.</h2>
+            <p>
+              RenewAI connects account activity with institutional knowledge so recommendations are grounded in
+              business policy, contractual commitments, product guidance, and proven customer success motion.
+            </p>
+          </div>
+          <div className="knowledge-layout">
+            <div className="knowledge-panel">
+              <div className="knowledge-row">
+                <span>Account context</span>
+                <strong>CRM notes, adoption history, executive sentiment</strong>
+              </div>
+              <div className="knowledge-row">
+                <span>Commercial truth</span>
+                <strong>Renewal dates, contract clauses, SLA commitments</strong>
+              </div>
+              <div className="knowledge-row">
+                <span>Company knowledge</span>
+                <strong>Playbooks, policies, product docs, FAQs</strong>
+              </div>
+              <div className="knowledge-row">
+                <span>Decision memory</span>
+                <strong>Prior recommendations, approvals, outcomes, feedback</strong>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-grid" id="problem">
-        <div className="section-intro">
-          <p className="eyebrow">The Problem</p>
-          <h2>Customer information is scattered across systems.</h2>
-          <p>Disjoint data and manual workflows leave opportunities unnoticed and renewals at risk.</p>
-        </div>
-        <div className="problem-grid">
-          <div className="info-card">
-            <Mail size={20} />
-            <h3>Emails</h3>
-          </div>
-          <div className="info-card">
-            <MessageCircle size={20} />
-            <h3>Meeting transcripts</h3>
-          </div>
-          <div className="info-card">
-            <ClipboardList size={20} />
-            <h3>CRM Notes</h3>
-          </div>
-          <div className="info-card">
-            <FileText size={20} />
-            <h3>Contracts</h3>
-          </div>
-          <div className="info-card">
-            <Database size={20} />
-            <h3>Support tickets</h3>
-          </div>
-          <div className="info-card">
-            <BookOpen size={20} />
-            <h3>Playbooks</h3>
-          </div>
-          <div className="info-card">
-            <ShieldCheck size={20} />
-            <h3>Policies</h3>
-          </div>
-          <div className="info-card">
-            <Shield size={20} />
-            <h3>FAQs</h3>
-          </div>
-        </div>
-      </section>
-
-      <section className="section" id="solution">
-        <div className="section-intro">
-          <p className="eyebrow">How RenewAI Solves It</p>
-          <h2>End-to-end agentic workflow for explainable customer success.</h2>
-        </div>
-        <div className="flow-diagram">
-          <div className="flow-node">Customer Interaction</div>
-          <div className="flow-arrow">↓</div>
-          <div className="flow-node accent">Planner Agent</div>
-          <div className="flow-arrow">↓</div>
-          <div className="flow-group">
-            <div className="flow-col">
-              <div className="flow-node">Customer Health Agent</div>
-              <div className="flow-node">CRM Context Agent</div>
-            </div>
-            <div className="flow-col">
-              <div className="flow-node">Contract Agent</div>
-              <div className="flow-node">Knowledge Agent (RAG)</div>
+            <div className="knowledge-grid">
+              {signalSources.map(({ icon: Icon, label }) => (
+                <div className="source-card" key={label}>
+                  <Icon size={18} />
+                  <h4>{label}</h4>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="flow-arrow">↓</div>
-          <div className="flow-node">Business Reasoning Agent</div>
-          <div className="flow-arrow">↓</div>
-          <div className="flow-node">Scenario Simulation Agent</div>
-          <div className="flow-arrow">↓</div>
-          <div className="flow-node">Devil's Advocate Agent</div>
-          <div className="flow-arrow">↓</div>
-          <div className="flow-node">Recommendation Agent</div>
-          <div className="flow-arrow">↓</div>
-          <div className="flow-node">Human Review</div>
-          <div className="flow-arrow">↓</div>
-          <div className="flow-node">Memory</div>
-        </div>
-      </section>
+        </section>
 
-      <section className="section" id="agents">
-        <div className="section-intro">
-          <p className="eyebrow">Agent Intelligence</p>
-          <h2>Specialized agents working together.</h2>
-        </div>
-        <div className="agent-grid">
-          <article className="agent-card">
-            <Sparkles size={20} />
-            <h3>Planner Agent</h3>
-            <p>Determines which specialized agents should execute.</p>
-          </article>
-          <article className="agent-card">
-            <Layers size={20} />
-            <h3>Knowledge Agent</h3>
-            <p>Uses RAG to retrieve relevant playbooks, policies, FAQs and docs.</p>
-          </article>
-          <article className="agent-card">
-            <Activity size={20} />
-            <h3>Customer Health Agent</h3>
-            <p>Analyzes health score, adoption, and engagement signals.</p>
-          </article>
-          <article className="agent-card">
-            <ClipboardList size={20} />
-            <h3>Contract Agent</h3>
-            <p>Extracts renewal dates, SLA clauses and contract details.</p>
-          </article>
-          <article className="agent-card">
-            <ShieldCheck size={20} />
-            <h3>Business Reasoning Agent</h3>
-            <p>Combines knowledge and context to identify risks and opportunities.</p>
-          </article>
-          <article className="agent-card">
-            <ArrowRight size={20} />
-            <h3>Recommendation Agent</h3>
-            <p>Generates prioritized Next Best Actions.</p>
-          </article>
-          <article className="agent-card">
-            <CheckCircle size={20} />
-            <h3>Explanation Agent</h3>
-            <p>Provides supporting evidence and confidence scores.</p>
-          </article>
-          <article className="agent-card">
-            <Terminal size={20} />
-            <h3>Memory Agent</h3>
-            <p>Learns from past interactions and human feedback.</p>
-          </article>
-        </div>
-      </section>
+        <section className="section outcome-section">
+          <div className="section-intro">
+            <p className="eyebrow">Customer-Facing Motion</p>
+            <h2>From scattered signals to an explainable revenue decision.</h2>
+          </div>
+          <div className="outcome-strip">
+            {outcomeSteps.map((step, index) => (
+              <div className="outcome-step" key={step}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{step}</strong>
+              </div>
+            ))}
+          </div>
+        </section>
 
-      <section className="section section-grid" id="knowledge">
-        <div className="section-intro">
-          <p className="eyebrow">Enterprise Knowledge</p>
-          <h2>All business signals in one enterprise memory.</h2>
-        </div>
-        <div className="knowledge-grid">
-          <div className="source-card">
-            <Mail size={18} />
-            <h4>Emails</h4>
+        <section className="section" id="features">
+          <div className="section-intro">
+            <p className="eyebrow">Platform Features</p>
+            <h2>Built for enterprise customer success teams that own revenue outcomes.</h2>
           </div>
-          <div className="source-card">
-            <MessageCircle size={18} />
-            <h4>Meeting Transcripts</h4>
+          <div className="feature-grid">
+            {features.map(({ icon: Icon, title, text }) => (
+              <article className="feature-card" key={title}>
+                <Icon size={22} />
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
           </div>
-          <div className="source-card">
-            <ClipboardList size={18} />
-            <h4>CRM Notes</h4>
-          </div>
-          <div className="source-card">
-            <FileText size={18} />
-            <h4>Contracts</h4>
-          </div>
-          <div className="source-card">
-            <Shield size={18} />
-            <h4>Support Tickets</h4>
-          </div>
-          <div className="source-card">
-            <BookOpen size={18} />
-            <h4>Playbooks</h4>
-          </div>
-          <div className="source-card">
-            <BookOpen size={18} />
-            <h4>Product Documentation</h4>
-          </div>
-          <div className="source-card">
-            <ShieldCheck size={18} />
-            <h4>FAQs</h4>
-          </div>
-          <div className="source-card">
-            <Layers size={18} />
-            <h4>Policies</h4>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="section" id="features">
-        <div className="section-intro">
-          <p className="eyebrow">Platform Features</p>
-          <h2>Designed for enterprise customer success.</h2>
-        </div>
-        <div className="feature-grid">
-          <article className="feature-card">
-            <Sparkles size={22} />
-            <h3>Dynamic Planner-Based Orchestration</h3>
-            <p>Agent workflow adapts to every customer signal and business priority.</p>
-          </article>
-          <article className="feature-card">
-            <Layers size={22} />
-            <h3>Enterprise Knowledge Retrieval (RAG)</h3>
-            <p>Finds and cites the right enterprise playbooks and policies instantly.</p>
-          </article>
-          <article className="feature-card">
-            <ShieldCheck size={22} />
-            <h3>Business Reasoning</h3>
-            <p>Resolves risk, renewal, and upsell decisions with multi-agent logic.</p>
-          </article>
-          <article className="feature-card">
-            <Activity size={22} />
-            <h3>Explainable AI</h3>
-            <p>Recommendations come with evidence, confidence, and action context.</p>
-          </article>
-          <article className="feature-card">
-            <CheckCircle size={22} />
-            <h3>Human-in-the-Loop Review</h3>
-            <p>Customer success managers keep control with approval and feedback.</p>
-          </article>
-          <article className="feature-card">
-            <Database size={22} />
-            <h3>Shared Memory</h3>
-            <p>Continuous learning from interactions, outcomes, and human updates.</p>
-          </article>
-        </div>
-      </section>
+        <section className="section stats-section" id="outcomes">
+          <div className="section-intro">
+            <p className="eyebrow">Metric Features</p>
+            <h2>Executive-ready visibility into customer success performance.</h2>
+            <p>
+              Track the operating metrics that matter: churn exposure, renewal confidence, response velocity, and team
+              productivity from one polished revenue command center.
+            </p>
+          </div>
+          <div className="stats-grid">
+            {impactMetrics.map((metric, index) => (
+              <article className={`stat-card ${index === 0 ? "featured" : ""}`} key={metric.label}>
+                <span>{metric.label}</span>
+                <h3>{metric.value}</h3>
+                <p>{metric.detail}</p>
+              </article>
+            ))}
+          </div>
+        </section>
 
-      <section className="section stats-section">
-        <div className="section-intro">
-          <p className="eyebrow">Business Impact</p>
-          <h2>Transform customer success outcomes with agentic intelligence.</h2>
-        </div>
-        <div className="stats-grid">
-          <div className="stat-card">
-            <h3>30%</h3>
-            <p>Reduction in Customer Churn</p>
+        <section className="section compare-section">
+          <div className="section-intro">
+            <p className="eyebrow">Why RenewAI</p>
+            <h2>A decision platform, not a chatbot.</h2>
           </div>
-          <div className="stat-card">
-            <h3>25%</h3>
-            <p>Higher Renewal Success</p>
+          <div className="comparison-table">
+            <div className="table-column">
+              <h4>Traditional CS workflows</h4>
+              <ul>
+                <li>Manual account research</li>
+                <li>Scattered knowledge and policy lookup</li>
+                <li>Inconsistent risk interpretation</li>
+                <li>Limited decision traceability</li>
+              </ul>
+            </div>
+            <div className="table-column highlight">
+              <h4>RenewAI</h4>
+              <ul>
+                <li>Unified enterprise customer memory</li>
+                <li>Evidence-backed next best actions</li>
+                <li>Consistent reasoning across accounts</li>
+                <li>Human approval with learning feedback</li>
+              </ul>
+            </div>
           </div>
-          <div className="stat-card">
-            <h3>40%</h3>
-            <p>Faster Decision Making</p>
-          </div>
-          <div className="stat-card">
-            <h3>35%</h3>
-            <p>Increase in Customer Success Productivity</p>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="section" id="technology">
-        <div className="section-intro">
-          <p className="eyebrow">Technology Stack</p>
-          <h2>Built with modern AI and enterprise tooling.</h2>
-        </div>
-        <div className="tech-grid">
-          <div className="tech-card">React</div>
-          <div className="tech-card">Node.js</div>
-          <div className="tech-card">Express</div>
-          <div className="tech-card">MongoDB</div>
-          <div className="tech-card">Gemini AI</div>
-          <div className="tech-card">LangChain</div>
-          <div className="tech-card">RAG</div>
-          <div className="tech-card">Multi-Agent Architecture</div>
-        </div>
-      </section>
-
-      <section className="section compare-section">
-        <div className="section-intro">
-          <p className="eyebrow">Why RenewAI?</p>
-          <h2>RenewAI is more than a chatbot or simple knowledge retrieval product.</h2>
-        </div>
-        <div className="comparison-table">
-          <div className="table-column">
-            <h4>Traditional Chatbot</h4>
-            <ul>
-              <li>Answers questions</li>
-              <li>No planning</li>
-              <li>No reasoning</li>
-              <li>No memory</li>
-              <li>No explainability</li>
-            </ul>
+        <section className="section cta-section">
+          <div className="cta-card">
+            <p className="eyebrow">Go To Market Ready</p>
+            <h2>Turn customer knowledge into revenue action.</h2>
+            <p>
+              Give customer success, account management, and revenue leaders one intelligent workspace for renewals,
+              risk, expansion, and executive-ready account decisions.
+            </p>
+            <Link className="btn btn-primary btn-lg" to="/dashboard">
+              Launch Dashboard <ArrowRight size={18} />
+            </Link>
           </div>
-          <div className="table-column highlight">
-            <h4>RenewAI</h4>
-            <ul>
-              <li>Planner-based orchestration</li>
-              <li>Multi-agent reasoning</li>
-              <li>Enterprise knowledge retrieval</li>
-              <li>Explainable recommendations</li>
-              <li>Human approval</li>
-              <li>Continuous learning</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section className="section workflow-preview">
-        <div className="section-intro">
-          <p className="eyebrow">Live AI Workflow Preview</p>
-          <h2>See the agent execution flow in action.</h2>
-        </div>
-        <div className="terminal-card">
-          <div className="terminal-row">
-            <span>Planner Agent</span>
-            <strong>✓</strong>
-          </div>
-          <div className="terminal-row">
-            <span>Customer Health Agent Invoked</span>
-            <strong>✓</strong>
-          </div>
-          <div className="terminal-row">
-            <span>Knowledge Agent</span>
-            <strong>✓ Retrieved 3 Relevant Playbooks</strong>
-          </div>
-          <div className="terminal-row">
-            <span>Business Reasoning Agent</span>
-            <strong>✓ Churn Risk Detected</strong>
-          </div>
-          <div className="terminal-row">
-            <span>Recommendation Agent</span>
-            <strong>✓ Generated 5 Next Best Actions</strong>
-          </div>
-          <div className="terminal-row pending">
-            <span>Human Review</span>
-            <strong>⏳ Waiting for Approval</strong>
-          </div>
-        </div>
-      </section>
-
-      <section className="section cta-section">
-        <div className="cta-card">
-          <h2>Ready to Transform Customer Success?</h2>
-          <p>
-            Analyze customer interactions, retrieve enterprise knowledge and generate explainable Next Best Actions using
-            Agentic AI.
-          </p>
-          <Link className="btn btn-primary btn-lg" to="/dashboard">
-            Launch Dashboard
-          </Link>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <footer className="landing-footer">
         <div>
           <strong>RenewAI</strong>
-          <p>Agentic Customer Success & Contract Intelligence Platform</p>
-          <p>Hackathon Project</p>
+          <p>Agentic Customer Success Platform</p>
         </div>
         <div>
-          <a href="https://github.com" target="_blank" rel="noreferrer">
-            GitHub Repository
-          </a>
-          <p>Team Members: Product, Engineering, AI</p>
+          <p>Built for post-sales revenue teams</p>
+          <p>Renewals, retention, expansion, and account intelligence</p>
         </div>
         <div>
-          <p>© 2026 RenewAI. All rights reserved.</p>
+          <p>(c) 2026 RenewAI. All rights reserved.</p>
         </div>
       </footer>
     </div>

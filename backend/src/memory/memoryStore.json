@@ -4055,5 +4055,1206 @@
             }
         ],
         "timestamp": "2026-06-28T17:06:29.408Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 98,
+            "reasoning": "Heuristic fallback detected multiple Customer Success signals when Gemini was unavailable."
+        },
+        "executionPlan": [
+            "CustomerHealthAgent",
+            "ContractAgent",
+            "KnowledgeAgent",
+            "CRMContextAgent",
+            "DataCompletenessAgent",
+            "ScenarioSimulationAgent",
+            "DevilsAdvocateAgent"
+        ],
+        "reasoning": {
+            "risks": [],
+            "opportunities": [
+                "upsell opportunity"
+            ],
+            "missingInformation": [
+                "adoption metrics",
+                "NPS score",
+                "renewal date",
+                "contract value",
+                "renewal meeting confirmation"
+            ],
+            "dataCompleteness": {
+                "available": [
+                    "executive sponsor"
+                ],
+                "missing": [
+                    "adoption metrics",
+                    "NPS score",
+                    "renewal date",
+                    "contract value"
+                ],
+                "confidence": 20
+            },
+            "knowledgeGuidance": [
+                {
+                    "title": "Executive Sponsor Engagement Playbook",
+                    "category": "playbooks",
+                    "action": "If no executive sponsor is identified, work with your champion to map the org chart and identify the economic buyer. Schedule a sponsor introduction call within 30 days. Send monthly executive summary emails with business outcomes, key metrics, and upcoming milestones. The executive sponsor should attend every QBR/EBR.",
+                    "retrievalMethod": "embedding",
+                    "similarity": 0.6989
+                },
+                {
+                    "title": "Expansion and Upsell Opportunity Playbook",
+                    "category": "playbooks",
+                    "action": "Identify expansion opportunities when: (1) customer adoption is above 70%, (2) they have expressed interest in additional modules, (3) their team has grown. Steps: (1) Prepare a usage report showing value delivered, (2) Present product roadmap with upcoming features, (3) Propose expansion SKUs aligned with their pain points, (4) Involve your AE for commercial negotiation. Target: expand ARR by 20%+ on renewal.",
+                    "retrievalMethod": "embedding",
+                    "similarity": 0.6987
+                },
+                {
+                    "title": "Low Adoption Intervention Playbook",
+                    "category": "playbooks",
+                    "action": "If product adoption falls below 50%, schedule an Adoption Workshop within 14 days. Identify the top 3 unused features relevant to the customer's use case. Assign a Solutions Engineer to run a hands-on training session. Follow up with a 30-day adoption improvement plan and weekly check-ins. Measure adoption weekly post-workshop.",
+                    "retrievalMethod": "embedding",
+                    "similarity": 0.6952
+                }
+            ],
+            "riskSummary": "",
+            "opportunitySummary": "",
+            "urgency": "soon",
+            "businessContext": "",
+            "priorityFocus": ""
+        },
+        "scenarioAnalysis": {
+            "scenarios": [
+                {
+                    "id": "scenario-a",
+                    "name": "Executive Business Review",
+                    "summary": "Bring executives together to validate the renewal plan and address churn risk.",
+                    "renewalProbability": 70,
+                    "churnProbability": 17,
+                    "revenueImpact": "High",
+                    "customerSatisfaction": "High",
+                    "confidence": 75
+                },
+                {
+                    "id": "scenario-b",
+                    "name": "Quarterly Payment Plan",
+                    "summary": "Offer a flexible payment schedule to balance cash flow and retention.",
+                    "renewalProbability": 72,
+                    "churnProbability": 10,
+                    "revenueImpact": "Medium",
+                    "customerSatisfaction": "High",
+                    "confidence": 75
+                },
+                {
+                    "id": "scenario-c",
+                    "name": "20% Discount",
+                    "summary": "Use a price incentive to improve renewal likelihood while accepting margin pressure.",
+                    "renewalProbability": 78,
+                    "churnProbability": 8,
+                    "revenueImpact": "Low",
+                    "customerSatisfaction": "Very High",
+                    "confidence": 58
+                },
+                {
+                    "id": "scenario-d",
+                    "name": "Additional Product Training",
+                    "summary": "Improve adoption through targeted training to increase engagement and retention.",
+                    "renewalProbability": 68,
+                    "churnProbability": 12,
+                    "revenueImpact": "High",
+                    "customerSatisfaction": "High",
+                    "confidence": 66
+                },
+                {
+                    "id": "scenario-e",
+                    "name": "No Action",
+                    "summary": "Maintain the status quo and do not intervene aggressively.",
+                    "renewalProbability": 40,
+                    "churnProbability": 30,
+                    "revenueImpact": "None",
+                    "customerSatisfaction": "Low",
+                    "confidence": 52
+                }
+            ],
+            "selectedScenarioId": "scenario-b",
+            "bestScenario": {
+                "id": "scenario-b",
+                "name": "Quarterly Payment Plan",
+                "summary": "Offer a flexible payment schedule to balance cash flow and retention.",
+                "renewalProbability": 72,
+                "churnProbability": 10,
+                "revenueImpact": "Medium",
+                "customerSatisfaction": "High",
+                "confidence": 75
+            }
+        },
+        "devilsAdvocateReview": {
+            "scenarioId": "scenario-b",
+            "scenarioName": "Quarterly Payment Plan",
+            "potentialWeaknesses": [
+                "Potential revenue impact from the selected option.",
+                "The selected scenario may create customer expectations that are hard to sustain."
+            ],
+            "longTermDisadvantages": [
+                "Margin pressure could harm future renewal negotiations.",
+                "It may reduce ability to pursue higher-value upsell opportunities."
+            ],
+            "revenueTradeOffs": [
+                "Short-term renewal may come at the cost of long-term revenue growth."
+            ],
+            "customerRelationshipRisks": [
+                "Customers may expect similar concessions in the next cycle."
+            ],
+            "alternative": {
+                "name": "Quarterly Payment Plan",
+                "summary": "A balanced approach that preserves revenue while improving renewal probability.",
+                "renewalProbability": 91,
+                "churnProbability": 9,
+                "revenueImpact": "Medium",
+                "customerSatisfaction": "High",
+                "confidence": 88
+            },
+            "finalVerdict": "The selected scenario should be reviewed for risk; a more balanced alternative may be preferable."
+        },
+        "finalRecommendation": {
+            "priority": "MEDIUM",
+            "action": "Explore Upsell Opportunities",
+            "timeline": "30 days",
+            "impact": "Identify expansion revenue"
+        },
+        "recommendations": [
+            {
+                "priority": "MEDIUM",
+                "action": "Explore Upsell Opportunities",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Collect Product Usage Analytics",
+                "timeline": "5 days",
+                "impact": "Improve analysis confidence"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Conduct Customer Satisfaction Survey",
+                "timeline": "7 days",
+                "impact": "Measure customer sentiment"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Request Contract Information",
+                "timeline": "3 days",
+                "impact": "Clarify renewal exposure"
+            },
+            {
+                "priority": "LOW",
+                "action": "Verify Contract Value Information",
+                "timeline": "5 days",
+                "impact": "Improve revenue forecasting"
+            },
+            {
+                "priority": "LOW",
+                "action": "Schedule Renewal Planning Meeting",
+                "timeline": "14 days",
+                "impact": "Create renewal action plan"
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Explore Upsell Opportunities",
+                "priority": "MEDIUM",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue",
+                "reason": "Existing expansion opportunities are available.",
+                "businessImpact": "Identify expansion revenue",
+                "evidence": [
+                    "The Analytics Module is being considered for next quarter.",
+                    "No formal adoption metrics are available yet.",
+                    "No executive sponsor has been assigned.",
+                    "Analytics Module"
+                ],
+                "confidence": 64
+            },
+            {
+                "recommendation": "Collect Product Usage Analytics",
+                "priority": "HIGH",
+                "timeline": "5 days",
+                "impact": "Improve analysis confidence",
+                "reason": "Product adoption metrics are missing from uploaded documents.",
+                "businessImpact": "Improve analysis confidence",
+                "evidence": [
+                    "The Analytics Module is being considered for next quarter.",
+                    "No formal adoption metrics are available yet.",
+                    "No executive sponsor has been assigned."
+                ],
+                "confidence": 53
+            },
+            {
+                "recommendation": "Conduct Customer Satisfaction Survey",
+                "priority": "MEDIUM",
+                "timeline": "7 days",
+                "impact": "Measure customer sentiment",
+                "reason": "No NPS or customer satisfaction metrics were detected.",
+                "businessImpact": "Measure customer sentiment",
+                "evidence": [
+                    "The Analytics Module is being considered for next quarter.",
+                    "No formal adoption metrics are available yet.",
+                    "No executive sponsor has been assigned."
+                ],
+                "confidence": 51
+            },
+            {
+                "recommendation": "Request Contract Information",
+                "priority": "HIGH",
+                "timeline": "3 days",
+                "impact": "Clarify renewal exposure",
+                "reason": "Contract renewal details are unavailable.",
+                "businessImpact": "Clarify renewal exposure",
+                "evidence": [
+                    "The Analytics Module is being considered for next quarter.",
+                    "No formal adoption metrics are available yet.",
+                    "No executive sponsor has been assigned."
+                ],
+                "confidence": 56
+            },
+            {
+                "recommendation": "Verify Contract Value Information",
+                "priority": "LOW",
+                "timeline": "5 days",
+                "impact": "Improve revenue forecasting",
+                "reason": "Contract value information is missing.",
+                "businessImpact": "Improve revenue forecasting",
+                "evidence": [
+                    "The Analytics Module is being considered for next quarter.",
+                    "No formal adoption metrics are available yet.",
+                    "No executive sponsor has been assigned."
+                ],
+                "confidence": 49
+            },
+            {
+                "recommendation": "Schedule Renewal Planning Meeting",
+                "priority": "LOW",
+                "timeline": "14 days",
+                "impact": "Create renewal action plan",
+                "reason": "Renewal planning activities have not been confirmed.",
+                "businessImpact": "Create renewal action plan",
+                "evidence": [
+                    "The Analytics Module is being considered for next quarter.",
+                    "No formal adoption metrics are available yet.",
+                    "No executive sponsor has been assigned."
+                ],
+                "confidence": 49
+            }
+        ],
+        "timestamp": "2026-06-28T18:35:30.134Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 98,
+            "reasoning": "Heuristic fallback detected multiple Customer Success signals when Gemini was unavailable."
+        },
+        "executionPlan": [
+            "ContractAgent",
+            "KnowledgeAgent",
+            "CRMContextAgent",
+            "DataCompletenessAgent",
+            "ScenarioSimulationAgent",
+            "DevilsAdvocateAgent"
+        ],
+        "reasoning": {
+            "risks": [
+                "renewal risk"
+            ],
+            "opportunities": [
+                "retention discount strategy",
+                "upsell opportunity"
+            ],
+            "missingInformation": [
+                "adoption metrics",
+                "NPS score",
+                "renewal meeting confirmation"
+            ],
+            "dataCompleteness": {
+                "available": [
+                    "renewal date",
+                    "contract value",
+                    "executive sponsor"
+                ],
+                "missing": [
+                    "adoption metrics",
+                    "NPS score"
+                ],
+                "confidence": 60
+            },
+            "knowledgeGuidance": [
+                {
+                    "title": "Discount and Retention Incentive Playbook",
+                    "category": "playbooks",
+                    "action": "If a customer is at renewal risk and discount is permitted by contract, offer a tiered retention incentive: (1) 5% for 1-year renewal, (2) 10% for 2-year renewal, (3) 15% for 3-year renewal plus white-glove onboarding. Never lead with discounts - first establish value, then use discount as a closing lever. Get VP approval before offering >10%.",
+                    "retrievalMethod": "embedding",
+                    "similarity": 0.697
+                },
+                {
+                    "title": "Expansion and Upsell Opportunity Playbook",
+                    "category": "playbooks",
+                    "action": "Identify expansion opportunities when: (1) customer adoption is above 70%, (2) they have expressed interest in additional modules, (3) their team has grown. Steps: (1) Prepare a usage report showing value delivered, (2) Present product roadmap with upcoming features, (3) Propose expansion SKUs aligned with their pain points, (4) Involve your AE for commercial negotiation. Target: expand ARR by 20%+ on renewal.",
+                    "retrievalMethod": "embedding",
+                    "similarity": 0.6705
+                },
+                {
+                    "title": "Proactive Renewal Management Playbook",
+                    "category": "playbooks",
+                    "action": "Initiate renewal conversations 90 days before the renewal date. If auto-renewal is disabled, treat this as a high-priority renewal risk. Steps: (1) Review contract value and discount eligibility, (2) Schedule renewal discovery call with economic buyer, (3) Prepare a Business Value Assessment showing ROI over the contract period, (4) Present renewal proposal with multi-year incentive if applicable.",
+                    "retrievalMethod": "embedding",
+                    "similarity": 0.6676
+                }
+            ],
+            "riskSummary": "",
+            "opportunitySummary": "",
+            "urgency": "soon",
+            "businessContext": "",
+            "priorityFocus": ""
+        },
+        "scenarioAnalysis": {
+            "scenarios": [
+                {
+                    "id": "scenario-a",
+                    "name": "Executive Business Review",
+                    "summary": "Bring executives together to validate the renewal plan and address churn risk.",
+                    "renewalProbability": 55,
+                    "churnProbability": 11,
+                    "revenueImpact": "High",
+                    "customerSatisfaction": "High",
+                    "confidence": 79
+                },
+                {
+                    "id": "scenario-b",
+                    "name": "Quarterly Payment Plan",
+                    "summary": "Offer a flexible payment schedule to balance cash flow and retention.",
+                    "renewalProbability": 62,
+                    "churnProbability": 10,
+                    "revenueImpact": "Medium",
+                    "customerSatisfaction": "High",
+                    "confidence": 75
+                },
+                {
+                    "id": "scenario-c",
+                    "name": "20% Discount",
+                    "summary": "Use a price incentive to improve renewal likelihood while accepting margin pressure.",
+                    "renewalProbability": 65,
+                    "churnProbability": 8,
+                    "revenueImpact": "Low",
+                    "customerSatisfaction": "Very High",
+                    "confidence": 76
+                },
+                {
+                    "id": "scenario-d",
+                    "name": "Additional Product Training",
+                    "summary": "Improve adoption through targeted training to increase engagement and retention.",
+                    "renewalProbability": 57,
+                    "churnProbability": 12,
+                    "revenueImpact": "High",
+                    "customerSatisfaction": "High",
+                    "confidence": 66
+                },
+                {
+                    "id": "scenario-e",
+                    "name": "No Action",
+                    "summary": "Maintain the status quo and do not intervene aggressively.",
+                    "renewalProbability": 35,
+                    "churnProbability": 40,
+                    "revenueImpact": "None",
+                    "customerSatisfaction": "Low",
+                    "confidence": 52
+                }
+            ],
+            "selectedScenarioId": "scenario-c",
+            "bestScenario": {
+                "id": "scenario-c",
+                "name": "20% Discount",
+                "summary": "Use a price incentive to improve renewal likelihood while accepting margin pressure.",
+                "renewalProbability": 65,
+                "churnProbability": 8,
+                "revenueImpact": "Low",
+                "customerSatisfaction": "Very High",
+                "confidence": 76
+            }
+        },
+        "devilsAdvocateReview": {
+            "scenarioId": "scenario-c",
+            "scenarioName": "20% Discount",
+            "potentialWeaknesses": [
+                "Potential revenue impact from the selected option.",
+                "The selected scenario may create customer expectations that are hard to sustain."
+            ],
+            "longTermDisadvantages": [
+                "Margin pressure could harm future renewal negotiations.",
+                "It may reduce ability to pursue higher-value upsell opportunities."
+            ],
+            "revenueTradeOffs": [
+                "Short-term renewal may come at the cost of long-term revenue growth."
+            ],
+            "customerRelationshipRisks": [
+                "Customers may expect similar concessions in the next cycle."
+            ],
+            "alternative": {
+                "name": "Quarterly Payment Plan",
+                "summary": "A balanced approach that preserves revenue while improving renewal probability.",
+                "renewalProbability": 91,
+                "churnProbability": 9,
+                "revenueImpact": "Medium",
+                "customerSatisfaction": "High",
+                "confidence": 88
+            },
+            "finalVerdict": "The selected scenario should be reviewed for risk; a more balanced alternative may be preferable."
+        },
+        "finalRecommendation": {
+            "priority": "MEDIUM",
+            "action": "Initiate Renewal Discussion",
+            "timeline": "7 days",
+            "impact": "Protect renewal revenue"
+        },
+        "recommendations": [
+            {
+                "priority": "MEDIUM",
+                "action": "Initiate Renewal Discussion",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Offer Renewal Incentive",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Explore Upsell Opportunities",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Collect Product Usage Analytics",
+                "timeline": "5 days",
+                "impact": "Improve analysis confidence"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Conduct Customer Satisfaction Survey",
+                "timeline": "7 days",
+                "impact": "Measure customer sentiment"
+            },
+            {
+                "priority": "LOW",
+                "action": "Schedule Renewal Planning Meeting",
+                "timeline": "14 days",
+                "impact": "Create renewal action plan"
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Initiate Renewal Discussion",
+                "priority": "MEDIUM",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue",
+                "reason": "Contract requires proactive renewal management.",
+                "businessImpact": "Protect renewal revenue",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renew: false"
+                ],
+                "confidence": 86
+            },
+            {
+                "recommendation": "Offer Renewal Incentive",
+                "priority": "MEDIUM",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood",
+                "reason": "Retention incentives are permitted by contract.",
+                "businessImpact": "Improve retention likelihood",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Discount Allowed: true",
+                    "Max Discount: 15%"
+                ],
+                "confidence": 85
+            },
+            {
+                "recommendation": "Explore Upsell Opportunities",
+                "priority": "MEDIUM",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue",
+                "reason": "Existing expansion opportunities are available.",
+                "businessImpact": "Identify expansion revenue",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Analytics Module",
+                    "AI Assistant"
+                ],
+                "confidence": 84
+            },
+            {
+                "recommendation": "Collect Product Usage Analytics",
+                "priority": "HIGH",
+                "timeline": "5 days",
+                "impact": "Improve analysis confidence",
+                "reason": "Product adoption metrics are missing from uploaded documents.",
+                "businessImpact": "Improve analysis confidence",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No"
+                ],
+                "confidence": 73
+            },
+            {
+                "recommendation": "Conduct Customer Satisfaction Survey",
+                "priority": "MEDIUM",
+                "timeline": "7 days",
+                "impact": "Measure customer sentiment",
+                "reason": "No NPS or customer satisfaction metrics were detected.",
+                "businessImpact": "Measure customer sentiment",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No"
+                ],
+                "confidence": 71
+            },
+            {
+                "recommendation": "Schedule Renewal Planning Meeting",
+                "priority": "LOW",
+                "timeline": "14 days",
+                "impact": "Create renewal action plan",
+                "reason": "Renewal planning activities have not been confirmed.",
+                "businessImpact": "Create renewal action plan",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No"
+                ],
+                "confidence": 69
+            }
+        ],
+        "timestamp": "2026-06-28T18:36:58.090Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 98,
+            "reasoning": "Heuristic fallback detected multiple Customer Success signals when Gemini was unavailable."
+        },
+        "executionPlan": [
+            "ContractAgent",
+            "KnowledgeAgent",
+            "CRMContextAgent",
+            "DataCompletenessAgent",
+            "ScenarioSimulationAgent",
+            "DevilsAdvocateAgent"
+        ],
+        "reasoning": {
+            "risks": [
+                "renewal risk"
+            ],
+            "opportunities": [
+                "retention discount strategy",
+                "upsell opportunity"
+            ],
+            "missingInformation": [
+                "adoption metrics",
+                "NPS score",
+                "renewal meeting confirmation"
+            ],
+            "dataCompleteness": {
+                "available": [
+                    "renewal date",
+                    "contract value",
+                    "executive sponsor"
+                ],
+                "missing": [
+                    "adoption metrics",
+                    "NPS score"
+                ],
+                "confidence": 60
+            },
+            "knowledgeGuidance": [
+                {
+                    "title": "Discount and Retention Incentive Playbook",
+                    "category": "playbooks",
+                    "action": "If a customer is at renewal risk and discount is permitted by contract, offer a tiered retention incentive: (1) 5% for 1-year renewal, (2) 10% for 2-year renewal, (3) 15% for 3-year renewal plus white-glove onboarding. Never lead with discounts - first establish value, then use discount as a closing lever. Get VP approval before offering >10%.",
+                    "retrievalMethod": "embedding",
+                    "similarity": 0.697
+                },
+                {
+                    "title": "Expansion and Upsell Opportunity Playbook",
+                    "category": "playbooks",
+                    "action": "Identify expansion opportunities when: (1) customer adoption is above 70%, (2) they have expressed interest in additional modules, (3) their team has grown. Steps: (1) Prepare a usage report showing value delivered, (2) Present product roadmap with upcoming features, (3) Propose expansion SKUs aligned with their pain points, (4) Involve your AE for commercial negotiation. Target: expand ARR by 20%+ on renewal.",
+                    "retrievalMethod": "embedding",
+                    "similarity": 0.6705
+                },
+                {
+                    "title": "Proactive Renewal Management Playbook",
+                    "category": "playbooks",
+                    "action": "Initiate renewal conversations 90 days before the renewal date. If auto-renewal is disabled, treat this as a high-priority renewal risk. Steps: (1) Review contract value and discount eligibility, (2) Schedule renewal discovery call with economic buyer, (3) Prepare a Business Value Assessment showing ROI over the contract period, (4) Present renewal proposal with multi-year incentive if applicable.",
+                    "retrievalMethod": "embedding",
+                    "similarity": 0.6676
+                }
+            ],
+            "riskSummary": "",
+            "opportunitySummary": "",
+            "urgency": "soon",
+            "businessContext": "",
+            "priorityFocus": ""
+        },
+        "scenarioAnalysis": {
+            "scenarios": [
+                {
+                    "id": "scenario-a",
+                    "name": "Executive Business Review",
+                    "summary": "Bring executives together to validate the renewal plan and address churn risk.",
+                    "renewalProbability": 55,
+                    "churnProbability": 11,
+                    "revenueImpact": "High",
+                    "customerSatisfaction": "High",
+                    "confidence": 79
+                },
+                {
+                    "id": "scenario-b",
+                    "name": "Quarterly Payment Plan",
+                    "summary": "Offer a flexible payment schedule to balance cash flow and retention.",
+                    "renewalProbability": 62,
+                    "churnProbability": 10,
+                    "revenueImpact": "Medium",
+                    "customerSatisfaction": "High",
+                    "confidence": 75
+                },
+                {
+                    "id": "scenario-c",
+                    "name": "20% Discount",
+                    "summary": "Use a price incentive to improve renewal likelihood while accepting margin pressure.",
+                    "renewalProbability": 65,
+                    "churnProbability": 8,
+                    "revenueImpact": "Low",
+                    "customerSatisfaction": "Very High",
+                    "confidence": 76
+                },
+                {
+                    "id": "scenario-d",
+                    "name": "Additional Product Training",
+                    "summary": "Improve adoption through targeted training to increase engagement and retention.",
+                    "renewalProbability": 57,
+                    "churnProbability": 12,
+                    "revenueImpact": "High",
+                    "customerSatisfaction": "High",
+                    "confidence": 66
+                },
+                {
+                    "id": "scenario-e",
+                    "name": "No Action",
+                    "summary": "Maintain the status quo and do not intervene aggressively.",
+                    "renewalProbability": 35,
+                    "churnProbability": 40,
+                    "revenueImpact": "None",
+                    "customerSatisfaction": "Low",
+                    "confidence": 52
+                }
+            ],
+            "selectedScenarioId": "scenario-c",
+            "bestScenario": {
+                "id": "scenario-c",
+                "name": "20% Discount",
+                "summary": "Use a price incentive to improve renewal likelihood while accepting margin pressure.",
+                "renewalProbability": 65,
+                "churnProbability": 8,
+                "revenueImpact": "Low",
+                "customerSatisfaction": "Very High",
+                "confidence": 76
+            }
+        },
+        "devilsAdvocateReview": {
+            "scenarioId": "scenario-c",
+            "scenarioName": "20% Discount",
+            "potentialWeaknesses": [
+                "Potential revenue impact from the selected option.",
+                "The selected scenario may create customer expectations that are hard to sustain."
+            ],
+            "longTermDisadvantages": [
+                "Margin pressure could harm future renewal negotiations.",
+                "It may reduce ability to pursue higher-value upsell opportunities."
+            ],
+            "revenueTradeOffs": [
+                "Short-term renewal may come at the cost of long-term revenue growth."
+            ],
+            "customerRelationshipRisks": [
+                "Customers may expect similar concessions in the next cycle."
+            ],
+            "alternative": {
+                "name": "Quarterly Payment Plan",
+                "summary": "A balanced approach that preserves revenue while improving renewal probability.",
+                "renewalProbability": 91,
+                "churnProbability": 9,
+                "revenueImpact": "Medium",
+                "customerSatisfaction": "High",
+                "confidence": 88
+            },
+            "finalVerdict": "The selected scenario should be reviewed for risk; a more balanced alternative may be preferable."
+        },
+        "finalRecommendation": {
+            "priority": "MEDIUM",
+            "action": "Initiate Renewal Discussion",
+            "timeline": "7 days",
+            "impact": "Protect renewal revenue"
+        },
+        "recommendations": [
+            {
+                "priority": "MEDIUM",
+                "action": "Initiate Renewal Discussion",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Offer Renewal Incentive",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Explore Upsell Opportunities",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Collect Product Usage Analytics",
+                "timeline": "5 days",
+                "impact": "Improve analysis confidence"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Conduct Customer Satisfaction Survey",
+                "timeline": "7 days",
+                "impact": "Measure customer sentiment"
+            },
+            {
+                "priority": "LOW",
+                "action": "Schedule Renewal Planning Meeting",
+                "timeline": "14 days",
+                "impact": "Create renewal action plan"
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Initiate Renewal Discussion",
+                "priority": "MEDIUM",
+                "timeline": "7 days",
+                "impact": "Protect renewal revenue",
+                "reason": "Contract requires proactive renewal management.",
+                "businessImpact": "Protect renewal revenue",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renew: false"
+                ],
+                "confidence": 86
+            },
+            {
+                "recommendation": "Offer Renewal Incentive",
+                "priority": "MEDIUM",
+                "timeline": "14 days",
+                "impact": "Improve retention likelihood",
+                "reason": "Retention incentives are permitted by contract.",
+                "businessImpact": "Improve retention likelihood",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Discount Allowed: true",
+                    "Max Discount: 15%"
+                ],
+                "confidence": 85
+            },
+            {
+                "recommendation": "Explore Upsell Opportunities",
+                "priority": "MEDIUM",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue",
+                "reason": "Existing expansion opportunities are available.",
+                "businessImpact": "Identify expansion revenue",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No",
+                    "Analytics Module",
+                    "AI Assistant"
+                ],
+                "confidence": 84
+            },
+            {
+                "recommendation": "Collect Product Usage Analytics",
+                "priority": "HIGH",
+                "timeline": "5 days",
+                "impact": "Improve analysis confidence",
+                "reason": "Product adoption metrics are missing from uploaded documents.",
+                "businessImpact": "Improve analysis confidence",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No"
+                ],
+                "confidence": 73
+            },
+            {
+                "recommendation": "Conduct Customer Satisfaction Survey",
+                "priority": "MEDIUM",
+                "timeline": "7 days",
+                "impact": "Measure customer sentiment",
+                "reason": "No NPS or customer satisfaction metrics were detected.",
+                "businessImpact": "Measure customer sentiment",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No"
+                ],
+                "confidence": 71
+            },
+            {
+                "recommendation": "Schedule Renewal Planning Meeting",
+                "priority": "LOW",
+                "timeline": "14 days",
+                "impact": "Create renewal action plan",
+                "reason": "Renewal planning activities have not been confirmed.",
+                "businessImpact": "Create renewal action plan",
+                "evidence": [
+                    "Contract Value: $300,000",
+                    "Renewal Date: August 15, 2026",
+                    "Auto Renewal: No"
+                ],
+                "confidence": 69
+            }
+        ],
+        "timestamp": "2026-06-28T18:40:49.468Z"
+    },
+    {
+        "type": "analysis",
+        "domainDetection": {
+            "domain": "Customer Success",
+            "confidence": 95,
+            "reasoning": "The document discusses customer adoption rates, customer satisfaction metrics (NPS, CSAT), onboarding challenges, the risk of non-renewal, and the need for an executive review, all of which are key indicators and responsibilities within Customer Success."
+        },
+        "executionPlan": [
+            "CustomerHealthAgent",
+            "ContractAgent",
+            "KnowledgeAgent",
+            "CRMContextAgent",
+            "DataCompletenessAgent",
+            "ScenarioSimulationAgent",
+            "DevilsAdvocateAgent"
+        ],
+        "reasoning": {
+            "risks": [
+                "churn risk",
+                "customer dissatisfaction",
+                "low product adoption",
+                "frequent escalations"
+            ],
+            "opportunities": [
+                "upsell opportunity"
+            ],
+            "missingInformation": [
+                "renewal date",
+                "contract value",
+                "executive sponsor",
+                "renewal meeting confirmation"
+            ],
+            "dataCompleteness": {
+                "available": [
+                    "adoption metrics",
+                    "NPS score"
+                ],
+                "missing": [
+                    "renewal date",
+                    "contract value",
+                    "executive sponsor"
+                ],
+                "confidence": 40
+            },
+            "knowledgeGuidance": [
+                {
+                    "title": "Executive Business Review (EBR) Playbook",
+                    "category": "playbooks",
+                    "action": "When a customer exhibits high churn risk signals (NPS < 5, adoption < 40%, or explicit renewal concerns), initiate an Executive Business Review within 7 days. The EBR should include the customer's executive sponsor and your internal VP of Customer Success. Agenda: review ROI achieved, address top concerns, present renewal roadmap. Prepare a slide deck with usage metrics, outcomes delivered, and a 12-month value roadmap.",
+                    "retrievalMethod": "embedding",
+                    "similarity": 0.7393
+                },
+                {
+                    "title": "Low Adoption Intervention Playbook",
+                    "category": "playbooks",
+                    "action": "If product adoption falls below 50%, schedule an Adoption Workshop within 14 days. Identify the top 3 unused features relevant to the customer's use case. Assign a Solutions Engineer to run a hands-on training session. Follow up with a 30-day adoption improvement plan and weekly check-ins. Measure adoption weekly post-workshop.",
+                    "retrievalMethod": "embedding",
+                    "similarity": 0.7215
+                },
+                {
+                    "title": "Customer Health Data Collection Playbook",
+                    "category": "playbooks",
+                    "action": "If adoption or NPS data is unavailable, immediately request access to product analytics dashboards. Schedule a data-sharing onboarding session. Send a CSAT survey via email within 3 days. Set up automated health score tracking in your CRM. Without health data, you are flying blind - this is a P1 task.",
+                    "retrievalMethod": "embedding",
+                    "similarity": 0.6865
+                }
+            ],
+            "riskSummary": "",
+            "opportunitySummary": "",
+            "urgency": "soon",
+            "businessContext": "",
+            "priorityFocus": ""
+        },
+        "scenarioAnalysis": {
+            "scenarios": [
+                {
+                    "id": "scenario-a",
+                    "name": "Executive Business Review",
+                    "summary": "Bring executives together to validate the renewal plan and address churn risk.",
+                    "renewalProbability": 55,
+                    "churnProbability": 22,
+                    "revenueImpact": "High",
+                    "customerSatisfaction": "Medium",
+                    "confidence": 68
+                },
+                {
+                    "id": "scenario-b",
+                    "name": "Quarterly Payment Plan",
+                    "summary": "Offer a flexible payment schedule to balance cash flow and retention.",
+                    "renewalProbability": 62,
+                    "churnProbability": 14,
+                    "revenueImpact": "Medium",
+                    "customerSatisfaction": "High",
+                    "confidence": 70
+                },
+                {
+                    "id": "scenario-c",
+                    "name": "20% Discount",
+                    "summary": "Use a price incentive to improve renewal likelihood while accepting margin pressure.",
+                    "renewalProbability": 65,
+                    "churnProbability": 11,
+                    "revenueImpact": "Low",
+                    "customerSatisfaction": "Very High",
+                    "confidence": 58
+                },
+                {
+                    "id": "scenario-d",
+                    "name": "Additional Product Training",
+                    "summary": "Improve adoption through targeted training to increase engagement and retention.",
+                    "renewalProbability": 57,
+                    "churnProbability": 14,
+                    "revenueImpact": "High",
+                    "customerSatisfaction": "High",
+                    "confidence": 76
+                },
+                {
+                    "id": "scenario-e",
+                    "name": "No Action",
+                    "summary": "Maintain the status quo and do not intervene aggressively.",
+                    "renewalProbability": 35,
+                    "churnProbability": 30,
+                    "revenueImpact": "None",
+                    "customerSatisfaction": "Low",
+                    "confidence": 57
+                }
+            ],
+            "selectedScenarioId": "scenario-d",
+            "bestScenario": {
+                "id": "scenario-d",
+                "name": "Additional Product Training",
+                "summary": "Improve adoption through targeted training to increase engagement and retention.",
+                "renewalProbability": 57,
+                "churnProbability": 14,
+                "revenueImpact": "High",
+                "customerSatisfaction": "High",
+                "confidence": 76
+            }
+        },
+        "devilsAdvocateReview": {
+            "scenarioId": "scenario-d",
+            "scenarioName": "Additional Product Training",
+            "potentialWeaknesses": [
+                "Potential revenue impact from the selected option.",
+                "The selected scenario may create customer expectations that are hard to sustain."
+            ],
+            "longTermDisadvantages": [
+                "Margin pressure could harm future renewal negotiations.",
+                "It may reduce ability to pursue higher-value upsell opportunities."
+            ],
+            "revenueTradeOffs": [
+                "Short-term renewal may come at the cost of long-term revenue growth."
+            ],
+            "customerRelationshipRisks": [
+                "Customers may expect similar concessions in the next cycle."
+            ],
+            "alternative": {
+                "name": "Quarterly Payment Plan",
+                "summary": "A balanced approach that preserves revenue while improving renewal probability.",
+                "renewalProbability": 91,
+                "churnProbability": 9,
+                "revenueImpact": "Medium",
+                "customerSatisfaction": "High",
+                "confidence": 88
+            },
+            "finalVerdict": "The selected scenario should be reviewed for risk; a more balanced alternative may be preferable."
+        },
+        "finalRecommendation": {
+            "priority": "HIGH",
+            "action": "Schedule Executive Business Review",
+            "timeline": "7 days",
+            "impact": "Reduce churn probability"
+        },
+        "recommendations": [
+            {
+                "priority": "HIGH",
+                "action": "Schedule Executive Business Review",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Escalate to Senior Customer Success Manager",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Conduct Adoption Workshop",
+                "timeline": "14 days",
+                "impact": "Increase product adoption"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Review Historical Support Issues",
+                "timeline": "10 days",
+                "impact": "Reduce recurring escalations"
+            },
+            {
+                "priority": "MEDIUM",
+                "action": "Explore Upsell Opportunities",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue"
+            },
+            {
+                "priority": "HIGH",
+                "action": "Request Contract Information",
+                "timeline": "3 days",
+                "impact": "Clarify renewal exposure"
+            }
+        ],
+        "explanations": [
+            {
+                "recommendation": "Schedule Executive Business Review",
+                "priority": "HIGH",
+                "timeline": "7 days",
+                "impact": "Reduce churn probability",
+                "reason": "Customer exhibits strong churn indicators.",
+                "businessImpact": "Reduce churn probability",
+                "evidence": [
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%.",
+                    "Several teams are frustrated with onboarding.",
+                    "NPS: 3",
+                    "Adoption: 35%"
+                ],
+                "confidence": 82
+            },
+            {
+                "recommendation": "Escalate to Senior Customer Success Manager",
+                "priority": "HIGH",
+                "timeline": "3 days",
+                "impact": "Improve customer sentiment",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Improve customer sentiment",
+                "evidence": [
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%.",
+                    "Several teams are frustrated with onboarding.",
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%."
+                ],
+                "confidence": 75
+            },
+            {
+                "recommendation": "Conduct Adoption Workshop",
+                "priority": "HIGH",
+                "timeline": "14 days",
+                "impact": "Increase product adoption",
+                "reason": "Feature adoption is below acceptable levels.",
+                "businessImpact": "Increase product adoption",
+                "evidence": [
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%.",
+                    "Several teams are frustrated with onboarding.",
+                    "Adoption: 35%"
+                ],
+                "confidence": 81
+            },
+            {
+                "recommendation": "Review Historical Support Issues",
+                "priority": "MEDIUM",
+                "timeline": "10 days",
+                "impact": "Reduce recurring escalations",
+                "reason": "Generated from business reasoning rules.",
+                "businessImpact": "Reduce recurring escalations",
+                "evidence": [
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%.",
+                    "Several teams are frustrated with onboarding.",
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%."
+                ],
+                "confidence": 75
+            },
+            {
+                "recommendation": "Explore Upsell Opportunities",
+                "priority": "MEDIUM",
+                "timeline": "30 days",
+                "impact": "Identify expansion revenue",
+                "reason": "Existing expansion opportunities are available.",
+                "businessImpact": "Identify expansion revenue",
+                "evidence": [
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%.",
+                    "Several teams are frustrated with onboarding.",
+                    "Analytics Module"
+                ],
+                "confidence": 77
+            },
+            {
+                "recommendation": "Request Contract Information",
+                "priority": "HIGH",
+                "timeline": "3 days",
+                "impact": "Clarify renewal exposure",
+                "reason": "Contract renewal details are unavailable.",
+                "businessImpact": "Clarify renewal exposure",
+                "evidence": [
+                    "We are unhappy with adoption.",
+                    "Current adoption is 35%.",
+                    "Several teams are frustrated with onboarding."
+                ],
+                "confidence": 69
+            }
+        ],
+        "timestamp": "2026-06-29T02:48:34.976Z"
     }
 ]

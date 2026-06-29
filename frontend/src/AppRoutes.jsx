@@ -1,3 +1,4 @@
+import { useLayoutEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -16,6 +17,25 @@ import DevilsAdvocatePage from "./pages/DevilsAdvocatePage";
 import MetricsPage from "./pages/MetricsPage";
 import KnowledgeBasePage from "./pages/KnowledgeBasePage";
 
+function ScrollToTop() {
+    const { pathname, hash } = useLocation();
+
+    useLayoutEffect(() => {
+        if (hash) {
+            return;
+        }
+
+        if ("scrollRestoration" in window.history) {
+            window.history.scrollRestoration = "manual";
+        }
+
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        document.querySelector(".app-main")?.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }, [pathname, hash]);
+
+    return null;
+}
+
 function AppLayout() {
     const location = useLocation();
     const isLanding = location.pathname === "/";
@@ -23,6 +43,7 @@ function AppLayout() {
 
     return (
         <div className="app-shell">
+            <ScrollToTop />
             {!isLanding && !isAuth && <Navbar />}
             <main className={`app-main ${isLanding || isAuth ? "landing-main" : ""}`}>
                 <Routes>

@@ -1,9 +1,9 @@
 {
-    "timestamp": "2026-06-28T17:06:29.401Z",
+    "timestamp": "2026-06-29T02:48:34.961Z",
     "domainDetection": {
         "domain": "Customer Success",
-        "confidence": 98,
-        "reasoning": "The documents consistently highlight themes central to Customer Success, including customer renewal dates, adoption metrics (NPS, CSAT), onboarding issues, executive sponsor engagement in quarterly reviews, customer escalations due to dissatisfaction, and potential expansion opportunities linked to customer success and product adoption."
+        "confidence": 95,
+        "reasoning": "The document discusses customer adoption rates, customer satisfaction metrics (NPS, CSAT), onboarding challenges, the risk of non-renewal, and the need for an executive review, all of which are key indicators and responsibilities within Customer Success."
     },
     "executionPlan": [
         "CustomerHealthAgent",
@@ -29,23 +29,19 @@
             ]
         },
         "ContractAgent": {
-            "renewalDate": "August 15, 2026",
-            "contractValue": 300000,
-            "autoRenew": false,
-            "discountAllowed": true,
-            "maximumDiscountPercent": 15,
-            "maxDiscountPercent": 15,
-            "slaTerms": "Priority support response within 2 hours.",
-            "sla": "Priority support response within 2 hours.",
+            "renewalDate": null,
+            "contractValue": null,
+            "autoRenew": null,
+            "discountAllowed": false,
+            "maximumDiscountPercent": 0,
+            "maxDiscountPercent": 0,
+            "slaTerms": null,
+            "sla": null,
             "tier": null,
             "contractDuration": null,
             "paymentTerms": null,
             "renewalRisk": "medium",
-            "evidence": [
-                "Renewal Date: August 15, 2026",
-                "Contract Value: $300000",
-                "Auto renewal is disabled - manual renewal required."
-            ]
+            "evidence": []
         },
         "KnowledgeAgent": {
             "retrievedKnowledge": [
@@ -61,22 +57,7 @@
                         "renewal",
                         "high-risk"
                     ],
-                    "similarity": 0.7399,
-                    "retrievalMethod": "embedding"
-                },
-                {
-                    "id": "pb-008",
-                    "category": "renewal",
-                    "title": "Discount and Retention Incentive Playbook",
-                    "content": "If a customer is at renewal risk and discount is permitted by contract, offer a tiered retention incentive: (1) 5% for 1-year renewal, (2) 10% for 2-year renewal, (3) 15% for 3-year renewal plus white-glove onboarding. Never lead with discounts - first establish value, then use discount as a closing lever. Get VP approval before offering >10%.",
-                    "tags": [
-                        "discount",
-                        "retention",
-                        "renewal",
-                        "incentive",
-                        "ARR"
-                    ],
-                    "similarity": 0.7092,
+                    "similarity": 0.7393,
                     "retrievalMethod": "embedding"
                 },
                 {
@@ -91,7 +72,23 @@
                         "onboarding",
                         "usage"
                     ],
-                    "similarity": 0.709,
+                    "similarity": 0.7215,
+                    "retrievalMethod": "embedding"
+                },
+                {
+                    "id": "pb-007",
+                    "category": "data_collection",
+                    "title": "Customer Health Data Collection Playbook",
+                    "content": "If adoption or NPS data is unavailable, immediately request access to product analytics dashboards. Schedule a data-sharing onboarding session. Send a CSAT survey via email within 3 days. Set up automated health score tracking in your CRM. Without health data, you are flying blind - this is a P1 task.",
+                    "tags": [
+                        "NPS",
+                        "CSAT",
+                        "adoption",
+                        "metrics",
+                        "analytics",
+                        "data"
+                    ],
+                    "similarity": 0.6865,
                     "retrievalMethod": "embedding"
                 }
             ],
@@ -101,48 +98,50 @@
                     "action": "When a customer exhibits high churn risk signals (NPS < 5, adoption < 40%, or explicit renewal concerns), initiate an Executive Business Review within 7 days. The EBR should include the customer's executive sponsor and your internal VP of Customer Success. Agenda: review ROI achieved, address top concerns, present renewal roadmap. Prepare a slide deck with usage metrics, outcomes delivered, and a 12-month value roadmap."
                 },
                 {
-                    "trigger": "Discount and Retention Incentive Playbook",
-                    "action": "If a customer is at renewal risk and discount is permitted by contract, offer a tiered retention incentive: (1) 5% for 1-year renewal, (2) 10% for 2-year renewal, (3) 15% for 3-year renewal plus white-glove onboarding. Never lead with discounts - first establish value, then use discount as a closing lever. Get VP approval before offering >10%."
-                },
-                {
                     "trigger": "Low Adoption Intervention Playbook",
                     "action": "If product adoption falls below 50%, schedule an Adoption Workshop within 14 days. Identify the top 3 unused features relevant to the customer's use case. Assign a Solutions Engineer to run a hands-on training session. Follow up with a 30-day adoption improvement plan and weekly check-ins. Measure adoption weekly post-workshop."
+                },
+                {
+                    "trigger": "Customer Health Data Collection Playbook",
+                    "action": "If adoption or NPS data is unavailable, immediately request access to product analytics dashboards. Schedule a data-sharing onboarding session. Send a CSAT survey via email within 3 days. Set up automated health score tracking in your CRM. Without health data, you are flying blind - this is a P1 task."
                 }
             ],
             "evidence": [
                 "Executive Business Review (EBR) Playbook retrieved via embedding.",
-                "Discount and Retention Incentive Playbook retrieved via embedding.",
-                "Low Adoption Intervention Playbook retrieved via embedding."
+                "Low Adoption Intervention Playbook retrieved via embedding.",
+                "Customer Health Data Collection Playbook retrieved via embedding."
             ]
         },
         "CRMContextAgent": {
-            "tier": "Enterprise",
-            "opportunities": [
-                "Analytics Module",
-                "AI Assistant",
-                "Expansion Discussion"
-            ],
-            "stakeholders": [
-                "Executive Sponsor",
-                "Finance Stakeholder"
-            ],
-            "escalations": 2,
+            "tier": null,
+            "stakeholders": [],
             "executiveSponsor": null,
+            "opportunities": [
+                "Analytics Module"
+            ],
+            "escalations": 3,
             "openSupportTickets": null,
-            "lastEngagementSentiment": "neutral",
+            "lastEngagementSentiment": "negative",
             "expansionPotential": "medium",
-            "evidence": []
+            "evidence": [
+                "We are unhappy with adoption.",
+                "Current adoption is 35%.",
+                "NPS: 3",
+                "CSAT: 3.5",
+                "Several teams are frustrated with onboarding."
+            ]
         },
         "DataCompletenessAgent": {
             "available": [
                 "adoption metrics",
-                "NPS score",
+                "NPS score"
+            ],
+            "missing": [
                 "renewal date",
                 "contract value",
                 "executive sponsor"
             ],
-            "missing": [],
-            "confidence": 100
+            "confidence": 40
         }
     },
     "reasoning": {
@@ -150,26 +149,28 @@
             "churn risk",
             "customer dissatisfaction",
             "low product adoption",
-            "renewal risk",
             "frequent escalations"
         ],
         "opportunities": [
-            "retention discount strategy",
             "upsell opportunity"
         ],
         "missingInformation": [
+            "renewal date",
+            "contract value",
+            "executive sponsor",
             "renewal meeting confirmation"
         ],
         "dataCompleteness": {
             "available": [
                 "adoption metrics",
-                "NPS score",
+                "NPS score"
+            ],
+            "missing": [
                 "renewal date",
                 "contract value",
                 "executive sponsor"
             ],
-            "missing": [],
-            "confidence": 100
+            "confidence": 40
         },
         "knowledgeGuidance": [
             {
@@ -177,21 +178,21 @@
                 "category": "playbooks",
                 "action": "When a customer exhibits high churn risk signals (NPS < 5, adoption < 40%, or explicit renewal concerns), initiate an Executive Business Review within 7 days. The EBR should include the customer's executive sponsor and your internal VP of Customer Success. Agenda: review ROI achieved, address top concerns, present renewal roadmap. Prepare a slide deck with usage metrics, outcomes delivered, and a 12-month value roadmap.",
                 "retrievalMethod": "embedding",
-                "similarity": 0.7399
-            },
-            {
-                "title": "Discount and Retention Incentive Playbook",
-                "category": "playbooks",
-                "action": "If a customer is at renewal risk and discount is permitted by contract, offer a tiered retention incentive: (1) 5% for 1-year renewal, (2) 10% for 2-year renewal, (3) 15% for 3-year renewal plus white-glove onboarding. Never lead with discounts - first establish value, then use discount as a closing lever. Get VP approval before offering >10%.",
-                "retrievalMethod": "embedding",
-                "similarity": 0.7092
+                "similarity": 0.7393
             },
             {
                 "title": "Low Adoption Intervention Playbook",
                 "category": "playbooks",
                 "action": "If product adoption falls below 50%, schedule an Adoption Workshop within 14 days. Identify the top 3 unused features relevant to the customer's use case. Assign a Solutions Engineer to run a hands-on training session. Follow up with a 30-day adoption improvement plan and weekly check-ins. Measure adoption weekly post-workshop.",
                 "retrievalMethod": "embedding",
-                "similarity": 0.709
+                "similarity": 0.7215
+            },
+            {
+                "title": "Customer Health Data Collection Playbook",
+                "category": "playbooks",
+                "action": "If adoption or NPS data is unavailable, immediately request access to product analytics dashboards. Schedule a data-sharing onboarding session. Send a CSAT survey via email within 3 days. Set up automated health score tracking in your CRM. Without health data, you are flying blind - this is a P1 task.",
+                "retrievalMethod": "embedding",
+                "similarity": 0.6865
             }
         ],
         "riskSummary": "",
@@ -203,51 +204,71 @@
     "scenarioAnalysis": {
         "scenarios": [
             {
-                "id": "scenario-1",
-                "name": "Strategic EBR, Adoption Workshop & Analytics Deep Dive",
-                "summary": "Execute the customer's requested Executive Business Review within 7 days, involving internal and customer executives to address overall satisfaction, ROI, and future roadmap. Simultaneously, initiate an Accelerated Adoption Program, including a hands-on workshop led by a Solutions Engineer to improve onboarding and feature usage. Integrate a detailed discussion and demo of the Analytics Module, positioning it as a key solution to their data needs and a driver for increased value and adoption.",
-                "renewalProbability": 80,
-                "churnProbability": 20,
-                "revenueImpact": "Positive",
-                "customerSatisfaction": "High",
-                "confidence": 85
+                "id": "scenario-a",
+                "name": "Executive Business Review",
+                "summary": "Bring executives together to validate the renewal plan and address churn risk.",
+                "renewalProbability": 55,
+                "churnProbability": 22,
+                "revenueImpact": "High",
+                "customerSatisfaction": "Medium",
+                "confidence": 68
             },
             {
-                "id": "scenario-2",
-                "name": "Accelerated Adoption Program & Value Validation (Pre-EBR)",
-                "summary": "Prioritize an intensive 30-day Accelerated Adoption Program, including a hands-on workshop led by a Solutions Engineer to immediately address onboarding frustrations and low feature usage. Defer the Executive Business Review until demonstrable adoption improvements can be presented, aiming to build positive momentum. Once improvements are validated, schedule the EBR to review progress, reinforce value, and discuss the Analytics Module as a further enhancement.",
-                "renewalProbability": 65,
-                "churnProbability": 35,
-                "revenueImpact": "Neutral",
-                "customerSatisfaction": "Medium",
+                "id": "scenario-b",
+                "name": "Quarterly Payment Plan",
+                "summary": "Offer a flexible payment schedule to balance cash flow and retention.",
+                "renewalProbability": 62,
+                "churnProbability": 14,
+                "revenueImpact": "Medium",
+                "customerSatisfaction": "High",
                 "confidence": 70
             },
             {
-                "id": "scenario-3",
-                "name": "Proactive Discounted Renewal Offer & Analytics Pitch",
-                "summary": "Immediately acknowledge customer dissatisfaction and proactively offer a tiered discount (e.g., 10-15%) for a multi-year renewal to secure the contract and mitigate immediate churn risk. Simultaneously, pitch the Analytics Module as a solution to their data visibility problems, hoping it will drive future perceived value. Postpone deeper operational reviews and adoption workshops until the renewal is secured, focusing on the financial incentive to retain the customer.",
-                "renewalProbability": 45,
-                "churnProbability": 55,
-                "revenueImpact": "Negative",
+                "id": "scenario-c",
+                "name": "20% Discount",
+                "summary": "Use a price incentive to improve renewal likelihood while accepting margin pressure.",
+                "renewalProbability": 65,
+                "churnProbability": 11,
+                "revenueImpact": "Low",
+                "customerSatisfaction": "Very High",
+                "confidence": 58
+            },
+            {
+                "id": "scenario-d",
+                "name": "Additional Product Training",
+                "summary": "Improve adoption through targeted training to increase engagement and retention.",
+                "renewalProbability": 57,
+                "churnProbability": 14,
+                "revenueImpact": "High",
+                "customerSatisfaction": "High",
+                "confidence": 76
+            },
+            {
+                "id": "scenario-e",
+                "name": "No Action",
+                "summary": "Maintain the status quo and do not intervene aggressively.",
+                "renewalProbability": 35,
+                "churnProbability": 30,
+                "revenueImpact": "None",
                 "customerSatisfaction": "Low",
-                "confidence": 40
+                "confidence": 57
             }
         ],
-        "selectedScenarioId": "scenario-1",
+        "selectedScenarioId": "scenario-d",
         "bestScenario": {
-            "id": "scenario-1",
-            "name": "Strategic EBR, Adoption Workshop & Analytics Deep Dive",
-            "summary": "Execute the customer's requested Executive Business Review within 7 days, involving internal and customer executives to address overall satisfaction, ROI, and future roadmap. Simultaneously, initiate an Accelerated Adoption Program, including a hands-on workshop led by a Solutions Engineer to improve onboarding and feature usage. Integrate a detailed discussion and demo of the Analytics Module, positioning it as a key solution to their data needs and a driver for increased value and adoption.",
-            "renewalProbability": 80,
-            "churnProbability": 20,
-            "revenueImpact": "Positive",
+            "id": "scenario-d",
+            "name": "Additional Product Training",
+            "summary": "Improve adoption through targeted training to increase engagement and retention.",
+            "renewalProbability": 57,
+            "churnProbability": 14,
+            "revenueImpact": "High",
             "customerSatisfaction": "High",
-            "confidence": 85
+            "confidence": 76
         }
     },
     "devilsAdvocateReview": {
-        "scenarioId": "scenario-1",
-        "scenarioName": "Strategic EBR, Adoption Workshop & Analytics Deep Dive",
+        "scenarioId": "scenario-d",
+        "scenarioName": "Additional Product Training",
         "potentialWeaknesses": [
             "Potential revenue impact from the selected option.",
             "The selected scenario may create customer expectations that are hard to sustain."
@@ -300,21 +321,21 @@
         },
         {
             "priority": "MEDIUM",
-            "action": "Initiate Renewal Discussion",
-            "timeline": "7 days",
-            "impact": "Protect renewal revenue"
-        },
-        {
-            "priority": "MEDIUM",
             "action": "Review Historical Support Issues",
             "timeline": "10 days",
             "impact": "Reduce recurring escalations"
         },
         {
             "priority": "MEDIUM",
-            "action": "Offer Renewal Incentive",
-            "timeline": "14 days",
-            "impact": "Improve retention likelihood"
+            "action": "Explore Upsell Opportunities",
+            "timeline": "30 days",
+            "impact": "Identify expansion revenue"
+        },
+        {
+            "priority": "HIGH",
+            "action": "Request Contract Information",
+            "timeline": "3 days",
+            "impact": "Clarify renewal exposure"
         }
     ],
     "explanations": [
@@ -326,13 +347,13 @@
             "reason": "Customer exhibits strong churn indicators.",
             "businessImpact": "Reduce churn probability",
             "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
+                "We are unhappy with adoption.",
+                "Current adoption is 35%.",
+                "Several teams are frustrated with onboarding.",
                 "NPS: 3",
                 "Adoption: 35%"
             ],
-            "confidence": 98
+            "confidence": 82
         },
         {
             "recommendation": "Escalate to Senior Customer Success Manager",
@@ -342,13 +363,13 @@
             "reason": "Generated from business reasoning rules.",
             "businessImpact": "Improve customer sentiment",
             "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026"
+                "We are unhappy with adoption.",
+                "Current adoption is 35%.",
+                "Several teams are frustrated with onboarding.",
+                "We are unhappy with adoption.",
+                "Current adoption is 35%."
             ],
-            "confidence": 96
+            "confidence": 75
         },
         {
             "recommendation": "Conduct Adoption Workshop",
@@ -358,28 +379,12 @@
             "reason": "Feature adoption is below acceptable levels.",
             "businessImpact": "Increase product adoption",
             "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
+                "We are unhappy with adoption.",
+                "Current adoption is 35%.",
+                "Several teams are frustrated with onboarding.",
                 "Adoption: 35%"
             ],
-            "confidence": 98
-        },
-        {
-            "recommendation": "Initiate Renewal Discussion",
-            "priority": "MEDIUM",
-            "timeline": "7 days",
-            "impact": "Protect renewal revenue",
-            "reason": "Contract requires proactive renewal management.",
-            "businessImpact": "Protect renewal revenue",
-            "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Renewal Date: August 15, 2026",
-                "Auto Renew: false"
-            ],
-            "confidence": 98
+            "confidence": 81
         },
         {
             "recommendation": "Review Historical Support Issues",
@@ -389,29 +394,42 @@
             "reason": "Generated from business reasoning rules.",
             "businessImpact": "Reduce recurring escalations",
             "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026"
+                "We are unhappy with adoption.",
+                "Current adoption is 35%.",
+                "Several teams are frustrated with onboarding.",
+                "We are unhappy with adoption.",
+                "Current adoption is 35%."
             ],
-            "confidence": 96
+            "confidence": 75
         },
         {
-            "recommendation": "Offer Renewal Incentive",
+            "recommendation": "Explore Upsell Opportunities",
             "priority": "MEDIUM",
-            "timeline": "14 days",
-            "impact": "Improve retention likelihood",
-            "reason": "Retention incentives are permitted by contract.",
-            "businessImpact": "Improve retention likelihood",
+            "timeline": "30 days",
+            "impact": "Identify expansion revenue",
+            "reason": "Existing expansion opportunities are available.",
+            "businessImpact": "Identify expansion revenue",
             "evidence": [
-                "Contract Value: $300,000",
-                "Renewal Date: August 15, 2026",
-                "Auto Renewal: No",
-                "Discount Allowed: true",
-                "Max Discount: 15%"
+                "We are unhappy with adoption.",
+                "Current adoption is 35%.",
+                "Several teams are frustrated with onboarding.",
+                "Analytics Module"
             ],
-            "confidence": 98
+            "confidence": 77
+        },
+        {
+            "recommendation": "Request Contract Information",
+            "priority": "HIGH",
+            "timeline": "3 days",
+            "impact": "Clarify renewal exposure",
+            "reason": "Contract renewal details are unavailable.",
+            "businessImpact": "Clarify renewal exposure",
+            "evidence": [
+                "We are unhappy with adoption.",
+                "Current adoption is 35%.",
+                "Several teams are frustrated with onboarding."
+            ],
+            "confidence": 69
         }
     ]
 }
