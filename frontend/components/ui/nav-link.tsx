@@ -16,7 +16,7 @@ export function NavLink({ href, label, Icon }: NavLinkProps) {
 
   return (
     <Link
-      href={href}
+      href={href as any}
       className={`nav-link${isActive ? " active" : ""}`}
     >
       <span className="nav-icon">

@@ -51,7 +51,7 @@ export function Sidebar() {
               .map(({ label, href, Icon }) => {
                 const isActive =
                   pathname === href ||
-                  (href !== "/" && pathname.startsWith(href));
+                  ((href as string) !== "/" && pathname.startsWith(href));
                 return (
                   <Link
                     key={href}

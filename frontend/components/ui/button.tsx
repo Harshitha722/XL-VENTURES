@@ -58,7 +58,7 @@ export function Button({
 
 export function ButtonLink({ href, variant = "primary", size = "md", children, style, ...props }: ButtonLinkProps) {
   return (
-    <Link href={href}>
+    <Link href={href as any}>
       <span className={`btn btn-${variant}`} style={{ ...sizeStyle[size], ...style }}>
         {children}
       </span>

@@ -45,7 +45,7 @@ export default function AnalysisDashboard() {
     }
   });
 
-  const confidenceVal = report ? parseFloat(report.confidence.overall) : 0;
+  const confidenceVal = report ? Number(report.confidence.overall) : 0;
   const confidencePercent = isNaN(confidenceVal) ? 0 : Math.min(100, confidenceVal > 1 ? confidenceVal : confidenceVal * 100);
 
   return (
