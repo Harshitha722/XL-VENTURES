@@ -40,6 +40,9 @@ function MemoryPage() {
     const [memory, setMemory] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [query, setQuery] = useState("");
+    const [customerId, setCustomerId] = useState("");
+    const [type, setType] = useState("");
 
     useEffect(() => {
         async function fetchMemory() {
@@ -58,6 +61,26 @@ function MemoryPage() {
 
         fetchMemory();
     }, []);
+
+    async function searchMemory(event) {
+        event.preventDefault();
+        setError("");
+
+        try {
+            const response = await api.get("/memory", {
+                params: {
+                    query: query || undefined,
+                    customerId: customerId || undefined,
+                    type: type || undefined
+                }
+            });
+
+            setMemory(Array.isArray(response.data) ? response.data : []);
+        }
+        catch {
+            setError("Unable to search memory.");
+        }
+    }
 
     const approvedRecommendations = useMemo(
         () => getApprovedRecommendations(memory),
@@ -107,6 +130,26 @@ function MemoryPage() {
                     <strong>{approvedRecommendations.length}</strong>
                 </article>
             </section>
+
+            <form className="governance-controls" onSubmit={searchMemory}>
+                <label>
+                    Search memory
+                    <input value={query} onChange={(event) => setQuery(event.target.value)} />
+                </label>
+                <label>
+                    Customer ID
+                    <input value={customerId} onChange={(event) => setCustomerId(event.target.value)} />
+                </label>
+                <label>
+                    Type
+                    <select value={type} onChange={(event) => setType(event.target.value)}>
+                        <option value="">All</option>
+                        <option value="analysis">Analysis</option>
+                        <option value="recommendationApproval">Recommendation approval</option>
+                    </select>
+                </label>
+                <button className="primary-action" type="submit">Search</button>
+            </form>
 
             {approvedRecommendations.length === 0 ? (
                 <section className="result-panel empty-state">

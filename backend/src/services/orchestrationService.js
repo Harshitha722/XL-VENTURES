@@ -31,6 +31,9 @@ const dataCompletenessAgent =
 const {
     saveMemory
 } = require("../memory/memoryAgent");
+const { getMemory } = require("../memory/memoryAgent");
+const { appendAuditEvent } = require("./auditService");
+const { scoreRecommendation } = require("./confidenceEngine");
 
 
 const LATEST_ANALYSIS_PATH = path.join(
@@ -97,7 +100,7 @@ function saveLatestAnalysis(result) {
 /**
  * Main orchestration pipeline.
  */
-async function orchestrate(uploadedText) {
+async function orchestrate(uploadedText, context = {}) {
 
     const evidence =
         buildEvidence(uploadedText);
@@ -227,11 +230,40 @@ async function orchestrate(uploadedText) {
             orchestrationInput
         );
 
+    const memory = getMemory();
+    const signals = [
+        ...(reasoning.risks || []),
+        ...(reasoning.opportunities || []),
+        ...(reasoning.missingInformation || [])
+    ];
+    const enrichedExplanations = explanations.map((item) => {
+        const score = scoreRecommendation({
+            recommendation: item.recommendation,
+            evidence: item.evidence || evidence,
+            signals,
+            memory
+        });
+
+        return {
+            ...item,
+            confidence: score.confidence,
+            confidenceComponents: score.components,
+            memorySignals: memory
+                .flatMap((entry) => entry.approvedRecommendations || [])
+                .filter((approval) => approval.recommendation === item.recommendation)
+                .slice(-3)
+        };
+    });
+
 
     const result = {
 
         timestamp:
             new Date().toISOString(),
+
+        tenantId: context.tenantId || "default-tenant",
+
+        workspaceId: context.workspaceId || "default-workspace",
 
         domainDetection,
 
@@ -256,14 +288,30 @@ async function orchestrate(uploadedText) {
 
         recommendations,
 
-        explanations
+        explanations: enrichedExplanations
     };
+
+    if (result.finalRecommendation) {
+        const matchingExplanation = enrichedExplanations.find(
+            (item) => item.recommendation === result.finalRecommendation.action
+        );
+
+        result.finalRecommendation = {
+            ...result.finalRecommendation,
+            confidence: matchingExplanation?.confidence ?? recommendationResult.confidence ?? 0,
+            evidence: matchingExplanation?.evidence || recommendationResult.evidence || [],
+            reasoning: matchingExplanation?.reason || recommendationResult.reason || "",
+            memorySignals: matchingExplanation?.memorySignals || []
+        };
+    }
 
 
     saveLatestAnalysis(result);
 
     saveMemory({
         type: "analysis",
+        tenantId: result.tenantId,
+        workspaceId: result.workspaceId,
         domainDetection,
         executionPlan: result.executionPlan,
         reasoning,
@@ -271,7 +319,20 @@ async function orchestrate(uploadedText) {
         devilsAdvocateReview,
         finalRecommendation,
         recommendations,
-        explanations
+        explanations: enrichedExplanations
+    });
+
+    await appendAuditEvent({
+        tenantId: result.tenantId,
+        workspaceId: result.workspaceId,
+        actorId: context.userId || "system",
+        action: "recommendation.generated",
+        entityType: "analysis",
+        entityId: result.timestamp,
+        details: {
+            recommendationCount: recommendations.length,
+            executionPlan: result.executionPlan
+        }
     });
 
     return result;

@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs");
 const express = require("express");
 const multer = require("multer");
 
@@ -15,6 +16,8 @@ const uploadDirectory = path.join(
     __dirname,
     "../../uploads"
 );
+
+fs.mkdirSync(uploadDirectory, { recursive: true });
 
 const storage = multer.diskStorage({
     destination: uploadDirectory,
@@ -61,7 +64,7 @@ router.post(
             }
 
             const result =
-                await orchestrate(uploadedText);
+                await orchestrate(uploadedText, req.context);
 
             res.json(result);
         }

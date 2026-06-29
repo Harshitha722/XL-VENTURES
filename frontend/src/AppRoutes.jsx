@@ -16,6 +16,8 @@ import ScenarioAnalysisPage from "./pages/ScenarioAnalysisPage";
 import DevilsAdvocatePage from "./pages/DevilsAdvocatePage";
 import MetricsPage from "./pages/MetricsPage";
 import KnowledgeBasePage from "./pages/KnowledgeBasePage";
+import GovernancePage from "./pages/GovernancePage";
+import AuditPage from "./pages/AuditPage";
 
 function ScrollToTop() {
     const { pathname, hash } = useLocation();
@@ -56,7 +58,9 @@ function AppLayout() {
                     <Route path="/scenario-analysis" element={<ScenarioAnalysisPage />} />
                     <Route path="/devils-advocate" element={<DevilsAdvocatePage />} />
                     <Route path="/recommendations" element={<RecommendationsPage />} />
+                    <Route path="/governance" element={<GovernancePage />} />
                     <Route path="/memory" element={<MemoryPage />} />
+                    <Route path="/audit" element={<AuditPage />} />
                     <Route path="/architecture" element={<ArchitecturePage />} />
                     <Route path="/metrics" element={<MetricsPage />} />
                     <Route path="/knowledge" element={<KnowledgeBasePage />} />

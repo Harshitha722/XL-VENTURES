@@ -6,9 +6,14 @@ function Navbar() {
 
         <aside className="sidebar">
 
-            <h2>RenewAI</h2>
+            <Link className="sidebar-brand" to="/" aria-label="Go to DecisionMesh AI home">
+                <span className="sidebar-brand-mark">DM</span>
+                <span>DecisionMesh AI</span>
+            </Link>
 
             <div className="sidebar-links">
+
+                <Link to="/">Home</Link>
 
                 <Link to="/dashboard">Dashboard</Link>
 
@@ -24,7 +29,11 @@ function Navbar() {
 
                 <Link to="/recommendations">Recommendations</Link>
 
+                <Link to="/governance">Governance</Link>
+
                 <Link to="/memory">Memory</Link>
+
+                <Link to="/audit">Audit</Link>
 
                 <Link to="/architecture">Architecture</Link>
 

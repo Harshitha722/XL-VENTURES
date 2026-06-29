@@ -15,10 +15,10 @@ function Login() {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-header">
-          <div className="brand-mark">RA</div>
+          <div className="brand-mark">DM</div>
           <div>
-            <h1>RenewAI Login</h1>
-            <p>Agentic Customer Success & Contract Intelligence Platform</p>
+            <h1>DecisionMesh AI Login</h1>
+            <p>Enterprise Decision Intelligence Platform</p>
           </div>
         </div>
         <form className="auth-form" onSubmit={handleSubmit}>

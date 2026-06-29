@@ -10,9 +10,17 @@ const {
 
     addHumanFeedback,
 
-    addRecommendationApproval
+    addRecommendationApproval,
+
+    addReviewAction,
+
+    searchMemory
 
 } = require("../memory/memoryAgent");
+const { appendAuditEvent } = require("../services/auditService");
+const { discoverPatterns } = require("../services/patternAgent");
+const { asyncHandler } = require("../middleware/errorMiddleware");
+const { requirePermission } = require("../middleware/contextMiddleware");
 
 const router = express.Router();
 
@@ -20,11 +28,21 @@ const router = express.Router();
 /**
  * GET all memory entries.
  */
-router.get("/", (req, res) => {
+router.get("/", requirePermission("memory:read"), (req, res) => {
 
     res.json(
-        getMemory()
+        searchMemory({
+            tenantId: req.query.tenantId || req.context.tenantId,
+            workspaceId: req.query.workspaceId || req.context.workspaceId,
+            customerId: req.query.customerId,
+            query: req.query.query,
+            type: req.query.type
+        })
     );
+});
+
+router.get("/patterns", requirePermission("memory:read"), (req, res) => {
+    res.json(discoverPatterns(getMemory()));
 });
 
 
@@ -73,11 +91,40 @@ router.post("/review", (req, res) => {
     });
 });
 
+router.post(
+    "/review-action",
+    requirePermission("recommendation:review"),
+    asyncHandler(async (req, res) => {
+        const review = await addReviewAction({
+            ...req.body,
+            tenantId: req.context.tenantId,
+            workspaceId: req.context.workspaceId,
+            reviewerId: req.context.userId,
+            reviewerRole: req.context.role
+        });
+
+        await appendAuditEvent({
+            tenantId: req.context.tenantId,
+            workspaceId: req.context.workspaceId,
+            actorId: req.context.userId,
+            action: `review.${review.action}`,
+            entityType: "recommendation",
+            entityId: review.recommendation,
+            details: review
+        });
+
+        res.json({
+            message: "Review action saved.",
+            review
+        });
+    })
+);
+
 
 /**
  * Recommendation approval endpoint.
  */
-router.post("/approve-recommendation", (req, res) => {
+router.post("/approve-recommendation", asyncHandler(async (req, res) => {
 
     const {
         analysisTimestamp,
@@ -92,13 +139,27 @@ router.post("/approve-recommendation", (req, res) => {
         });
     }
 
-    const memoryEntry = addRecommendationApproval(req.body);
+    const memoryEntry = addRecommendationApproval({
+        ...req.body,
+        tenantId: req.context.tenantId,
+        workspaceId: req.context.workspaceId
+    });
+
+    await appendAuditEvent({
+        tenantId: req.context.tenantId,
+        workspaceId: req.context.workspaceId,
+        actorId: req.context.userId,
+        action: "recommendation.approve",
+        entityType: "recommendation",
+        entityId: recommendation,
+        details: req.body
+    });
 
     res.json({
         message: "Recommendation approved and saved to memory.",
         memoryEntry
     });
-});
+}));
 
 
 module.exports = router;

@@ -2,7 +2,7 @@
  * ARCHITECTURE SERVICE
  *
  * Purpose:
- * Expose the RenewAI architecture
+ * Expose the DecisionMesh AI architecture
  * to the frontend for visualization.
  */
 
@@ -11,7 +11,7 @@ function getArchitecture() {
     return {
 
         title:
-            "RenewAI Agentic Decision Intelligence Platform",
+            "DecisionMesh AI Enterprise Decision Intelligence Platform",
 
         layers: [
 
@@ -70,7 +70,9 @@ function getArchitecture() {
 
                     "Shared Memory",
 
-                    "Human Feedback"
+                    "Human Feedback",
+                    "Audit Log",
+                    "RBAC"
                 ]
             }
         ]

@@ -33,7 +33,7 @@ const features = [
   {
     icon: Sparkles,
     title: "Agentic account intelligence",
-    text: "RenewAI turns scattered customer signals into prioritized renewal, expansion, and risk decisions.",
+    text: "DecisionMesh AI turns scattered enterprise signals into prioritized renewal, expansion, and risk decisions.",
   },
   {
     icon: Database,
@@ -91,10 +91,10 @@ function Home() {
     <div className="landing-page">
       <header className="landing-header">
         <Link className="landing-brand" to="/">
-          <div className="brand-mark">RA</div>
+          <div className="brand-mark">DM</div>
           <div>
-            <p>RenewAI</p>
-            <span>Agentic Customer Success Platform</span>
+            <p>DecisionMesh AI</p>
+            <span>Enterprise Decision Intelligence Platform</span>
           </div>
         </Link>
         <nav className="landing-nav" aria-label="Primary navigation">
@@ -114,14 +114,14 @@ function Home() {
           <img className="hero-platform-art" src={heroArt} alt="" aria-hidden="true" />
           <div className="hero-layout">
             <div className="hero-copy">
-              <p className="eyebrow">B2B Agentic AI for Customer Success</p>
-              <h1>RenewAI</h1>
+              <p className="eyebrow">Enterprise Decision Intelligence Platform</p>
+              <h1>DecisionMesh AI</h1>
               <p className="hero-subtitle">
-                Agentic intelligence for retention, renewals, and expansion.
+                Planner-based intelligence for governed, explainable enterprise decisions.
               </p>
               <p className="hero-text">
-                RenewAI unifies customer conversations, CRM context, contracts, policies, and playbooks into one
-                explainable revenue workspace, helping teams move from scattered signals to confident next best actions.
+                DecisionMesh AI unifies CRM context, conversations, contracts, policies, playbooks, memory, and
+                reviewer governance into one explainable workspace for confident next best actions.
               </p>
               <div className="hero-actions">
                 <Link className="btn btn-primary btn-lg" to="/dashboard">
@@ -141,7 +141,7 @@ function Home() {
               </div>
             </div>
 
-            <aside className="product-preview" aria-label="RenewAI product preview">
+            <aside className="product-preview" aria-label="DecisionMesh AI product preview">
               <div className="preview-toolbar">
                 <span />
                 <span />
@@ -210,7 +210,7 @@ function Home() {
             <h2>Customer success teams are making revenue decisions with fragmented context.</h2>
             <p>
               Critical renewal signals live across conversations, systems, documents, policies, and account history.
-              RenewAI brings those signals into a trusted operating layer for the entire post-sales organization.
+              DecisionMesh AI brings those signals into a trusted operating layer for the entire post-sales organization.
             </p>
           </div>
           <div className="problem-grid">
@@ -223,7 +223,7 @@ function Home() {
           </div>
         </section>
 
-        <section className="section audience-section" aria-label="Teams RenewAI supports">
+        <section className="section audience-section" aria-label="Teams DecisionMesh AI supports">
           <div className="section-intro">
             <p className="eyebrow">Built For Revenue Teams</p>
             <h2>One operating surface for the teams responsible for customer outcomes.</h2>
@@ -243,7 +243,7 @@ function Home() {
             <p className="eyebrow">Enterprise Knowledge</p>
             <h2>One enterprise memory for every customer decision.</h2>
             <p>
-              RenewAI connects account activity with institutional knowledge so recommendations are grounded in
+              DecisionMesh AI connects account activity with institutional knowledge so recommendations are grounded in
               business policy, contractual commitments, product guidance, and proven customer success motion.
             </p>
           </div>
@@ -330,7 +330,7 @@ function Home() {
 
         <section className="section compare-section">
           <div className="section-intro">
-            <p className="eyebrow">Why RenewAI</p>
+            <p className="eyebrow">Why DecisionMesh AI</p>
             <h2>A decision platform, not a chatbot.</h2>
           </div>
           <div className="comparison-table">
@@ -344,7 +344,7 @@ function Home() {
               </ul>
             </div>
             <div className="table-column highlight">
-              <h4>RenewAI</h4>
+              <h4>DecisionMesh AI</h4>
               <ul>
                 <li>Unified enterprise customer memory</li>
                 <li>Evidence-backed next best actions</li>
@@ -372,15 +372,15 @@ function Home() {
 
       <footer className="landing-footer">
         <div>
-          <strong>RenewAI</strong>
-          <p>Agentic Customer Success Platform</p>
+          <strong>DecisionMesh AI</strong>
+          <p>Enterprise Decision Intelligence Platform</p>
         </div>
         <div>
           <p>Built for post-sales revenue teams</p>
           <p>Renewals, retention, expansion, and account intelligence</p>
         </div>
         <div>
-          <p>(c) 2026 RenewAI. All rights reserved.</p>
+          <p>(c) 2026 DecisionMesh AI. All rights reserved.</p>
         </div>
       </footer>
     </div>

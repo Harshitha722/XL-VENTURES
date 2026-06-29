@@ -175,7 +175,7 @@ async function plannerAgent(uploadedText) {
     const documentText = buildDocumentText(uploadedText);
 
     const prompt = `
-You are the orchestration planner for RenewAI.
+You are the orchestration planner for DecisionMesh AI.
 
 Available agents:
 

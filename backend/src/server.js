@@ -1,5 +1,5 @@
 ﻿/**
- * RENEWAI SERVER
+ * DECISIONMESH AI SERVER
  *
  * Main backend entry point.
  */
@@ -8,6 +8,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
+const { attachRequestContext } = require("./middleware/contextMiddleware");
+const { errorHandler, notFoundHandler } = require("./middleware/errorMiddleware");
 require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
@@ -58,6 +60,9 @@ const scenarioRoutes =
 
 const devilsAdvocateRoutes =
     require("./routes/devilsAdvocateRoutes");
+const auditRoutes = require("./routes/auditRoutes");
+const crmRoutes = require("./routes/crmRoutes");
+const analyticsRoutes = require("./routes/analyticsRoutes");
 
 
 const app = express();
@@ -92,6 +97,7 @@ connectToDatabase();
 app.use(cors());
 
 app.use(express.json());
+app.use(attachRequestContext);
 
 
 /**
@@ -106,7 +112,7 @@ app.get("/", (req, res) => {
         success: true,
 
         message:
-            "RenewAI Backend Running"
+            "DecisionMesh AI Backend Running"
     });
 });
 
@@ -232,21 +238,29 @@ app.use(
     businessRulesRoutes
 );
 
+app.use(
+    "/api/audit",
+    auditRoutes
+);
+
+app.use(
+    "/api/crm",
+    crmRoutes
+);
+
+app.use(
+    "/api/analytics",
+    analyticsRoutes
+);
+
 
 /**
  * =========================
  * 404 Handler
  * =========================
  */
-app.use((req, res) => {
-
-    res.status(404).json({
-
-        success: false,
-
-        message: "Route not found"
-    });
-});
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 
 /**
@@ -257,6 +271,6 @@ app.use((req, res) => {
 app.listen(PORT, () => {
 
     console.log(
-        `RenewAI Backend running on port ${PORT}`
+        `DecisionMesh AI Backend running on port ${PORT}`
     );
 });

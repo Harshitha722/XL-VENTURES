@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
                 contractText: req.body.contractText || "",
                 meetingText: req.body.meetingText || req.body.interaction || "",
                 emailText: req.body.emailText || ""
-            });
+            }, req.context);
 
         res.json(result);
     }

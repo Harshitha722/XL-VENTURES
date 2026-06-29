@@ -23,7 +23,7 @@ export default function MetricsPage() {
     return (
         <div className="page metrics-page">
             <h1>Platform Metrics & Business Outcomes</h1>
-            <p className="subtitle">Measurable evaluation of RenewAI recommendation quality</p>
+            <p className="subtitle">Measurable evaluation of DecisionMesh AI recommendation quality</p>
 
             <section>
                 <h2>Platform Performance</h2>
@@ -44,11 +44,73 @@ export default function MetricsPage() {
                         <div className="metric-value">{platform.averageConfidenceOfApprovedActions}</div>
                         <div className="metric-label">Avg Confidence Approved</div>
                     </div>
+                    <div className="metric-card">
+                        <div className="metric-value">{platform.totalRecommendationsRejected}</div>
+                        <div className="metric-label">Recommendations Rejected</div>
+                    </div>
+                    <div className="metric-card">
+                        <div className="metric-value">{platform.memoryGrowth}</div>
+                        <div className="metric-label">Memory Growth</div>
+                    </div>
                 </div>
                 {platform.mostFrequentApprovedAction !== "N/A" && (
                     <p>Most frequently approved action: <strong>{platform.mostFrequentApprovedAction}</strong></p>
                 )}
             </section>
+
+            {Object.keys(metrics.reviewerPerformance || {}).length > 0 && (
+                <section>
+                    <h2>Reviewer Performance</h2>
+                    <table className="breakdown-table">
+                        <thead>
+                            <tr>
+                                <th>Reviewer</th>
+                                <th>Reviewed</th>
+                                <th>Approved</th>
+                                <th>Rejected</th>
+                                <th>Escalated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Object.entries(metrics.reviewerPerformance).map(([reviewer, stats]) => (
+                                <tr key={reviewer}>
+                                    <td>{reviewer}</td>
+                                    <td>{stats.reviewed}</td>
+                                    <td>{stats.approved}</td>
+                                    <td>{stats.rejected}</td>
+                                    <td>{stats.escalated}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </section>
+            )}
+
+            {metrics.discoveredPatterns?.length > 0 && (
+                <section>
+                    <h2>Discovered Patterns</h2>
+                    <table className="breakdown-table">
+                        <thead>
+                            <tr>
+                                <th>Recommendation</th>
+                                <th>Approvals</th>
+                                <th>Rejections</th>
+                                <th>Acceptance Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {metrics.discoveredPatterns.map((pattern) => (
+                                <tr key={pattern.recommendation}>
+                                    <td>{pattern.recommendation}</td>
+                                    <td>{pattern.approvals}</td>
+                                    <td>{pattern.rejections}</td>
+                                    <td>{pattern.acceptanceRate ?? "N/A"}%</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </section>
+            )}
 
             <section>
                 <h2>Business Success Targets</h2>
