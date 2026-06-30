@@ -64,22 +64,26 @@ npm run dev
 Open `http://localhost:3000`. OpenAPI docs are at `http://localhost:8000/docs`.
 
 ---
-Frontend
-Framework: Next.js (App Router, React 18)
-Language: TypeScript
-Styling: Tailwind CSS (v4) 
-State Management: Zustand (for client-side state like useDecisionStore)
-Data Fetching: React Query (@tanstack/react-query)
-Icons: Lucide React
+## 🛠️ Tech Stack
 
-Backend
-Framework: FastAPI (High-performance async Python framework)
-Language: Python 3.13+
-Data Validation: Pydantic (Strict typing and schemas)
-AI Agent Orchestration: pydantic_ai (Pure LLM-driven pipelines)
-LLM Provider: Google Gemini API (gemini-1.5-pro & gemini-1.5-flash)
-Testing: Pytest
-Server: Uvicorn (ASGI)
+### Frontend
+
+- **Framework:** Next.js (App Router, React 18)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **State Management:** Zustand (client-side state management, e.g., `useDecisionStore`)
+- **Data Fetching:** TanStack React Query (`@tanstack/react-query`)
+- **Icons:** Lucide React
+
+### Backend
+
+- **Framework:** FastAPI (High-performance asynchronous Python framework)
+- **Language:** Python 3.13+
+- **Data Validation:** Pydantic (strict typing and schema validation)
+- **AI Agent Orchestration:** PydanticAI (LLM-driven agent pipelines)
+- **LLM Provider:** Google Gemini API (`gemini-1.5-pro`, `gemini-1.5-flash`)
+- **Testing:** Pytest
+- **Server:** Uvicorn (ASGI)
 
 ---
 
