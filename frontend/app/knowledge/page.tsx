@@ -14,8 +14,8 @@ export default function KnowledgeBase() {
 
   return (
     <Section
-      title="Detected Domains"
-      subtitle="Domains identified by the LLM from real evidence — no static catalog"
+      title="Knowledge Base"
+      subtitle="Analyzed business environments and available reasoning capabilities"
     >
       <div style={{ display: "grid", gap: 14 }}>
         {isLoading && (

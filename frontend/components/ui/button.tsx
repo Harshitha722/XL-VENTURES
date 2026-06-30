@@ -17,11 +17,6 @@ interface ButtonLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   size?: Size;
 }
 
-const sizeMap: Record<Size, string> = {
-  sm: "padding: 7px 12px; font-size: 12px;",
-  md: "padding: 10px 18px; font-size: 13.5px;",
-  lg: "padding: 13px 24px; font-size: 15px;"
-};
 
 const sizeStyle: Record<Size, React.CSSProperties> = {
   sm: { padding: "7px 12px", fontSize: 12 },

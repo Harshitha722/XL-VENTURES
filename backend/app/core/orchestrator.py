@@ -145,22 +145,29 @@ class DecisionMeshOrchestrator:
                 },
             )
 
-        # ── Step 1: LLM Domain Detection ──────────────────────────────────────
-        domain = await llm_detect_domain(request.task, corpus)
+        # ── Step 1 & 2: Domain Detection and RAG in parallel ──────────────────
+        import asyncio
+        
+        def run_rag():
+            self.rag.index(request.documents)
+            return self.rag.retrieve(request.task, request.documents)
+            
+        domain, evidence = await asyncio.gather(
+            llm_detect_domain(request.task, corpus),
+            asyncio.to_thread(run_rag)
+        )
 
-        # ── Step 2: RAG evidence retrieval ────────────────────────────────────
-        self.rag.index(request.documents)
-        evidence = self.rag.retrieve(request.task, request.documents)
-
-        # ── Step 3: LLM Agent Planning ────────────────────────────────────────
-        agents = await llm_plan_agents(domain, request.task)
+        # ── Step 3: LLM Agent Planning and Memory Retrieval ───────────────────
+        agents, memories = await asyncio.gather(
+            llm_plan_agents(domain, request.task),
+            asyncio.to_thread(memory_store.retrieve, domain.domain, request.task)
+        )
         self.registry.register(agents)
 
         # ── Step 4: Parallel LLM Agent execution ──────────────────────────────
         findings = await self.registry.run(agents, evidence)
 
         # ── Step 5: LLM Business Reasoning ────────────────────────────────────
-        memories = memory_store.retrieve(domain.domain, request.task)
         reasoning = await self.reasoner.reason_async(findings, domain.domain, request.task, memories)
 
         # ── Step 6: LLM Scenario Simulation ───────────────────────────────────

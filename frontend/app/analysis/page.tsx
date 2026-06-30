@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { Zap, Sparkles, Target, AlertTriangle, ChevronRight, Cpu, ShieldCheck, Users, Layers } from "lucide-react";
+import { Zap, Target, AlertTriangle, ChevronRight, Cpu, ShieldCheck, Users, Layers } from "lucide-react";
 import { analyzeDecision, sampleDocuments } from "@/lib/api";
 import { useDecisionStore } from "@/store/useDecisionStore";
 import { Button } from "@/components/ui/button";

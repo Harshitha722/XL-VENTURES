@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   Activity,
   Archive,
-  BrainCircuit,
+  Brain,
   ClipboardCheck,
   Gauge,
   Settings,
@@ -18,6 +18,7 @@ const nav = [
   { label: "Workspace", href: "/workspace", Icon: Gauge, section: "Core" },
   { label: "Upload", href: "/upload", Icon: UploadCloud, section: "Core" },
   { label: "Analysis", href: "/analysis", Icon: Zap, section: "Intelligence" },
+  { label: "Knowledge Base", href: "/knowledge", Icon: Brain, section: "Intelligence" },
   { label: "Recommendations", href: "/recommendations", Icon: ClipboardCheck, section: "Intelligence" },
   { label: "Human Review", href: "/review", Icon: ShieldCheck, section: "Intelligence" },
   { label: "Audit", href: "/audit", Icon: Archive, section: "System" },

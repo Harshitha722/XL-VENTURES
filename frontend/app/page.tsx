@@ -151,13 +151,10 @@ export default function LandingPage() {
             <div>
               <div
                 style={{
-                  fontSize: 22,
-                  fontWeight: 800,
+                  fontSize: 28,
+                  fontWeight: 700,
                   letterSpacing: "-0.02em",
-                  background: "var(--gradient-primary)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text"
+                  color: "var(--text-primary)"
                 }}
               >
                 {value}
